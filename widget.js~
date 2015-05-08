@@ -375,8 +375,7 @@ angular.element(document).ready(function() {
 // Wait for DOM content to load.
 var curState = document.readyState;
 console.log(curState);
-//|| curState=="interactive"
-if (curState=="complete" || curState=="loaded") {
+if (curState=="complete" || curState=="loaded" || curState=="interactive") {
 	console.log(curState);
 	ready();
 } else if (document.addEventListener) {
