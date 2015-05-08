@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
-
+<head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 	<link rel="stylesheet" type="text/css" href="css/min/modal.min.css">
 	<script type="text/javascript" src="//use.typekit.net/aml1eoz.js"></script>
     	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>

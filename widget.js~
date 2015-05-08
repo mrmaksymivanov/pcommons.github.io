@@ -375,10 +375,10 @@ angular.element(document).ready(function() {
 // Wait for DOM content to load.
 var curState = document.readyState;
 console.log(curState);
-//|| curState=="interactive"
-if (curState=="complete" || curState=="loaded") {
+
+if (curState=="complete" || curState=="loaded" || curState=="interactive") {
 	console.log(curState);
-	ready();
+	bindRetroTaxBtn();
 } else if (document.addEventListener) {
 	console.log("skip curState");
 	//document.addEventListener('DOMContentLoaded', bindRetroTaxBtn, false);

@@ -301,6 +301,7 @@ var bindRetroTaxBtn = function() {
 	document.getElementById('rt_widget').addEventListener('click', function() {
 		ready();
 	}, false);
+        return false;
 }
 
 
