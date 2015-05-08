@@ -299,7 +299,10 @@ var bindRetroTaxBtn = function() {
 	var myEl = document.getElementById('rt_widget');
 	console.log(myEl);
 	document.getElementById('rt_widget').addEventListener('click', function() {
-		ready();
+		console.log(document.readyState);
+  		if(document.readyState=="loaded"){
+			ready();
+		}
 	}, false);
         return false;
 }
