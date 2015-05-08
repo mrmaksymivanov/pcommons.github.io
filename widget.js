@@ -22,7 +22,7 @@
 (function(){ // :)
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
-var dfurl = 'https://widget.battleforthenet.com/iframe';
+var dfurl = 'http://plugin-paulcommons.rhcloud.com/iframe';
 
 
 /**
