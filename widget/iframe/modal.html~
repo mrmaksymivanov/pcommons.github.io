@@ -20,46 +20,37 @@
 
 
 	<!-- INCLUDE APPLICATION SPECIFIC CSS AND JAVASCRIPT -->
-	<script type="text/javascript" src="http://m.retrotax.co/assets/js/tcid/app.js?v=022320150212"></script>
+	<script type="text/javascript" src="/widget/iframe/js/app.js?v=022320150212"></script>
 	<!--<script type="text/javascript" src="js/tcid/controllers/ctlUser.js?v=022320150212"></script> -->
-	<script type="text/javascript" src="http://m.retrotax.co/assets/js/tcid/controllers/ctlEmployee.js?v=022320150212"></script>
+	<script type="text/javascript" src="/widget/iframe/js/ctlEmployee.js?v=022320150212"></script>
 
  <!--<script type="text/javascript" src="/assets/main.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="/assets/md5.js"></script>
 -->
 
 </head>
-<base href="">
+<base href="/">
 <body ng-app="app">
 
-<div id="scene" ng-view>
-
+<div id="scene">
+<!--
 	<div id="header">
 		<a class="close" href="#"></a>
 		<h1></h1>	
 		<div class="cta"><p></p></div>
 	</div>
+-->
 
-
-<div id="modal">
-		<div id="step1">
-			<h1 class="headline">
-				<em>RetroTax,</em> WebScreen
-			</h1>
-
-		</div>
+<!--
 		<div id="stepCall" class="extra-modal">
 		<h1>Step Call</h1>
 		</div>
 		
-
+-->
 	
 
-  <div class="modal-dialog">
-    <div class="modal-content">
-     
-      <div class="modal-body">
-       <div id="step1">
+  <div id="modal" >
+ 
 <div ng-controller="ctlEmployee" ng-init="initEdit()">
 
 <alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
@@ -69,6 +60,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
 <accordion close-others="1">
     <accordion-group heading="Employee Info - {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1">
+    <a class="close" href="#"></a>
       <input type="hidden" name="employeeid" id="employeeid" value="{{tcid.employee.maindata.id}}">
 
         <table class="table table-user-information table-responsive">
@@ -876,16 +868,13 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
   <div style="height:30px; clear:both;width:100%"></div>
 </form>
 
-</div><!-- /.step1 -->
 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+  </div><!-- /modal -->
 </div><!--/scene-->
 
 <div id="overlay">
 
-		<div class="content"><h1>content</h1></div>
+		<div class="content"></div>
 
 </div>
 
@@ -894,11 +883,11 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 <script type="text/javascript" src="js/min/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="js/min/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/min/angular.min.js"></script>
-<script type="text/javascript" src="js/ui-bootstrap-custom-tpls-0.12.0.js"></script>
-<script type="text/javascript" src="js/angular-toggle-switch.min.js"></script>
+<script type="text/javascript" src="js/min/ui-bootstrap-custom-tpls-0.12.0.js"></script>
+<script type="text/javascript" src="js/min/angular-toggle-switch.min.js"></script>
 -->
-<script type="text/javascript" src="js/min/modal.min.js"></script>
-<script type="text/javascript" src="js/min/common.min.js"></script>
+<script type="text/javascript" src="/widget/iframe/js/min/modal.min.js"></script>
+<script type="text/javascript" src="/widget/iframe/js/common.js"></script>
 
 </body>
 </html>

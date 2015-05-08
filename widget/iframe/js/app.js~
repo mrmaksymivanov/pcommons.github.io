@@ -1,40 +1,22 @@
 var app = angular.module("app", ['ngRoute','ui.bootstrap','ngMask']);
 
+
+
+
 app.config(function($routeProvider, $locationProvider){
+//app.config(function($routeProvider){
+
 	$routeProvider.
 		when("/",
-			{	templateUrl: "/assets/js/tcid/views/user_dashboard.html",
-				controller: "ctlUser"}).
-		when("/login",
-			{	templateUrl: "/assets/js/tcid/views/user_login.html",
-				controller: "ctlUser"}).
-		when("/logout",
-			{	templateUrl: "/assets/js/tcid/views/user_login.html",
-				controller: "ctlUser"}).
-		when("/employee/view/:employeeid",
-			{	templateUrl: 
-				function ($stateParams){
-				    return "/assets/js/tcid/views/employee_view.html";
-				  },
-				controller: "ctlEmployee"}).
-		when("/employee/:employeeid",
-			{	templateUrl: 
-				function ($stateParams){
-					console.log('routing to /employee/employeeid with stateparams: ',$stateParams);
-				    return "/assets/js/tcid/views/employee_screen.html";
-				  },
-				controller: "ctlEmployee"}).
-		when("/employee",
-			{	templateUrl: "/assets/js/tcid/views/employee_screen.html",
-				controller: "ctlEmployee"}).
-		when("/employees",
-			{	templateUrl: "/assets/js/tcid/views/employees.html",
-				controller: "ctlEmployee"}).
-		when("/eddddddmployees",
-			{	templateUrl: "/assets/js/tcid/views/employeesddddd.html",
+			{	templateUrl: "/iframe/js/modal.html",
 				controller: "ctlEmployee"});
 
-	$locationProvider.html5Mode(true);
+	//$locationProvider.html5Mode(false);
+	$locationProvider.html5Mode({
+  		enabled: true,
+  		requireBase: false
+	});
+
 });
 
 
