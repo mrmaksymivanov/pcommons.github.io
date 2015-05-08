@@ -548,5 +548,4 @@ for (var i = 0; i < ie11Styles.length; i++) {
 if (ieVersion)
 {
     document.getElementById('modal').className = 'IE';
-    document.getElementById('header').className = 'IE';
 }
