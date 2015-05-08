@@ -435,6 +435,7 @@ $(document).ready(function() {
     if (loc.indexOf('EMBED') != -1) {
 
         document.body.className = 'embedded';
+
         document.skipOptimizely = true;
 
         if (loc.indexOf('NOCALL') != -1)
@@ -547,5 +548,5 @@ for (var i = 0; i < ie11Styles.length; i++) {
 
 if (ieVersion)
 {
-    document.getElementById('modal').className = 'IE';
+    //document.getElementById('modal').className = 'IE';
 }
