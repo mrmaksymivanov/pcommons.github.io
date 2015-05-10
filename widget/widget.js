@@ -183,7 +183,7 @@ var _bftn_util = {
 	bindIframeCommunicator: function(iframe, animation) {
 		console.log("IN IFRAME BITCHES");
 		console.log(iframe);
-		console.log("test1");
+//		console.log("test1");
 		var sendMessage = function(requestType, data)
 		{
 			data || (data = {});
@@ -192,13 +192,13 @@ var _bftn_util = {
 			data.HOST_NAME = hostname;
 			iframe.contentWindow.postMessage(data, '*');
 		}
-console.log("test2");
+//console.log("test2");
 		var method = window.addEventListener ? "addEventListener":"attachEvent";
 		var eventer = window[method];
 		var messageEvent = method == "attachEvent" ? "onmessage":"message";
 
 		var hostname = this.getHostname();
-console.log("test3");
+//console.log("test3");
 		eventer(messageEvent,function(e) {
 			if (!e.data || !e.data.BFTN_IFRAME_MSG)
 				return;
@@ -215,6 +215,7 @@ console.log("test3");
 					break;
 			}
 		}, false);
+		console.log("test1");
 
 	},
 
