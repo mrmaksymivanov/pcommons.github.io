@@ -136,7 +136,7 @@ var _bftn_animations = {
 		stop: function() {
 			_bftn_util.destroyIframe();
 		}
-	},
+	}
 
 	
 }
