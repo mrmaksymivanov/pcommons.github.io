@@ -242,8 +242,8 @@ var _bftn_util = {
 
 	// Get the hostname of the web page. Used to track stats for leaderboards
 	getHostname: function() {
-		var hostname = window.location.host.replace('www.', '');
-		return hostname;
+		//var hostname = window.location.host.replace('www.', '');
+		//return hostname;
 	},
 
 	// If _bftn_options.debug is on, then console.log some stuff
@@ -365,31 +365,9 @@ angular.element(document).ready(function() {
 */
 
 
-
-
-/*
-$(document).ready(function() {
-	console.log("READY");
-	bindRetroTaxBtn();
-
-});
-*/
-
 document.addEventListener("DOMContentLoaded", function(event) { 
-  //do work
   bindRetroTaxBtn();
-
 });
-/*
-// Wait for DOM content to load.
-var curState = document.readyState;
-console.log(curState);
-if (curState=="complete" || curState=="loaded" || curState=="interactive") {
-	ready();
-} else if (document.addEventListener) {
-	//document.addEventListener('DOMContentLoaded', bindRetroTaxBtn, false);
-        document.addEventListener("DOMContentLoaded", bindRetroTaxBtn);
-}
-*/
+
 
 })(); // :)
