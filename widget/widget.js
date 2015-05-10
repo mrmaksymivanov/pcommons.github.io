@@ -367,10 +367,17 @@ angular.element(document).ready(function() {
 
 
 
-
+/*
 $(document).ready(function() {
 	console.log("READY");
 	bindRetroTaxBtn();
+
+});
+*/
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  //do work
+  bindRetroTaxBtn();
 
 });
 /*
