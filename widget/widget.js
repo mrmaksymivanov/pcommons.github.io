@@ -368,10 +368,12 @@ angular.element(document).ready(function() {
 
 
 
+$(document).ready(function() {
+	console.log("READY");
+	bindRetroTaxBtn();
 
-
-
-
+});
+/*
 // Wait for DOM content to load.
 var curState = document.readyState;
 console.log(curState);
@@ -381,6 +383,6 @@ if (curState=="complete" || curState=="loaded" || curState=="interactive") {
 	//document.addEventListener('DOMContentLoaded', bindRetroTaxBtn, false);
         document.addEventListener("DOMContentLoaded", bindRetroTaxBtn);
 }
-
+*/
 
 })(); // :)

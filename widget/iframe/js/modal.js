@@ -44,7 +44,7 @@ var animations = {
             console.log(this.options.populated_fields);
             console.log(this.options.populated_fields.firstname);
             $("#firstname").val(this.options.populated_fields.firstname);
-
+/*
             if (this.options.skipEmailSignup)
             {
                 $('#direct_call').show();
@@ -61,7 +61,7 @@ var animations = {
                 $('#opt-in').attr('checked', false);
                 $('.disclosure').removeClass('nice-check');
             }
-
+*/
             // ------------------------------ Optimizely test vvv
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {
@@ -83,6 +83,7 @@ var animations = {
             // Optimizely test vvv
             this.optimizelyTextAB();
 
+/*
             // If no org is set, then 16% chance of free press
             if (!this.options.org && Math.random() < 0.16) {
                 this.options.org = 'fp';
@@ -103,16 +104,16 @@ var animations = {
                 $('#fftf_disclosure').hide();
                 $('#fftf_org_disclosure').show();
             }
-
+*/
             $('a.close').click(function(e) {
                 e.preventDefault();
                 $('body').addClass('closed');
-                trackLeaderboardStat({stat: 'close_widget', data: 'modal'});
+                //trackLeaderboardStat({stat: 'close_widget', data: 'modal'});
                 setTimeout(function() {
-                    sendMessage('stop');
+                    //sendMessage('stop');
                 }, 750);
             });
-
+/*
             $('a.letter').click(function(e) {
                 e.preventDefault();
                 $('#overlay').css('display', 'block');
@@ -213,6 +214,7 @@ var animations = {
                     }
                 }.bind(this)
             });
+*/
         },
         log: function() {
             if (this.options.debug)
@@ -270,7 +272,7 @@ var animations = {
                 doc['org'] = this.default_org;
 
             $.ajax({
-                url: "https://queue.battleforthenet.com/submit",
+                url: "",
                 // url: "http://debbie:3019/submit",    // JL TEST ~
                 type: "post",
                 dataType: "json",
@@ -290,7 +292,7 @@ var animations = {
             window['optimizely'] = window['optimizely'] || [];
             window.optimizely.push(["trackEvent", ev]);
         },
-
+/*
         showFinalWithCallInstructions: function() {
             $('#stepFinal .defaultText').hide();
             $('#stepFinal .altText').show();
@@ -361,9 +363,9 @@ var animations = {
                 $('#stepCall').css('opacity', 1);
             }, 10);
         },
-
+*/
         optimizelyTextAB: function() {
-
+/*
             // JL NOTE ~ disabled
             return false;
 
@@ -414,6 +416,7 @@ var animations = {
 
                 default:
                     break;
+*/
             }
         }
     }
@@ -421,6 +424,7 @@ var animations = {
 
 $(document).ready(function() {
 
+/*
     $('#header h1').html($('h1.headline').html());
     $('#header .cta p').html($('p.cta-hidden-trust-me').html());
 
@@ -429,7 +433,7 @@ $(document).ready(function() {
         $('#letter').css('height', $('#modal').outerHeight()+'px');
         $('#letter').css('opacity', 1);
     }, 1000);
-
+*/
     var loc = window.location.href;
 
     if (loc.indexOf('EMBED') != -1) {
