@@ -21,7 +21,7 @@
 
 (function(){ // :)
 
-
+if($("#rt_widget").length){
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
 var dfurl = 'http://plugin-paulcommons.rhcloud.com/iframe';
@@ -372,6 +372,6 @@ angular.element(document).ready(function() {
 document.addEventListener("DOMContentLoaded", function(event) { 
   bindRetroTaxBtn();
 });
-
+}
 
 })(); // :)

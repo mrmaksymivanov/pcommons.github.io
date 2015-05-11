@@ -21,7 +21,6 @@
 
 (function(){ // :)
 
-    if($(".demoRetroTaxPlugin").length){
 
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
@@ -374,5 +373,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
   bindRetroTaxBtn();
 });
 
-}
+
 })(); // :)
+
