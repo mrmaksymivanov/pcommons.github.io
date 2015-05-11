@@ -103,7 +103,7 @@ var _bftn_animations = {
 
 			var iframe = _bftn_util.createIframe(this.options.modalAnimation);
 
-			console.log(this.options.prepopulate_basic_info_by_id.firstname);
+			//console.log(this.options.prepopulate_basic_info_by_id.firstname);
 			console.log(this);
 			var populated_fields={};
 			if(this.options.prepopulate_basic_info_by_id){
