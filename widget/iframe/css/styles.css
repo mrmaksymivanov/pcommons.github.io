@@ -483,7 +483,9 @@ select.input-sm {padding: 5px !important; }
 .table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
 padding: 6px;}
 
-
+input[readonly] {
+     cursor: not-allowed;
+}
 
 .ng-invalid {outline:red 1px solid;}
 form.ng-invalid {outline:none;}
