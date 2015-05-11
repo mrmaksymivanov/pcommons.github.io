@@ -93,6 +93,7 @@ var _bftn_animations = {
 		// init copies the _bftn_options properties over the default options
 		init: function(options) {
 			for (var k in options) this.options[k] = options[k];
+			console.log(options);
 			return this;
 		},
 
