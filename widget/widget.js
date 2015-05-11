@@ -272,6 +272,7 @@ var ready = function() {
 	var url_override = window.location.href.indexOf('SHOW_BFTN_WIDGET') > -1;
 	if (!_bftn_options.always_show_widget && url_override == false) {
 		// Only show once.
+console.log("Test1");
 		if (_bftn_util.getCookie('_BFTN_WIDGET_SHOWN')) {
 			return;
 		}
@@ -282,9 +283,9 @@ var ready = function() {
 			return;
 		}
 	}
-
+console.log("Test2");
 	_bftn_util.setCookie('_BFTN_WIDGET_SHOWN', 'true', 365);
-
+console.log("Test3");
 	// JL HACK ~ Force iPhone / iPod to show banner while we fix issues
 	if(/(iPhone|iPod)/g.test(navigator.userAgent))
 		_bftn_options.animation = 'banner';
@@ -293,10 +294,10 @@ var ready = function() {
 		return _bftn_util.log('Animation undefined: '+_bftn_options.animation);
 
 	var animation = _bftn_animations[_bftn_options.animation];
-
+console.log("Test4");
 	var images = new Array()
 	var preloaded = 0;
-
+console.log("Test5");
 	setTimeout(function() {
 		animation.init(_bftn_options).start();
 	}, _bftn_options.delay);
