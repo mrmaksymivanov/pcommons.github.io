@@ -356,7 +356,8 @@ var bindRetroTaxBtn = function() {
 	if (typeof(myEl) != 'undefined' && myEl != null){
 		console.log(myEl);
 
-		document.getElementById('rt_widget').addEventListener('click', function() {
+		document.getElementById('rt_widget').addEventListener('click', function(e) {
+			e.preventDefault();
 			ready();
 		}, false);
 
