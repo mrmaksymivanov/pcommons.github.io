@@ -270,6 +270,8 @@ var ready = function() {
 	console.log("in ready");
 	// Should we show the widget, regardless?
 	var url_override = window.location.href.indexOf('SHOW_BFTN_WIDGET') > -1;
+console.log(url_override);
+console.log("Test0");
 	if (!_bftn_options.always_show_widget && url_override == false) {
 		// Only show once.
 console.log("Test1");
