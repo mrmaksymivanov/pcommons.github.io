@@ -262,7 +262,7 @@ $(document).ready(function() {
 
         document.body.className = 'embedded';
         document.skipOptimizely = true;
-
+/*
         if (loc.indexOf('NOCALL') != -1)
             animations.modal.options.skipCallTool = true; 
 
@@ -280,7 +280,7 @@ $(document).ready(function() {
 
         if (loc.indexOf('FFF') != -1)
             animations.modal.options.org = 'fftf_org'; 
-               
+*/               
         animations.modal.options.fastAnimation = true;
         animations.modal.start(); 
     } 

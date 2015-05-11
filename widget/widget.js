@@ -21,6 +21,16 @@
 
 (function(){ // :)
 
+	Element.prototype.remove = function() {
+	    this.parentElement.removeChild(this);
+	}
+	NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+	    for(var i = 0, len = this.length; i < len; i++) {
+	        if(this[i] && this[i].parentElement) {
+	            this[i].parentElement.removeChild(this[i]);
+	        }
+	    }
+	}
 
  var _bftn_options = {
             // This is used to override the widget iframe URL with something else
@@ -52,7 +62,7 @@
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
 var dfurl = 'https://pcommons.github.io/widget/iframe'; //http://plugin-paulcommons.rhcloud.com/iframe';
-
+var rt_iframeContentWindow=null;
 
 /**
 --------------------------------------------------------------------------------
@@ -112,17 +122,12 @@ var _bftn_animations = {
 		// Default options: Override these with _bftn_options object (see above)
 		options: {
 			modalAnimation: 'modal',
-			skipEmailSignup: false,
-			skipCallTool: false,
-			fastAnimation: false,
-			boxUnchecked: false,
-			org: null
+			fastAnimation: true
 		},
 
 		// init copies the _bftn_options properties over the default options
 		init: function(options) {
 			for (var k in options) this.options[k] = options[k];
-			console.log(options);
 			return this;
 		},
 
@@ -134,7 +139,8 @@ var _bftn_animations = {
 			_bftn_util.injectCSS('_bftn_iframe_css', css);
 
 			var iframe = _bftn_util.createIframe(this.options.modalAnimation);
-
+            console.log("IFRAME CREATED");
+            console.log(iframe);
 			//console.log(this.options.prepopulate_basic_info_by_id.firstname);
 			console.log(this); 
 			var populated_fields={};
@@ -156,8 +162,8 @@ var _bftn_animations = {
 				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
 
 				populated_fields={
-	                firstname:'Tom' //document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
-	                //lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
+	                firstname:document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
+	                lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
 	                //middleinitial:document.getElementById(this.options.prepopulate_basic_info_by_id.middleinitial).value
 	                /*
 	                city:city.value,
@@ -174,6 +180,8 @@ var _bftn_animations = {
 				this.options.populated_fields=populated_fields;
 
 			}
+			console.log("BINDING COMMUNICATION");
+			//setTimeout(function() {bftn_util.bindIframeCommunicator(iframe, this);}, 50);
 			_bftn_util.bindIframeCommunicator(iframe, this);
 		},
 
@@ -215,13 +223,17 @@ var _bftn_util = {
 		iframe.allowTransparency = true; 
 		iframe.style.display = 'none';
 		document.body.appendChild(iframe);
+		console.log("IFRAME CONTENT WINDOW");
 		return iframe;
 	},
 
 	// Destroy the iframe used to display the animation
 	destroyIframe: function() {
 		var iframe = document.getElementById('_bftn_iframe');
-		iframe.parentNode.removeChild(iframe);
+		iframe.remove();
+		//iframe.parentNode.removeChild(iframe);
+		//console.log(iframe);
+		//iframe=null;
 	},
 
 	// Sends / receives event messages to the iframe (IE9+)
@@ -231,12 +243,26 @@ var _bftn_util = {
 		console.log("IN IFRAME BITCHES");
 		console.log(iframe);
 		console.log(animation);
-		var sendMessage = function(requestType, data)
+		var sendMessage = function(requestType, data, iframe)
 		{
 			data || (data = {});
 			data.requestType = requestType;
 			data.BFTN_WIDGET_MSG = true;
 			data.HOST_NAME = hostname;
+			console.log("SEND MESSAGE");
+			console.log(iframe);
+			if(typeof iframe != 'undefined' && !iframe.contentWindow){
+				console.log("IFRAME CONTENT WINDOW IS NULL");
+				
+				var iframe = document.createElement('iframe');
+				iframe.id = '_bftn_iframe';
+				iframe.src = _bftn_options.iframe_base_path + '/' + animation + '.html';
+				iframe.frameBorder = 0;
+				iframe.allowTransparency = true; 
+				iframe.style.display = 'none';
+				document.body.appendChild(iframe);			
+			
+			}
 			iframe.contentWindow.postMessage(data, '*');
 		}
 //console.log("test2");
@@ -255,15 +281,13 @@ var _bftn_util = {
 			switch (e.data.requestType) {
 				case 'getAnimation':
 					iframe.style.display = 'block';
-					sendMessage('putAnimation', animation.options);
+					sendMessage('putAnimation', animation.options, iframe);
 					break;
 				case 'stop':
 					animation.stop();
 					break;
 			}
 		}, false);
-		console.log("test1");
-
 	},
 
 	// Set a cookie. Used to only show the widget once (unless you override).
@@ -330,9 +354,7 @@ console.log("Test1");
 			return;
 		}
 	}
-//console.log("Test2");
 	//_bftn_util.setCookie('_BFTN_WIDGET_SHOWN', 'true', 365);
-//console.log("Test3");
 	// JL HACK ~ Force iPhone / iPod to show banner while we fix issues
 	if(/(iPhone|iPod)/g.test(navigator.userAgent))
 		_bftn_options.animation = 'banner';
@@ -340,12 +362,11 @@ console.log("Test1");
 	if (typeof _bftn_animations[_bftn_options.animation] == "undefined")
 		return _bftn_util.log('Animation undefined: '+_bftn_options.animation);
 
-console.log(_bftn_animations[_bftn_options.animation]);
 	var animation = _bftn_animations[_bftn_options.animation];
-console.log(animation);
+//console.log(animation);
 	var images = new Array()
 	var preloaded = 0;
-console.log(_bftn_options);
+//console.log(_bftn_options);
 	setTimeout(function() {
 		animation.init(_bftn_options).start();
 	}, _bftn_options.delay);
