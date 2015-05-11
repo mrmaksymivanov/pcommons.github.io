@@ -66,8 +66,9 @@ var animations = {
             });
 
             //console.log(this.options.populated_fields.firstname);
-            //$("#firstname").val(this.options.populated_fields.firstname);
-/*
+            $("#firstname").val(this.options.populated_fields.firstname);
+            $("#lastname").val(this.options.populated_fields.lastname);
+/*          
             if (this.options.skipEmailSignup)
             {
                 $('#direct_call').show();
