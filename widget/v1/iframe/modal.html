@@ -1,0 +1,894 @@
+<!doctype html>
+<html>
+<head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+	<link rel="stylesheet" type="text/css" href="css/min/modal.min.css">
+	<script type="text/javascript" src="//use.typekit.net/aml1eoz.js"></script>
+    	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+  	<script src="http://m.retrotax.co/assets/js/ui-bootstrap-custom-tpls-0.12.0.js"></script>  
+  	<script src="http://m.retrotax.co/assets/js/angular-toggle-switch.min.js"></script>
+	<script src="http://m.retrotax.co/assets/js/angular-local-storage.js"></script>
+  	<script src="http://m.retrotax.co/assets/js/ngMask.min.js"></script>
+
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  	<link href="css/styles.css" rel="stylesheet"> 
+
+
+
+	<!-- INCLUDE APPLICATION SPECIFIC CSS AND JAVASCRIPT -->
+	<script type="text/javascript" src="/widget/iframe/js/app.js?v=022320150212"></script>
+	<!--<script type="text/javascript" src="js/tcid/controllers/ctlUser.js?v=022320150212"></script> -->
+	<script type="text/javascript" src="/widget/iframe/js/ctlEmployee.js?v=022320150212"></script>
+
+ <!--<script type="text/javascript" src="/assets/main.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="/assets/md5.js"></script>
+-->
+
+</head>
+<base href="/">
+<body ng-app="app">
+
+<div id="scene">
+<!--
+	<div id="header">
+		<a class="close" href="#"></a>
+		<h1></h1>	
+		<div class="cta"><p></p></div>
+	</div>
+-->
+
+<!--
+		<div id="stepCall" class="extra-modal">
+		<h1>Step Call</h1>
+		</div>
+		
+-->
+	
+
+  <div id="modal" >
+ 
+<div ng-controller="ctlEmployee" ng-init="initEdit()">
+
+<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+
+<form name="frmEmployee" id="frmEmployee" class="form-horizontal" role="form"
+ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmployee.$valid)" novalidate style="padding_top:50px">
+
+<accordion close-others="1">
+    <accordion-group heading="Employee Info - {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1">
+    <a class="close" href="#"></a>
+      <input type="hidden" name="employeeid" id="employeeid" value="{{tcid.employee.maindata.id}}">
+
+        <table class="table table-user-information table-responsive">
+        <tbody>
+        <tr>
+        <td colspan="2" id="errors">
+
+        </td>
+        </tr>
+
+        <input type="hidden" name="clientid" id="clientid">
+        
+        <tr class="req" ng-show="tcid.employee.maindata.applicationstatusid!=undefined">
+        <th class="frmlbl">Application Status</th>
+        <td class="">{{tcid.employee.maindata.applicationstatusid}}</td>
+        </tr>
+
+        <tr class="req">
+        <th class="frmlbl">Client</th>
+        <td class="" name="client" id="client">{{tcid.employee.maindata.client.name}}</td>
+        <input type="hidden" ng-model="tcid.employee.maindata.client.id">
+        </tr>
+
+        <tr class="req">
+        <th class="frmlbl">Company</th>
+        <td class="frminput" >
+            <select class="input-sm" ng-model="tcid.employee.maindata.company.id" ng-required="true" data-displayname="Company" name="companyid">
+                <option ng-repeat="cmpny in currentuser().ccl.clients[getSelectedClientIndex()].companies" 
+                        ng-selected="{{cmpny.id == tcid.employee.maindata.company.id}}" 
+                        value="{{cmpny.id}}">{{cmpny.legal_name}}
+                </option>
+            </select>
+        </td>
+        </tr>
+
+        <tr class="req">
+        <th class="frmlbl">Location</th>
+        <td class="frminput"  >
+            <select class="input-sm" ng-model="tcid.employee.maindata.location.id" ng-required="true" data-displayname="Location" name="locationid">
+                <option ng-repeat="loc in currentuser().ccl.clients[0].companies[getSelectedCompanyIndex()].locations"
+                        ng-selected="{{loc.id == tcid.employee.maindata.location.locationid}}" 
+                        value="{{loc.id}}">{{loc.location_name}}
+                </option>
+            </select>
+        </td>
+        </tr>
+
+        <tr class="req">
+        <th class="frmlbl">First Name</th>
+        <td class="frminput">
+        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50">
+        </td>
+        </tr>
+        <tr class="req">
+        <th class="frmlbl">Last Name</th>
+        <td class="frminput">
+        <input class="input-sm" type="text" placeholder="enter last name" ng-model="tcid.employee.maindata.lastname" name="lastname" id="lastname" ng-required="true" data-displayname="Last Name"  ng-minlength="2" ng-maxlength="50" ></td>
+        </tr>
+
+        <tr class="req">
+        <th class="frmlbl">Address</th>
+        <td  class="frminput">
+        <input class="input-sm" type="text" placeholder="enter employee home address" ng-model="tcid.employee.maindata.address" name="address" ng-required="true" ng-minlength="5" ng-maxlength="100" data-displayname="Address" ></td>
+        </tr>
+        <tr>
+        <th class="frmlbl"></th>
+        <td  class="frminput">
+        <input class="input-sm" type="text" placeholder="optional address line" ng-model="tcid.employee.maindata.address2" name="address2"></td>
+        </tr>
+        <tr class="req">
+        <th class="frmlbl">Zip</th>
+        <td class="frminput"><input class="input-sm" type="text" placeholder="zip code" ng-model="tcid.employee.maindata.zip" name="zip" id="zip" ng-required="true" mask="99999" data-displayname="Zip" ></td>
+        </tr>    
+        <tr class="req">
+        <th class="frmlbl">City</th>
+        <td class="frminput"><input class="input-sm" type="text" placeholder="City" ng-model="tcid.employee.maindata.city" name="city" ng-required="true" ng-minlength="2" ng-maxlength="50" data-displayname="City" ></td>
+        </tr>
+        <tr class="req">
+        <th class="frmlbl">State</th>
+        <td class="frminput">
+          <select class="input-sm" ng-model="tcid.employee.maindata.stateid" id="stateid" name="stateid" ng-required="true"  data-displayname="State">
+            <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
+          </select>
+        </td>
+        </tr>
+        <tr class="req">
+        <th class="frmlbl">SSN4</th>
+        <td class="frminput">
+        <input class="input-sm" type="tel" ng-model="tcid.employee.maindata.ssn4" name="ssn4" id="ssn4" >
+        </td>
+        </tr>
+        <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
+        <th class="frmlbl">SSN</th>
+        <td class="frminput">
+        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssn" name="ssn" id="ssn" mask="999-99-9999"  ng-required="tcid.employee.maindata.ssn4==undefined"   data-displayname="Social Security Number">
+        </td>
+        </tr>
+        <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
+        <th class="frmlbl">Confirm SSN</th>
+        <td class="frminput">
+        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999" ng-required="tcid.employee.maindata.ssn4==undefined"  data-displayname="Confirmed Social Security Number">
+        </td>
+        </tr>        
+        <tr class="req contdob">
+        <th class="frmlbl">DOB</th>
+        <td class="input-group frminput">
+          <p class="input-group">
+            <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dob" is-open="cals['dob']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Date of Birth" style="width:100px" name="dob" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="calop($event,'dob')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+          </p>
+        </td>
+        </tr>
+
+        </tbody>
+        </table>
+        <table class="table table-user-information table-responsive">
+        <tbody>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Has this employee ever worked for this company before?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.rehire" btn-radio="1" ng-required="true"  data-displayname="Rehire" name="rehire">YES</label>
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.rehire" btn-radio="0">NO</label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+    </accordion-group>
+
+    <accordion-group heading="Questionnaire" ng-show="tcid.employee.maindata.rehire==0">
+        <table class="table table-user-information table-responsive">
+          <tbody>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Have you or has anyone living with you received Temporary Assistance to Needy Families (TANF) at any time since August 5, 1997?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.afdc" btn-radio="0" ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: AFDC" name="afdc">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.afdc" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Have you or has anyone living with you received Food Stamps (SNAP) at any time during the past 15 months?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.foodstamps" btn-radio="0" ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: SNAP" name="foodstamps">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.foodstamps" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            <strong>Have you received Supplemental Security Income (SSI) at any time within the past 3 months?</strong><br /><small>Please note, this is not the same as Social Security benefits (SS) or Social Security Disability (SSDI) benefits.</small>
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.ssi" btn-radio="0"  ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: SSI" name="ssi">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.ssi" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req" id="tr_vocrehab">
+            <th width="*" align="right" valign="top">
+            Have you received any type of vocational rehabilitation services within the past two years?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+                <div class="btn-group">
+                    <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.vocrehab" btn-radio="0"  ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: Vocational rehab" name="vocrehab">NO</label>
+                    <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.vocrehab" btn-radio="1">YES</label>
+                </div>
+
+
+            </td>
+          </tr>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Are you a Veteran of the U.S. Military?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.veteran" btn-radio="0" ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: Military Veteran" name="veteran">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.veteran" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Have you been unemployed at any time during the last 12 months?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.unemployed" btn-radio="0" ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: Unemployed Past 12 Months" name="unemployed">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.unemployed" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Convicted of felony or released from prison in last 12 months?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.felon" btn-radio="0" ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: Recent Felony" name="felon">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.felon" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Are you or your spouse a member of a Native American Tribe?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.cdib" btn-radio="0" ng-required="tcid.employee.maindata.rehire==0" data-displayname="Question: Native American?" name="cdib">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.cdib" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req qcafoster" ng-show="tcid.employee.maindata.stateid==5">
+            <th width="*" align="right" valign="top">
+            Are you the child of foster parents?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.cafoster" btn-radio="0" ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: Foster Parents?" name="cafoster">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.cafoster" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req qcacalworks" ng-show="tcid.employee.maindata.stateid==5">
+            <th width="*" align="right" valign="top">
+            Do you receive CalWorks?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.cacalworks" btn-radio="0" ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: CalWorks?" name="cacalworks">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.cacalworks" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req qcawia" ng-show="tcid.employee.maindata.stateid==5 || tcid.employee.maindata.cawia==1">
+            <th width="*" align="right" valign="top">
+            Do you receive the Workforce Investment Act?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.cawia" btn-radio="0"  ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: Workforce Investment Act??" name="cawia">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.cawia" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req qcafarmer" ng-show="tcid.employee.maindata.stateid==5 || tcid.employee.maindata.cafarmer==1">
+            <th width="*" align="right" valign="top">
+            Are you a migrant or seasonal farm worker?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.cafarmer" btn-radio="0"  ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: Farm Worker?" name="cafarmer">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.cafarmer" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="yesno req qcamisdemeanor" ng-show="tcid.employee.maindata.stateid==5">
+            <th width="*" align="right" valign="top">
+            Have you ever been convicted of a misdemeanor?
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.camisdemeanor" btn-radio="0"  ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: Misdemeanor in CA?" name="camisdemeanor">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.camisdemeanor" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          </tbody>
+        </table>
+    </accordion-group>
+
+    <accordion-group heading="Benefits Recipient Details" ng-show="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps) && tcid.employee.maindata.rehire==0 ">
+        <table class="table table-user-information table-responsive">
+          <tbody>
+          <tr class="req">
+            <th class="frmlbl">Recipient Name</th>
+
+            <td class="frminput">
+            <input class="input-sm" type="text" placeholder="Benefit recipient name" 
+            ng-model="tcid.employee.maindata.recipient.recipient_name" 
+            ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
+            data-displayname="Benefits Recipient Name" name="recipient_name">
+          </td>
+          </tr>    
+          <tr class="req">
+            <th class="frmlbl">Relationship</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" placeholder="Relationship to recipient" ng-model="tcid.employee.maindata.recipient.recipient_relationship" ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
+            data-displayname="Benefits Recipient Relationship" name="recipient_relationship">
+          </td>
+          </tr>
+          <tr class="req">
+            <th class="frmlbl">City</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" placeholder="City where benefits received" ng-model="tcid.employee.maindata.recipient.recipient_cityreceived"
+            ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
+            data-displayname="Benefits Recipient City" name="recipient_cityreceived">
+          </td>
+          </tr>
+          <tr class="req">
+            <th class="frmlbl">State</th>
+            <td class="frminput">          
+              <select class="input-sm" ng-model="tcid.employee.maindata.recipient.recipient_received_stateid" id="recipient_received_stateid" ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)" data-displayname="Benefits Recipient State" name="recipient_received_stateid">
+                <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
+              </select>
+            </td>
+          </tr> 
+          <tr class="req">
+            <th class="frmlbl">County</th>
+            <td class="frminput">
+              <select class="input-sm" id="recipient_received_county" ng-model="tcid.employee.maindata.recipient.recipient_received_county" data-displayname="Benefits Recipient County" name="recipient_received_county">
+                <option ng-repeat='cnty in getCounties(tcid.employee.maindata.recipient.recipient_received_stateid)' value="{{cnty.ID}}">{{cnty.COUNTY}}</option>
+              </select>
+            </td>
+          </tr> 
+          </tbody>
+        </table>
+    </accordion-group>
+
+    <accordion-group heading="Vocational Rehab Services"  ng-show="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0">
+      
+        <table class="table table-user-information table-responsive">
+          <tbody>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">Received vocational rehabilitation services from a vocational rehabilitation agency?</th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.vocrehabagency" btn-radio="0"
+                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Question: Voc Rehab - Rehab Agency?" name="vocrehabagency"
+                  >NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.vocrehabagency" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">Received vocational rehabilitation services from department of veterans affairs?</th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.deptva" btn-radio="0"
+                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Question: Voc Rehab - Dept of VA?" name="deptva"
+                  >NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.deptva" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">Received vocational rehabilitation services from an Employment Network (Ticket to Work Program)?</th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.ttw" btn-radio="0"
+                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Question: Voc Rehab - TTW?" name="ttw"
+                  >NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.ttw" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <table class="table table-user-information table-responsive">
+          <tbody>
+          <tr class="req">
+            <th class="frmlbl">Name of Agency</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" placeholder="Agency Name" ng-model="tcid.employee.maindata.vocrehabinfo.agency" 
+            ng-required="tcid.employee.maindata.ttw || tcid.employee.maindata.deptva || tcid.employee.maindata.vocrehabagency"
+            data-displayname="Question: Voc Rehab - Name of Agency?" name="agency">
+          </td>
+          </tr>    
+          <tr class="req">
+            <th class="frmlbl">Phone Number</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" ng-model="tcid.employee.maindata.vocrehabinfo.phone" id="vocrehabinfo_phone" mask="(999) 999-9999 ?x?9?9?9?9?"
+            ng-required="tcid.employee.maindata.ttw==1 || tcid.employee.maindata.deptva==1 || tcid.employee.maindata.vocrehabagency==1" data-displayname="Question: Voc Rehab - Phone Number?" name="vocrehabinfo_phone">
+             </td>
+          </tr> 
+          <tr class="req">
+            <th class="frmlbl">Address</th>
+            <td class="frminput">
+            <input class="input-sm" type="text"  ng-model="tcid.employee.maindata.vocrehabinfo.address" data-displayname="Vocational Rehab Address">
+            </td>
+          </tr>
+          <tr class="req">
+            <th class="frmlbl">Address 2</th>
+            <td class="frminput">
+            <input class="input-sm" type="text"  ng-model="tcid.employee.maindata.vocrehabinfo.address2">
+            </td>
+          </tr>
+          <tr class="req">
+            <th class="frmlbl">City</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" placeholder="City where benefits received" ng-model="tcid.employee.maindata.vocrehabinfo.city" data-displayname="Vocational Rehab City">
+          </td>
+          </tr>
+          <tr class="req">
+            <th class="frmlbl">State</th>
+            <td class="frminput">          
+              <select class="input-sm" ng-model="tcid.employee.maindata.vocrehabinfo.stateid" id="vocrehabinfo_stateid" data-displayname="Vocational Rehab State">
+                <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
+              </select>
+            </td>
+          </tr> 
+          <tr class="req">
+            <th class="frmlbl">County</th>
+            <td class="frminput">
+              <select class="input-sm" id="vocrehabinfo_county" ng-model="tcid.employee.maindata.vocrehabinfo.county">
+<option ng-repeat='cnty in getCounties(tcid.employee.maindata.vocrehabinfo.stateid)' value="{{cnty.ID}}">{{cnty.COUNTY}}</option>
+              </select>
+            </td>
+          </tr> 
+          </tbody>
+        </table>
+    </accordion-group>
+    <accordion-group heading="Felon Details" ng-show="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0">
+        <table class="table table-user-information table-responsive">
+          <tbody>
+
+            <tr class="req">
+            <th class="frmlbl">Date of Conviction</th>
+            <td class="frminput" align="left" valign="top">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.feloninfo.dateconviction" is-open="cals['felondc']" min-date="minDate" datepicker-options="dateOptions"  
+                ng-required="tcid.employee.maindata.felon==1"
+                 close-text="Close"  data-displayname="Conviction Date" name="dateconviction" />
+                <span class="input-group-btn"  style="float:left; border:none;">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'felondc')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>
+            <tr class="req">
+            <th class="frmlbl">Date of Release</th>
+            <td class="frminput" align="left" valign="top">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.feloninfo.daterelease" is-open="cals['felondr']" min-date="minDate" datepicker-options="dateOptions"  ng-ng-required="tcid.employee.maindata.felon==1" close-text="Close"  data-displayname="Conviction Date" name="daterelease" />
+                <span class="input-group-btn"  style="float:left; border:none;">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'felondr')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>
+
+  
+
+          <tr class="yesno req">
+            <th align="right" valign="top">Is this a Federal Conviction?</th>
+            <td class="" xalign="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.feloninfo.isfederalconviction" btn-radio="0"
+                  ng-required="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0" data-displayname="Question: Felon - Is Federal Conviction?" name="isfederalconviction"
+                  >NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.feloninfo.isfederalconviction" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          <tr class="yesno req">
+            <th align="right" valign="top">Is this a State Conviction?</th>
+            <td class="" xalign="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.feloninfo.isstateconviction" btn-radio="0"
+                  ng-required="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0" data-displayname="Question: Felon - Is State Conviction?" name="isstateconviction"
+                  >NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.feloninfo.isstateconviction" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="req" ng-show="tcid.employee.maindata.feloninfo.isstateconviction">
+            <th class="frmlbl">State</th>
+            <td class="frminput">          
+              <select class="input-sm" ng-model="tcid.employee.maindata.feloninfo.stateid" id="feloninfo-stateid" ng-required="tcid.employee.maindata.feloninfo.isstateconviction && tcid.employee.maindata.felon"  data-displayname="Question: Felon - What State Convicted?" name="feloninfo_stateid">
+                <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
+              </select>
+            </td>
+          </tr> 
+          <tr class="req" ng-show="tcid.employee.maindata.feloninfo.isstateconviction">
+            <th class="frmlbl">County</th>
+            <td class="frminput">
+              <select class="input-sm" id="feloninfo-countyid" ng-model="tcid.employee.maindata.feloninfo.countyid">
+<option ng-repeat='cnty in getCounties(tcid.employee.maindata.feloninfo.stateid)' value="{{cnty.ID}}">{{cnty.COUNTY}}</option>                
+              </select>
+            </td>
+          </tr>
+          <tr class="req">
+            <th class="frmlbl">Parole Officer Name</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" ng-model="tcid.employee.maindata.feloninfo.paroleofficer" data-displayname="Felon Info - Parole Office">
+          </td>
+          </tr>    
+          <tr class="req">
+            <th class="frmlbl">Parole Office Phone Number</th>
+            <td class="frminput">
+            <input class="input-sm" type="text" ng-model="tcid.employee.maindata.feloninfo.paroleofficerphone" id="feloninfo_paroleofficerphone" mask="(999) 999-9999 ?x?9?9?9?9?" data-displayname="Felon Info - Parole Office Phone Number">
+             </td>
+          </tr> 
+
+          </tbody>
+        </table>
+    </accordion-group>
+    <accordion-group heading="Military Veteran Details"  ng-show="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0">
+        <table class="table table-user-information table-responsive">
+          <tbody>
+          <tr class="yesno req">
+            <th  align="left" valign="top">Are you Disabled due to service?</th>
+            <td class=""  align="left" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.veteraninfo.disabled" btn-radio="0"
+                   ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" data-displayname="Question: Veteran - Disabled?" name="disabled">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.veteraninfo.disabled" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <table class="table table-user-information table-responsive">
+          <tbody>                  
+          <tr class="yesno req">
+            <th class=""  align="left" valign="top">Service Date From</th>
+            <td class="frminput"  align="left" valign="top">
+              <p class="input-group">
+                <input type="tel"  name="servicestart" style="width:100px" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestart" is-open="cals['vsdf']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date From" />
+                <span class="input-group-btn"  style="float:left; border:none; ">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'vsdf')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+          </tr> 
+
+          <tr class="yesno req">
+            <th class=""  align="left" valign="top">Service Date To</th>
+            <td class="frminput"  align="left" valign="top">
+              <p class="input-group">
+                <input type="tel" name="servicestart" style="width:100px" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestop" is-open="cals['vsdt']" min-date="minDate" datepicker-options="dateOptions" ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date To" />
+                <span class="input-group-btn"  style="float:left; border:none; ">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'vsdt')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+          </tr> 
+
+          <tr class="yesno req">
+            <th  align="left" valign="top">Branch</th>
+            <td class="frminput"  align="left" valign="top">
+              <select class="input-sm" ng-model="tcid.employee.maindata.veteraninfo.branchid">
+                <option value="">Select Branch</option>
+                <option value="1">Army</option>
+                <option value="2">Army Reserve</option>
+                <option value="3">Army National Guard</option>
+                <option value="4">Marine Corps</option>
+                <option value="5">Marine Corps Reserve</option>
+                <option value="6">Navy</option>
+                <option value="7">Navy Reserve</option>
+                <option value="8">Air Force</option>
+                <option value="9">Air Force Reserve</option>
+                <option value="10">Air Guard</option>
+                <option value="11">Coast Guard</option>
+                <option value="12">Coast Guard Reserve</option>
+              </select>
+            </td>
+          </tr>
+
+
+          </tbody>
+        </table>
+    </accordion-group>
+    <accordion-group heading="Unemployment Detail" ng-show="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0">
+        <table class="table table-user-information table-responsive">
+          <tbody>
+            <tr class="req">
+            <th class="frmlbl">Unemployed From</th>
+            <td class="input-group frminput">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstart" is-open="cals['unemployedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed From" style="width:100px" name="unemployedstart" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'unemployedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>
+            <tr class="req">
+            <th class="frmlbl">Unemployed To</th>
+            <td class="input-group frminput">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstop" is-open="cals['unemployedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed To" style="width:100px"  name="unemployedstop" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'unemployedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table table-user-information table-responsive">
+          <tbody>
+
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">Did you receive unemployment compensation at any point during your unemployment?</th>
+            <td class="" width="100" align="left" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.unemploymentinfo.compensated" btn-radio="0">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.unemploymentinfo.compensated" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <table class="table table-user-information table-responsive"  ng-show="tcid.employee.maindata.unemploymentinfo.compensated==1">
+          <tbody>
+
+            <tr class="req">
+            <th class="frmlbl">Compensated From</th>
+            <td class="input-group frminput">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstart" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated From" style="width:100px" name="compensatedstart"  />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'compensatedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>
+            <tr class="req">
+            <th class="frmlbl">Compensated To</th>
+            <td class="input-group frminput">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstop" is-open="cals['compensatedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated To" style="width:100px" name="compensatedstop" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'compensatedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>          
+
+          </tbody>
+        </table>
+    </accordion-group>
+    <accordion-group  ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
+        <accordion-heading>
+            Hiring Manager Information {{emp.maindata.hiring_manager_completed}}
+        </accordion-heading>
+        <table class="table table-user-information table-responsive">
+            <tbody>
+            <tr class=" req">
+              <th width="175" align="left" valign="top">Starting Position</th>
+              <td class="frminput" width="*" align="left" valign="top">
+                  <select class="input-sm" name="occupationid" ng-model="tcid.employee.maindata.occupationid">
+                    <option value="">Select Starting Occupation</option>
+                    <option value="17">Architecture & Engineering</option>
+                    <option value="27">Arts, Design, Entertainment, Sports, & Media</option>
+                    <option value="37">Building and Grounds Cleaning & Maintenance</option>
+                    <option value="13">Business & Financial Operations</option>
+                    <option value="21">Community & Social Services</option>
+                    <option value="15">Computer & Mathematical</option>
+                    <option value="47">Construction & Extraction</option>
+                    <option value="25">Education, Training, & Library</option>
+                    <option value="45">Farming, Fishing, & Forestry</option>
+                    <option value="35">Food Preparation & Serving Related</option>
+                    <option value="29">Healthcare Practitioners & Technical</option>
+                    <option value="31">Healthcare Support</option>
+                    <option value="49">Installation, Maintenance, & Repair</option>
+                    <option value="23">Legal</option>
+                    <option value="19">Life, Physical, & Social Sciences</option>
+                    <option value="11">Management</option>
+                    <option value="55">Military Specific</option>
+                    <option value="43">Office and Administrative Support</option>
+                    <option value="99">Other</option>
+                    <option value="39">Personal Care & Service</option>
+                    <option value="51">Production</option>
+                    <option value="33">Protection Service</option>
+                    <option value="41">Sales and Related</option>
+                    <option value="53">Transportation & Material Moving</option>
+                  </select>
+              </td>
+            </tr> 
+            <tr class=" req">
+              <th align="left" valign="top">Wage</th>
+              <td class="frminput" align="left" valign="top">
+                  <input class="input-sm" type="tel" ng-model="tcid.employee.maindata.startingwage" id="startingwage" name="startingwage"  data-displayname="Hiring Manager - Wage" >
+              </td>
+            </tr> 
+
+            <tr class=" req">
+              <th align="left" valign="top">Date Gave Information</th>
+              <td class="frminput" align="left" valign="top">
+
+                  <p class="input-group">
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dgi" is-open="cals['dgi']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date Gave Information" name="hmdgi"/>
+                    <span class="input-group-btn" style="float:left; border:none; ">
+                      <button type="button" class="btn btn-default" ng-click="calop($event,'dgi')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+              </td>
+            </tr> 
+            <tr class="req">
+              <th align="left" valign="top">Date of Job Offer</th>
+              <td class="frminput" align="left" valign="top">
+                  <p class="input-group">
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dojo" is-open="cals['dojo']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date of Job Offer" name="hmdojo"/>
+                    <span class="input-group-btn" style="float:left; border:none; ">
+                      <button type="button" class="btn btn-default" ng-click="calop($event,'dojo')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+              </td>
+            </tr>
+            <tr class="req">
+              <th align="left" valign="top">Date of Hire</th>
+              <td class="frminput" align="left" valign="top">
+                  <p class="input-group">
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.doh" is-open="cals['doh']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date of Hire" name="hmdoh" />
+                    <span class="input-group-btn" style="float:left; border:none; ">
+                      <button type="button" class="btn btn-default" ng-click="calop($event,'doh')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+              </td>
+            </tr> 
+
+            <tr class="req">
+            <th class="frmlbl">Date Started Work</th>
+            <td class="frminput" align="left" valign="top">
+              <p class="input-group">
+                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dsw" is-open="cals['dsw']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Hiring Manager - Date Started Work" name="hmdsw" />
+                <span class="input-group-btn"  style="float:left; border:none;">
+                  <button type="button" class="btn btn-default" ng-click="calop($event,'dsw')"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </p>
+            </td>
+            </tr>
+
+            </tbody>    
+        </table>
+                  
+    </accordion-group>
+
+
+    <accordion-group  ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
+        <accordion-heading>
+           Authorization Confirmation <i class="pull-right glyphicon" ></i>
+        </accordion-heading>
+        <table class="table table-user-information table-responsive">
+            <tbody>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            Authorization?<BR>
+            <span style="font-size:80%; font-weight:normal; line-height:13px;">
+"I hereby authorize any agency, organization Social Security Administration, Department of Veteran Affairs, or individuals to supply such verification or information as may be needed to determine tax credit eligibility to my employer, employer representative RetroTax®, or the Department of Labor."<span>
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.authorization" btn-radio="1" 
+                    ng-required="tcid.employee.maindata.rehire==0"  data-displayname="Question: Authorization?" name="authorization">YES</label>
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.authorization" btn-radio="0">NO</label>
+              </div>
+            </td>
+          </tr>
+          <tr class="yesno req">
+            <th width="*" align="right" valign="top">
+            E-Sign?<BR>
+            <span style="font-size:80%; font-weight:normal; line-height:13px;">
+"Under penalties of perjury, I declare that I gave the above information to the employer on or before the day I was offered a job, and it is, to the best of my knowledge, true, correct, and complete. I hereby authorize any agency, organization Social Security Administration, Department of Veteran Affaris, or individuals to supply such verification of information as may be needed to determine tax credit elibility to my employer, employer representative (Associated Consultants, Inc. dba RetroTax), or the Deptartment of Labor."</span>
+            </th>
+            <td class="" width="100" align="right" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.esign" btn-radio="1" 
+                   ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: E-Sign?" name="esign"  ng-required="tcid.employee.maindata.rehire==0" >YES</label>
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.esign" btn-radio="0">NO</label>
+              </div>
+            </td>
+          </tr>
+
+
+            </tbody>    
+        </table>
+        
+    </accordion-group>    
+</accordion>
+
+  <button id="btnSave" type="submit" class="btn btn-primary btn-block">SAVE</button>
+
+  <div style="height:30px; clear:both;width:100%"></div>
+</form>
+
+
+  </div><!-- /modal -->
+</div><!--/scene-->
+
+<div id="overlay">
+
+		<div class="content"></div>
+
+</div>
+
+
+<!-- JavaScript 
+<script type="text/javascript" src="js/min/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/min/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/min/angular.min.js"></script>
+<script type="text/javascript" src="js/min/ui-bootstrap-custom-tpls-0.12.0.js"></script>
+<script type="text/javascript" src="js/min/angular-toggle-switch.min.js"></script>
+-->
+<script type="text/javascript" src="/widget/iframe/js/min/modal.min.js"></script>
+<script type="text/javascript" src="/widget/iframe/js/common.js"></script>
+
+</body>
+</html>
