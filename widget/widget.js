@@ -22,7 +22,7 @@
 (function(){ // :)
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
-var dfurl = 'http://plugin-paulcommons.rhcloud.com/iframe';
+var dfurl = 'https://pcommons.github.io/widget/iframe'; //http://plugin-paulcommons.rhcloud.com/iframe';
 
 
 /**
