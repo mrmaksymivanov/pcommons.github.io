@@ -167,14 +167,11 @@ var _bftn_util = {
 	// Inject CSS styles into the page
 	injectCSS: function(id, css)
 	{
-		console.log("inject CSS");
 		var style = document.createElement('style');
 		style.type = 'text/css';
 		style.id = id;
 		if (style.styleSheet) style.styleSheet.cssText = css;
 		else style.appendChild(document.createTextNode(css));
-
-		console.log(style);
 		document.head.appendChild(style);
 	},
 
@@ -204,7 +201,7 @@ var _bftn_util = {
 	bindIframeCommunicator: function(iframe, animation) {
 		console.log("IN IFRAME BITCHES");
 		console.log(iframe);
-//		console.log("test1");
+		console.log(animation);
 		var sendMessage = function(requestType, data)
 		{
 			data || (data = {});
@@ -303,9 +300,9 @@ console.log("Test1");
 			return;
 		}
 	}
-console.log("Test2");
-	_bftn_util.setCookie('_BFTN_WIDGET_SHOWN', 'true', 365);
-console.log("Test3");
+//console.log("Test2");
+	//_bftn_util.setCookie('_BFTN_WIDGET_SHOWN', 'true', 365);
+//console.log("Test3");
 	// JL HACK ~ Force iPhone / iPod to show banner while we fix issues
 	if(/(iPhone|iPod)/g.test(navigator.userAgent))
 		_bftn_options.animation = 'banner';
@@ -313,11 +310,12 @@ console.log("Test3");
 	if (typeof _bftn_animations[_bftn_options.animation] == "undefined")
 		return _bftn_util.log('Animation undefined: '+_bftn_options.animation);
 
+console.log(_bftn_animations[_bftn_options.animation]);
 	var animation = _bftn_animations[_bftn_options.animation];
-console.log("Test4");
+console.log(animation);
 	var images = new Array()
 	var preloaded = 0;
-console.log("Test5");
+console.log(_bftn_options);
 	setTimeout(function() {
 		animation.init(_bftn_options).start();
 	}, _bftn_options.delay);
