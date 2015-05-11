@@ -42,8 +42,8 @@ var animations = {
             console.log("IN Modal.js - FUCKING WIN?");
 
             console.log(this.options.populated_fields);
-            console.log(this.options.populated_fields.firstname);
-            $("#firstname").val(this.options.populated_fields.firstname);
+            //console.log(this.options.populated_fields.firstname);
+            //$("#firstname").val(this.options.populated_fields.firstname);
 /*
             if (this.options.skipEmailSignup)
             {
