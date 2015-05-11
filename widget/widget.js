@@ -259,7 +259,6 @@ var _bftn_util = {
 			console.log.apply(console, arguments);
 	}
 }
-
 /**
 --------------------------------------------------------------------------------
 MAIN FUNCTIONALITY (called once the page is ready)
@@ -269,7 +268,8 @@ var ready = function() {
 
 	console.log("in ready");
 	// Should we show the widget, regardless?
-	var url_override = window.location.href.indexOf('SHOW_BFTN_WIDGET') > -1;
+	//var url_override = window.location.href.indexOf('SHOW_BFTN_WIDGET') > -1;
+	var url_override=true;
 console.log(url_override);
 console.log("Test0");
 	if (!_bftn_options.always_show_widget && url_override == false) {
@@ -318,6 +318,7 @@ var bindRetroTaxBtn = function() {
 
 	}
 }
+
 
 
 
