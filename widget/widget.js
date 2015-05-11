@@ -279,6 +279,7 @@ MAIN FUNCTIONALITY (called once the page is ready)
 */
 var ready = function() {
 
+	console.log(_bftn_options);
 	console.log("in ready");
 	// Should we show the widget, regardless?
 	//var url_override = window.location.href.indexOf('SHOW_BFTN_WIDGET') > -1;
