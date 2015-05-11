@@ -240,7 +240,7 @@ var _bftn_util = {
 	// Necessary because the iframe lives on a different domain and we can't
 	// just call Javascript functions to/from it due to XSS protections.
 	bindIframeCommunicator: function(iframe, animation) {
-		console.log("IN IFRAME BITCHES");
+		console.log("IN IFRAME");
 		console.log(iframe);
 		console.log(animation);
 		var sendMessage = function(requestType, data, iframe)
