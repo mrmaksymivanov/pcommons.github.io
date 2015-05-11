@@ -60,8 +60,8 @@ if (typeof _bftn_options.always_show_widget == "undefined")
 	_bftn_options.always_show_widget = false;
 
 // Usually a cookie is used to only show the widget once. You can override here.
-if (typeof _bftn_options.prepopulate_basic_info == "undefined")
-	_bftn_options.prepopulate_basic_info = false;
+if (typeof _bftn_options.prepopulate_basic_info_by_id == "undefined")
+	_bftn_options.prepopulate_basic_info_by_id = false;
 /**
 --------------------------------------------------------------------------------
 ANIMATION DEFINITIONS
