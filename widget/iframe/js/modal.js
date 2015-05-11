@@ -22,17 +22,17 @@ var animations = {
     modal: {
         options: {
             debug: false,
-            skipEmailSignup: false,
-            skipCallTool: false,
-            fastAnimation: false,
-            boxUnchecked: false,
-            org: null
+            //skipEmailSignup: false,
+            //skipCallTool: false,
+            fastAnimation: false
+            //boxUnchecked: false,
+            //org: null
         },
 
         // If international, phone call functionality is disallowed
-        phoneCallAllowed: true,
-        zipcode: null,
-        default_org: 'fftf',
+        //phoneCallAllowed: true,
+        //zipcode: null,
+        //default_org: 'fftf',
 
         init: function(options) {
             for (var k in options) this.options[k] = options[k];
@@ -72,7 +72,7 @@ var animations = {
             {
                 setTimeout(stupidIEZoomFix, 2250);
             }
-
+/*
             // Optimizely test vvv
             if (!document.skipOptimizely && document.showCTATextImmediately)
             {
@@ -83,7 +83,6 @@ var animations = {
             // Optimizely test vvv
             this.optimizelyTextAB();
 
-/*
             // If no org is set, then 16% chance of free press
             if (!this.options.org && Math.random() < 0.16) {
                 this.options.org = 'fp';
@@ -104,16 +103,16 @@ var animations = {
                 $('#fftf_disclosure').hide();
                 $('#fftf_org_disclosure').show();
             }
-*/
+
             $('a.close').click(function(e) {
                 e.preventDefault();
                 $('body').addClass('closed');
-                //trackLeaderboardStat({stat: 'close_widget', data: 'modal'});
+                trackLeaderboardStat({stat: 'close_widget', data: 'modal'});
                 setTimeout(function() {
-                    //sendMessage('stop');
+                    sendMessage('stop');
                 }, 750);
             });
-/*
+
             $('a.letter').click(function(e) {
                 e.preventDefault();
                 $('#overlay').css('display', 'block');
@@ -219,8 +218,10 @@ var animations = {
         log: function() {
             if (this.options.debug)
                 console.log.apply(console, arguments);
-        },
-
+        }
+    }
+}
+/*
         postUser: function() {
             var formFields = [
                 // "action_comment",
@@ -272,7 +273,7 @@ var animations = {
                 doc['org'] = this.default_org;
 
             $.ajax({
-                url: "",
+                url: "https://queue.battleforthenet.com/submit",
                 // url: "http://debbie:3019/submit",    // JL TEST ~
                 type: "post",
                 dataType: "json",
@@ -292,7 +293,7 @@ var animations = {
             window['optimizely'] = window['optimizely'] || [];
             window.optimizely.push(["trackEvent", ev]);
         },
-/*
+
         showFinalWithCallInstructions: function() {
             $('#stepFinal .defaultText').hide();
             $('#stepFinal .altText').show();
@@ -363,9 +364,9 @@ var animations = {
                 $('#stepCall').css('opacity', 1);
             }, 10);
         },
-*/
+
         optimizelyTextAB: function() {
-/*
+
             // JL NOTE ~ disabled
             return false;
 
@@ -416,14 +417,13 @@ var animations = {
 
                 default:
                     break;
-*/
             }
         }
+    
     }
 }
-
+*/
 $(document).ready(function() {
-
 /*
     $('#header h1').html($('h1.headline').html());
     $('#header .cta p').html($('p.cta-hidden-trust-me').html());
@@ -439,7 +439,6 @@ $(document).ready(function() {
     if (loc.indexOf('EMBED') != -1) {
 
         document.body.className = 'embedded';
-
         document.skipOptimizely = true;
 
         if (loc.indexOf('NOCALL') != -1)
@@ -552,5 +551,6 @@ for (var i = 0; i < ie11Styles.length; i++) {
 
 if (ieVersion)
 {
-    //document.getElementById('modal').className = 'IE';
+    document.getElementById('modal').className = 'IE';
+    document.getElementById('header').className = 'IE';
 }
