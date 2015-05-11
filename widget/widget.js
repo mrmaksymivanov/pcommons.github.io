@@ -21,6 +21,43 @@
 
 (function(){ // :)
 
+
+
+/*********************************************************************
+                DEMO PLUGIN CONFIG
+**********************************************************************/
+
+if($("rt_widget").length){
+      var _bftn_options = {
+            // This is used to override the widget iframe URL with something else
+            // Normally it would be on CDN somewhere, but we want it local for testing.
+            iframe_base_path: 'https://pcommons.github.io/widget/iframe', //http://plugin-paulcommons.rhcloud.com/widget/iframe',
+            // This is just a delay. You can have the animation start after page load.
+            delay: 0,
+            // This shows debug stuff in the console. For testing
+            debug: true,
+            // Always show the widget? Useful for testing lol.
+            always_show_widget: true,
+            plugin_type: 'demo', 
+            prepopulate_basic_info_by_id: {
+                firstname:'first_name',
+                lastname:'last_name',
+                middleinitial:'middle_init',
+                city:false,
+                state:false,
+                stateid:false,
+                zip:false,
+                address:false,
+                address2:false,
+                countyid:false,
+                dob:false
+            }
+        }
+}
+
+
+
+
 // Default URL for animation iframe. This gets overlay'ed over your page.
 var dfurl = 'https://pcommons.github.io/widget/iframe'; //http://plugin-paulcommons.rhcloud.com/iframe';
 
