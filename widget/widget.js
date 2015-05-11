@@ -151,16 +151,21 @@ var _bftn_util = {
 	// Inject CSS styles into the page
 	injectCSS: function(id, css)
 	{
+		console.log("inject CSS");
 		var style = document.createElement('style');
 		style.type = 'text/css';
 		style.id = id;
 		if (style.styleSheet) style.styleSheet.cssText = css;
 		else style.appendChild(document.createTextNode(css));
+
+		console.log(style);
 		document.head.appendChild(style);
 	},
 
 	// Create the iframe used to display the animation  
 	createIframe: function(animation) {
+		console.log("create Iframe");
+		console.log(animation);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
 		iframe.src = _bftn_options.iframe_base_path + '/' + animation + '.html';
@@ -244,8 +249,8 @@ var _bftn_util = {
 
 	// Get the hostname of the web page. Used to track stats for leaderboards
 	getHostname: function() {
-		//var hostname = window.location.host.replace('www.', '');
-		//return hostname;
+		var hostname = window.location.host.replace('www.', '');
+		return hostname;
 	},
 
 	// If _bftn_options.debug is on, then console.log some stuff
@@ -308,7 +313,6 @@ var bindRetroTaxBtn = function() {
 
 	}
 }
-
 
 
 
