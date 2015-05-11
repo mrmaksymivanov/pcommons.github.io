@@ -27,7 +27,7 @@
                 DEMO PLUGIN CONFIG
 **********************************************************************/
 
-if($("rt_widget").length){
+if($("#rt_widget").length){
       var _bftn_options = {
             // This is used to override the widget iframe URL with something else
             // Normally it would be on CDN somewhere, but we want it local for testing.
