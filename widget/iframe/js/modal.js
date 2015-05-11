@@ -40,7 +40,7 @@ var animations = {
         },
         start: function() {
             console.log("IN Modal.js - FUCKING WIN?");
-
+            console.log(this);
             console.log(this.options.populated_fields);
             console.log(this.options.plugin_type);
             console.log(this.options.test);
