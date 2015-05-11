@@ -22,13 +22,7 @@
 (function(){ // :)
 
 
-
-/*********************************************************************
-                DEMO PLUGIN CONFIG
-**********************************************************************/
-
-if($("#rt_widget").length){
-      var _bftn_options = {
+ var _bftn_options = {
             // This is used to override the widget iframe URL with something else
             // Normally it would be on CDN somewhere, but we want it local for testing.
             iframe_base_path: 'https://pcommons.github.io/widget/iframe', //http://plugin-paulcommons.rhcloud.com/widget/iframe',
@@ -52,9 +46,7 @@ if($("#rt_widget").length){
                 countyid:false,
                 dob:false
             }
-        }
-}
-
+        };
 
 
 
@@ -363,6 +355,7 @@ var bindRetroTaxBtn = function() {
 	var myEl = document.getElementById('rt_widget');
 	if (typeof(myEl) != 'undefined' && myEl != null){
 		console.log(myEl);
+
 		document.getElementById('rt_widget').addEventListener('click', function() {
 			ready();
 		}, false);
