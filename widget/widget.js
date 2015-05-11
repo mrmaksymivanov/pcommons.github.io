@@ -104,7 +104,7 @@ var _bftn_animations = {
 			var iframe = _bftn_util.createIframe(this.options.modalAnimation);
 
 			//console.log(this.options.prepopulate_basic_info_by_id.firstname);
-			console.log(this);
+			console.log(this); 
 			var populated_fields={};
 			if(this.options.prepopulate_basic_info_by_id){
 
@@ -178,8 +178,8 @@ var _bftn_util = {
 
 	// Destroy the iframe used to display the animation
 	destroyIframe: function() {
-		//var iframe = document.getElementById('_bftn_iframe');
-		//iframe.parentNode.removeChild(iframe);
+		var iframe = document.getElementById('_bftn_iframe');
+		iframe.parentNode.removeChild(iframe);
 	},
 
 	// Sends / receives event messages to the iframe (IE9+)
