@@ -59,9 +59,11 @@ if (typeof _bftn_options.debug == "undefined")
 if (typeof _bftn_options.always_show_widget == "undefined")
 	_bftn_options.always_show_widget = false;
 
-// Usually a cookie is used to only show the widget once. You can override here.
 if (typeof _bftn_options.prepopulate_basic_info_by_id == "undefined")
 	_bftn_options.prepopulate_basic_info_by_id = false;
+
+if (typeof _bftn_options.plugin_type == "undefined")
+	_bftn_options.plugin_type = false;
 /**
 --------------------------------------------------------------------------------
 ANIMATION DEFINITIONS
@@ -106,12 +108,25 @@ var _bftn_animations = {
 			//console.log(this.options.prepopulate_basic_info_by_id.firstname);
 			console.log(this); 
 			var populated_fields={};
+
+			console.log(this.options.plugin_type);
+
+			if(this.options.plugin_type){
+				if(this.options.plugin_type=='demo'){
+					this.options.test=true;
+					console.log(this.options.test);
+				}else if(this.options.plugin_type=='ats'){
+
+				}else{
+					//obs
+				}
+			}
 			if(this.options.prepopulate_basic_info_by_id){
 
 				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
 
 				populated_fields={
-	                firstname:'Paul' //document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
+	                firstname:'Tom' //document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
 	                //lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
 	                //middleinitial:document.getElementById(this.options.prepopulate_basic_info_by_id.middleinitial).value
 	                /*

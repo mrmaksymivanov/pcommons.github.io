@@ -42,6 +42,29 @@ var animations = {
             console.log("IN Modal.js - FUCKING WIN?");
 
             console.log(this.options.populated_fields);
+            console.log(this.options.plugin_type);
+            console.log(this.options.test);
+                       
+            if(this.options.plugin_type){
+
+                if(this.options.plugin_type=='demo'){
+                  $('input').each(function() {
+                        console.log($(this));
+                            $(this).attr({'disabled': 'disabled'});                 
+                    });
+                }
+
+            }
+
+
+            $('a.close').click(function(e) {
+                e.preventDefault();
+                $('body').addClass('closed');
+                setTimeout(function() {
+                    sendMessage('stop');
+                }, 750);
+            });
+
             //console.log(this.options.populated_fields.firstname);
             //$("#firstname").val(this.options.populated_fields.firstname);
 /*
