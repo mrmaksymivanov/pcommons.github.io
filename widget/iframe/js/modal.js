@@ -39,7 +39,7 @@ var animations = {
             return this;
         },
         start: function() {
-            console.log("IN Modal.js - FUCKING WIN?");
+            console.log("IN Modal.js");
             console.log(this);
             console.log(this.options.populated_fields);
             console.log(this.options.plugin_type);
@@ -50,7 +50,7 @@ var animations = {
                 if(this.options.plugin_type=='demo'){
                   $('input').each(function() {
                         console.log($(this));
-                            $(this).attr({'disabled': 'disabled'});                 
+                            $(this).attr({'readonly': 'readonly'});                 
                     });
                 }
 
