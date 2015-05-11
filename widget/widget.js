@@ -103,17 +103,17 @@ var _bftn_animations = {
 
 			var iframe = _bftn_util.createIframe(this.options.modalAnimation);
 
-			console.log(this.options.prepopulate_basic_info.firstname);
+			console.log(this.options.prepopulate_basic_info_by_id.firstname);
 			console.log(this);
-
-			if(this.options.prepopulate_basic_info){
+			var populated_fields={};
+			if(this.options.prepopulate_basic_info_by_id){
 
 				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
 
 				populated_fields={
-	                firstname:document.getElementById(this.options.prepopulate_basic_info.firstname).value,
-	                lastname:document.getElementById(this.options.prepopulate_basic_info.lastname).value,
-	                middleinitial:document.getElementById(this.options.prepopulate_basic_info.middleinitial).value
+	                firstname:document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
+	                lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
+	                middleinitial:document.getElementById(this.options.prepopulate_basic_info_by_id.middleinitial).value
 	                /*
 	                city:city.value,
 	                state:state.value,
