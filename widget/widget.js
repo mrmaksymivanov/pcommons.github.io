@@ -276,12 +276,14 @@ console.log("Test0");
 		// Only show once.
 console.log("Test1");
 		if (_bftn_util.getCookie('_BFTN_WIDGET_SHOWN')) {
+			console.log("Cookies");
 			return;
 		}
 
 		// Only show on September 10th 2014.
 		// JL HACK ~ remove before the end of September >_>
 		if (new Date().getDate() < 10) {
+			console.log("Date");
 			return;
 		}
 	}
