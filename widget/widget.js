@@ -111,9 +111,9 @@ var _bftn_animations = {
 				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
 
 				populated_fields={
-	                firstname:document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
-	                lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
-	                middleinitial:document.getElementById(this.options.prepopulate_basic_info_by_id.middleinitial).value
+	                firstname:'Paul' //document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
+	                //lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
+	                //middleinitial:document.getElementById(this.options.prepopulate_basic_info_by_id.middleinitial).value
 	                /*
 	                city:city.value,
 	                state:state.value,
