@@ -165,7 +165,7 @@ var _bftn_util = {
 	// Create the iframe used to display the animation  
 	createIframe: function(animation) {
 		console.log("create Iframe");
-		console.log(animation);
+		//console.log(animation);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
 		iframe.src = _bftn_options.iframe_base_path + '/' + animation + '.html';
