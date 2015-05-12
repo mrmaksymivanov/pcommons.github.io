@@ -52,6 +52,7 @@ var animations = {
                         console.log($(this));
                             $(this).attr({'readonly': 'readonly'});                 
                     });
+                  $('#btnSave').attr({'disabled':'disabled'});
                 }
 
             }
