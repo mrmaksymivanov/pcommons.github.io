@@ -428,6 +428,7 @@ var bindRetroTaxBtn = function() {
 		 	compatible=false;	
 		 }
 		}
+		console.log(_bftn_options);
 		console.log("Compatible?");
 		console.log(compatible);
 		var div = document.getElementById('rt_widget');
@@ -444,6 +445,7 @@ var bindRetroTaxBtn = function() {
 			var newlink = document.createElement('a');
 			newlink.setAttribute('class', 'btn');
 			newlink.setAttribute('target', '_blank');
+			newLink.innerHTML = _bftn_options.button_text;
 			newlink.setAttribute('href', 'https://webscreen.retrotax-aci.com/'+_bftn_options.apikey);
 			div.appendChild(newlink);
 		}
