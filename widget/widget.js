@@ -422,7 +422,6 @@ var bindRetroTaxBtn = function() {
 		}
 
 
-
 		document.getElementById('rt_widget').addEventListener('click', function(e) {
 				console.log(compatible);
 				if(compatible){
