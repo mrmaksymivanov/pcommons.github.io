@@ -23,6 +23,10 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
     console.log($scope.currentuser);
 
     console.log($scope);
+    $scope.isLoggedIn;
+    console.log($scope);
+
+    
 	$scope.thisPath='';
 	//$scope.isATS=true;
 	
@@ -242,7 +246,7 @@ $scope.getCounties(16);
 		}
 
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
-
+		console.log($scope);
 		$scope.tcid.employee.maindata.clientid=$scope.tcid.employee.maindata.client.id;
 		$scope.tcid.employee.maindata.companyid=$scope.tcid.employee.maindata.company.id;
 		$scope.tcid.employee.maindata.locationid=$scope.tcid.employee.maindata.location.id;
