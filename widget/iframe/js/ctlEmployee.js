@@ -619,11 +619,19 @@ $scope.getCounties(16);
 
 	    return;
 	}
-
+/*
     console.log(angular.element(document.querySelector('#plugin_type')).val());
 	console.log(angular.element('plugin_type'));
 	$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
 	console.log($scope.plugin_type);
+*/
 
+    addEventListener('load', loadIt, false);
+    function loadIt() {
+        var el = document.getElementById("plugin_type");
+        console.log(el);
+        $scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
+        // do something with el
+    }
 });
 
