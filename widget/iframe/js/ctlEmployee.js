@@ -24,7 +24,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
     console.log($scope);
 	$scope.thisPath='';
-	$scope.isATS=true;
+	
 
 	if ($routeParams.employeeid==undefined) {
 		$scope.alerts.push({type:'danger',msg: ''});
@@ -639,6 +639,11 @@ $scope.getCounties(16);
             $scope.plugin_type = document.getElementById("plugin_type").value;
             $scope.firstname = document.getElementById("firstname").value;
             $scope.lastname = document.getElementById("lastname").value;
+            if($scope.plugin_type=='ats'){
+            	$scope.isATS=true;
+            }else{
+            	$scope.isATS=true;
+            } 
         });
         //$scope.plugin_type = document.getElementById("plugin_type").value;
         console.log($scope.plugin_type);
