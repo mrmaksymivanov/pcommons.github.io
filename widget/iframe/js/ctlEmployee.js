@@ -631,7 +631,7 @@ $scope.getCounties(16);
     	$scope.$apply(function () {
             $scope.plugin_type = document.getElementById("plugin_type").value;
             $scope.firstname = document.getElementById("firstname").value;
-            $scope.tcid.employee.maindata.lastname = document.getElementById("lastname").value;
+            $scope.lastname = document.getElementById("lastname").value;
         });
         //$scope.plugin_type = document.getElementById("plugin_type").value;
         console.log($scope.plugin_type);
