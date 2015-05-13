@@ -49,15 +49,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 				$scope.tcid.employee=defEmployee();
 				// console.log('called defEmployee to get default employee info:',$scope.tcid.employee);
 
-			} else if ($scope.currentemployeeid!=$routeParams.employeeid)  {
-				// console.log('calling load function....');
-
-				$scope.alerts.push({type:'success',msg: 'EDITING EMPLOYEE...'});
-				$scope.currentemployeeid=$routeParams.employeeid;
-				$scope.tcid.employee={};
-				
-				$scope.load($scope.currentemployeeid);
-			}
+			} 
 
 		});
 	}
@@ -78,46 +70,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		//$location.path("/employee/"+eid);
 	};
 
-	$scope.load = function(eid) {
-		//eid=$scope.currentemployeeid;
-		console.log('loading employee id: ',eid);
-		$http.get('http://tcid.retrotax.co/api/v1/api_employees/view?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username+'&employeeid='+eid)
-		.success(function (data) {
-			if (data.SUCCESS) {
-				// console.log('laoded employee data from server, source json is: ',data.rows[0]);
-				$scope.tcid.employee=setEmployee(data.rows[0]);
-
-				$scope.tcid.employee.SUCCESS=true;
-				console.log('employee loadded!');
-				console.log($scope.tcid.employee);
-
-// re-redirect to appropriate path based on current location and appstatusid
-// console.log('$scope.tcid.employee.maindata.applicationstatusid',$scope.tcid.employee.maindata.applicationstatusid);
-// console.log($location.path());
-
-// preload state stuff?
-$scope.getCounties(16);
-				if ($scope.tcid.employee.maindata.applicationstatusid=='SS') {
-					//$location.path("/employee/view/"+$scope.tcid.employee.maindata.id);
-				} else {
-					console.log('all other status go to edit page: ',$scope.thisPath);
-					//$location.path("/employee/"+$scope.tcid.employee.maindata.id);
-				}
-
-				return true;
-
-			} else {
-				$scope.tcid.employee={};
-				$scope.tcid.employee.SUCCESS=false;
-				$scope.alerts.push({type:'danger',msg: data.message});
-				return false;
-			}
-		})
-		.error(function (data, status, headers, config) {
-			console.log('http et eerror is', data);
-			return false;
-		});
-	};
 
 	$scope.atsLoadCCL = function() {
 		//eid=$scope.currentemployeeid;
@@ -257,7 +209,7 @@ $scope.getCounties(16);
 
 		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
 
-		var responsePromise = $http.post('http://tcid.retrotax.co/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
+		var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
