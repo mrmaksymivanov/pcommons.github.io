@@ -24,7 +24,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
     console.log($scope);
 	$scope.thisPath='';
-	$scope.isATS=true;
+	//$scope.isATS=true;
 	
 
 	if ($routeParams.employeeid==undefined) {
