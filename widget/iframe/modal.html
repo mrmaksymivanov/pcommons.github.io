@@ -1,5 +1,4 @@
 <!doctype html>
-<html>
 <head>
     <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
@@ -63,8 +62,8 @@
 ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmployee.$valid)" novalidate style="padding_top:50px">
 
 <accordion close-others="1">
+<a class="close" href="#">Close</a>
     <accordion-group heading="Employee Info - {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1">
-    <a class="close" href="#">Close</a>
       <input type="hidden" name="employeeid" id="employeeid" value="{{tcid.employee.maindata.id}}">
 
         <table class="table table-user-information table-responsive">

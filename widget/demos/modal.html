@@ -29,6 +29,11 @@
             debug: true,
             // Always show the widget? Useful for testing lol.
             always_show_widget: true,
+            compatibility_iframe: {
+                width: 500,
+                height: 400
+
+            }
             //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
             plugin_type: 'demo',  
             prepopulate_basic_info_by_id: {
@@ -67,7 +72,7 @@
 
     <footer>
         <div class="wrap">
-      <button id="rt_widget">Screen Me, Bitch</button>
+      <div id="rt_widget">Screen Me, Bitch</div>
         </div><!-- close .wrap -->
 
         <input id="first_name" value="Paul">
