@@ -630,6 +630,8 @@ $scope.getCounties(16);
     function loadedPlugin() {
     	$scope.$apply(function () {
             $scope.plugin_type = document.getElementById("plugin_type").value;
+            $scope.tcid.employee.maindata.firstname = document.getElementById("firstname").value;
+            $scope.tcid.employee.maindata.lastname = document.getElementById("lastname").value;
         });
         //$scope.plugin_type = document.getElementById("plugin_type").value;
         console.log($scope.plugin_type);
