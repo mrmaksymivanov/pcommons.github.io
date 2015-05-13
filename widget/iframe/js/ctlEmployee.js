@@ -23,10 +23,10 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
     console.log($scope.currentuser);
 
     console.log($scope);
-    $scope.isLoggedIn;
+    $scope.isLoggedIn();
     console.log($scope);
 
-    
+
 	$scope.thisPath='';
 	//$scope.isATS=true;
 	
