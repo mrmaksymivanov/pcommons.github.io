@@ -24,6 +24,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
     console.log($scope);
 	$scope.thisPath='';
+	$scope.isATS=true;
 	
 
 	if ($routeParams.employeeid==undefined) {
@@ -642,7 +643,7 @@ $scope.getCounties(16);
             if($scope.plugin_type=='ats'){
             	$scope.isATS=true;
             }else{
-            	$scope.isATS=true;
+            	$scope.isATS=false;
             } 
         });
         //$scope.plugin_type = document.getElementById("plugin_type").value;
