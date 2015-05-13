@@ -622,7 +622,7 @@ $scope.getCounties(16);
 
 
 	console.log(angular.element('plugin_type'));
-	$scope.plugin_type=angular.element('#plugin_type').val();
+	$scope.plugin_type=$('#plugin_type').val();
 	console.log($scope.plugin_type);
 
 });
