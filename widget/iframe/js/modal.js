@@ -44,9 +44,9 @@ var animations = {
             console.log(this.options.populated_fields);
             console.log(this.options.plugin_type);
             console.log(this.options.test);
-            console.log($scope);
+            //console.log($scope);
             if(this.options.plugin_type){
-
+                $('#plugin_type').val(this.options.plugin_type);
                 if(this.options.plugin_type=='demo'){
                   $('input').each(function() {
                         console.log($(this));
