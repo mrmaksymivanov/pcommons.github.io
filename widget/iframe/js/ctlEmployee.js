@@ -620,9 +620,9 @@ $scope.getCounties(16);
 	    return;
 	}
 
-    console.log(angular.element(document.querySelector('#plugin_type')));
+    console.log(angular.element(document.querySelector('#plugin_type')).val());
 	console.log(angular.element('plugin_type'));
-	$scope.plugin_type=angular.element(document.querySelector('#plugin_type'));
+	$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
 	console.log($scope.plugin_type);
 
 });
