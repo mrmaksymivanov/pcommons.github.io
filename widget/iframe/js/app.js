@@ -163,7 +163,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 						tcid.location.name='location name to be looked up';
 						tcid.location.locationid=response.data.loggedInAPIUser.user.locationid;
 
-						tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
+						//tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
 
 						lcurrentuser=tcid;
 
