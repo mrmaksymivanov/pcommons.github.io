@@ -247,9 +247,13 @@ $scope.getCounties(16);
 
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
 		console.log($scope);
-		$scope.tcid.employee.maindata.clientid=$scope.tcid.employee.maindata.client.id;
-		$scope.tcid.employee.maindata.companyid=$scope.tcid.employee.maindata.company.id;
-		$scope.tcid.employee.maindata.locationid=$scope.tcid.employee.maindata.location.id;
+		//$scope.tcid.employee.maindata.clientid=$scope.tcid.employee.maindata.client.id;
+		//$scope.tcid.employee.maindata.companyid=$scope.tcid.employee.maindata.company.id;
+		//$scope.tcid.employee.maindata.locationid=$scope.tcid.employee.maindata.location.id;
+
+		$scope.tcid.employee.maindata.clientid=$scope.tcid.client.clientid;
+		$scope.tcid.employee.maindata.companyid=$scope.tcid.company.companyid;
+		$scope.tcid.employee.maindata.locationid=$scope.tcid.location.locationid;
 
 		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
 
