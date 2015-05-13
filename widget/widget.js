@@ -422,16 +422,18 @@ var bindRetroTaxBtn = function() {
 		}
 		console.log("Compatible?");
 		console.log(compatible);
-
+		var div = document.getElementById('rt_widget');
 		if(compatible){
-			document.getElementById('rt_widget').addEventListener('click', function(e) {
+			var newButton = document.createElement('button');
+			newButton.setAttribute('class', 'btn');
+			newButton.addEventListener('click', function(e) {
 				e.preventDefault();
 				ready();				
 			}, false);
+			div.appendChild(newButton);
 		}else{
-			var div = document.getElementById('rt_widget');
 			var newlink = document.createElement('a');
-			newlink.setAttribute('class', 'signature');
+			newlink.setAttribute('class', 'btn');
 			newlink.setAttribute('target', '_blank');
 			newlink.setAttribute('href', 'https://webscreen.retrotax-aci.com/'+_bftn_options.apikey);
 			div.appendChild(newlink);
