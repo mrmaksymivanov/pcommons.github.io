@@ -56,8 +56,6 @@
  
 <div ng-controller="ctlEmployee" ng-init="initEdit()">
 
-<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
-
 <form name="frmEmployee" id="frmEmployee" class="form-horizontal" role="form"
 ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmployee.$valid)" novalidate style="padding_top:50px">
 
@@ -873,6 +871,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
   <div style="height:30px; clear:both;width:100%"></div>
 </form>
+<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
 
 
   </div><!-- /modal -->
