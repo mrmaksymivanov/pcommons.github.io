@@ -94,6 +94,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <select class="input-sm" ng-model="tcid.employee.maindata.company.id" ng-required="true" data-displayname="Company" name="companyid">
                 <option ng-repeat="cmpny in currentuser().ccl.clients[getSelectedClientIndex()].companies" 
                         ng-selected="{{cmpny.id == tcid.employee.maindata.company.id}}" 
+                        ng-model-options="{ updateOn: 'loadedPlugin' }"
                         value="{{cmpny.id}}">{{cmpny.legal_name}}
                 </option>
             </select>
@@ -106,6 +107,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <select class="input-sm" ng-model="tcid.employee.maindata.location.id" ng-required="true" data-displayname="Location" name="locationid">
                 <option ng-repeat="loc in currentuser().ccl.clients[0].companies[getSelectedCompanyIndex()].locations"
                         ng-selected="{{loc.id == tcid.employee.maindata.location.locationid}}" 
+                        ng-model-options="{ updateOn: 'loadedPlugin' }"
                         value="{{loc.id}}">{{loc.location_name}}
                 </option>
             </select>

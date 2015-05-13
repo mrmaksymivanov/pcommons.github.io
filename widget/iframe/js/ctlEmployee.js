@@ -626,8 +626,9 @@ $scope.getCounties(16);
 	console.log($scope.plugin_type);
 */
 
-    addEventListener('load', loadIt, false);
-    function loadIt() {
+    addEventListener('load', loadedPlugin, false);
+    function loadedPlugin() {
+    	ng-model-options="{ updateOn: 'form.$submitted' }"
     	$scope.$apply(function () {
             $scope.plugin_type = document.getElementById("plugin_type").value;
         });
