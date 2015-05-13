@@ -378,60 +378,61 @@ var bindRetroTaxBtn = function() {
 	if (typeof(myEl) != 'undefined' && myEl != null){
 		console.log(myEl);
 
-//assume compatible but test user agent for shitty browsers
-var compatible=true;
-//Note: userAgent in FF2.0.0.13 WinXP returns: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13
-// userAgent in FF35 Win7 returns: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0
+		//assume compatible but test user agent for shitty browsers
+		var compatible=true;
+		//Note: userAgent in FF2.0.0.13 WinXP returns: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13
+		// userAgent in FF35 Win7 returns: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:35.0) Gecko/20100101 Firefox/35.0
 
-if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)){ //test for Firefox/x.x or Firefox x.x (ignoring remaining digits);
- var ffversion=new Number(RegExp.$1) // capture x.x portion and store as a number
- if (ffversion>=35)
-console.log("You're using FF 35 or above")
- else if (ffversion>=5)
-console.log("You're using FF 5.x or above")
- else if (ffversion>=4)
-console.log("You're using FF 4.x or above")
- else if (ffversion>=3)
-console.log("You're using FF 3.x or above")
- else if (ffversion>=2)
-console.log("You're using FF 2.x")
- else if (ffversion>=1)
-console.log("You're using FF 1.x")
-}
-
-
-//userAgent in IE7 WinXP returns: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)
-//userAgent in IE11 Win7 returns: Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko
-
-if (navigator.userAgent.indexOf('MSIE') != -1)
- var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
-else // if no "MSIE" string in userAgent
- var detectIEregexp = /Trident.*rv[ :]*(\d+\.\d+)/ //test for rv:x.x or rv x.x where Trident string exists
-
-if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
- var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
- if (ieversion>=12)
-  console.log("You're using IE12 or above")
- else if (ieversion>=11)
-  console.log("You're using IE11 or above")
- else if (ieversion>=10)
-  console.log("You're using IE10 or above")
- else{
- 	compatible=false;	
- }
-}
+		if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)){ //test for Firefox/x.x or Firefox x.x (ignoring remaining digits);
+		 var ffversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+		 if (ffversion>=35)
+		console.log("You're using FF 35 or above")
+		 else if (ffversion>=5)
+		console.log("You're using FF 5.x or above")
+		 else if (ffversion>=4)
+		console.log("You're using FF 4.x or above")
+		 else if (ffversion>=3)
+		console.log("You're using FF 3.x or above")
+		 else if (ffversion>=2)
+		console.log("You're using FF 2.x")
+		 else if (ffversion>=1)
+		console.log("You're using FF 1.x")
+		}
 
 
+		//userAgent in IE7 WinXP returns: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)
+		//userAgent in IE11 Win7 returns: Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko
 
-	document.getElementById('rt_widget').addEventListener('click', function(e) {
-		console.log(compatible);
-		if(compatible)
-			e.preventDefault();
-			ready();
-		else
-			location.href = 'http://webscreen.retrotax-aci.com'+_bftn_options.apikey;
-	}, false);
+		if (navigator.userAgent.indexOf('MSIE') != -1)
+		 var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
+		else // if no "MSIE" string in userAgent
+		 var detectIEregexp = /Trident.*rv[ :]*(\d+\.\d+)/ //test for rv:x.x or rv x.x where Trident string exists
 
+		if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
+		 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+		 if (ieversion>=12)
+		  console.log("You're using IE12 or above")
+		 else if (ieversion>=11)
+		  console.log("You're using IE11 or above")
+		 else if (ieversion>=10)
+		  console.log("You're using IE10 or above")
+		 else{
+		 	compatible=false;	
+		 }
+		}
+
+
+
+		document.getElementById('rt_widget').addEventListener('click', function(e) {
+				console.log(compatible);
+				if(compatible){
+					e.preventDefault();
+					ready();
+				}else{
+					location.href = 'http://webscreen.retrotax-aci.com'+_bftn_options.apikey;
+				}
+		}, false);
+	}
 }
 
 
