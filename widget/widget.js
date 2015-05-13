@@ -450,7 +450,7 @@ var bindRetroTaxBtn = function() {
 			div.appendChild(newButton);
 		}else{
 			var newlink = document.createElement('a');
-			newlink.setAttribute('class', 'btn');
+			newlink.setAttribute('class', _bftn_options.button_class);
 			newlink.setAttribute('target', '_blank');
 			newLink.innerHTML = _bftn_options.button_text;
 			newlink.setAttribute('href', 'https://webscreen.retrotax-aci.com/'+_bftn_options.apikey);
