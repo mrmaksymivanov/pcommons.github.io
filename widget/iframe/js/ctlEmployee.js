@@ -17,7 +17,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 	//$scope.calOpened=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false];
 
-	$scope.isLoggedIn=function(){return AuthService.plugin_auth(tcid);}; 
+	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
 	$scope.currentuser=function(){return AuthService.currentuser();};
     console.log("IN SCOPE");
     console.log($scope.currentuser);
