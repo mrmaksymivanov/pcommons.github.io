@@ -23,7 +23,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
     console.log($scope.currentuser);
 
     console.log($scope);
-    $scope.isLoggedIn(tcid);
+    $scope.isLoggedIn($scope.tcid);
     console.log($scope);
 
 
