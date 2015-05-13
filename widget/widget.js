@@ -40,7 +40,8 @@
             delay: 0,
             // This shows debug stuff in the console. For testing
             debug: true,
-            apikey:'12345',
+            username:'DemoAPI.New.Employee',
+            apikey:'111BC0B55FEF6737944B37B1CA2DBED3',
             // Always show the widget? Useful for testing lol.
             always_show_widget: true,
             compatibility_iframe: {
@@ -432,6 +433,7 @@ var bindRetroTaxBtn = function() {
 		 else if (ieversion>=10)
 		  console.log("You're using IE10 or above")
 		 else{
+		 	//need to make 9 compatible
 		 	compatible=false;	
 		 }
 		}
@@ -453,7 +455,7 @@ var bindRetroTaxBtn = function() {
 			newlink.setAttribute('class', _bftn_options.button_class);
 			newlink.setAttribute('target', '_blank');
 			newlink.innerHTML = _bftn_options.button_text;
-			newlink.setAttribute('href', 'https://webscreen.retrotax-aci.com/'+_bftn_options.apikey);
+			newlink.setAttribute('href', 'http://tcid.retrotax.co/users/authenticateh?u='+_bftn_options.username+'&h='+_bftn_options.apikey);
 			div.appendChild(newlink);
 		}
 	}
