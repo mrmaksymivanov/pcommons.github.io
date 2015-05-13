@@ -167,7 +167,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <th class="frmlbl">Confirm SSN</th>
         <td class="frminput">
-        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999" ng-required="tcid.employee.maindata.ssn4==undefined"  data-displayname="Confirmed Social Security Number">
+        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999" ng-required="!isATS"  data-displayname="Confirmed Social Security Number">
         </td>
         </tr>        
         <tr class="req contdob">
@@ -779,7 +779,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <td class="frminput" align="left" valign="top">
 
                   <p class="input-group">
-                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dgi" is-open="cals['dgi']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date Gave Information" name="hmdgi"/>
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dgi" is-open="cals['dgi']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date Gave Information" name="hmdgi"/>
                     <span class="input-group-btn" style="float:left; border:none; ">
                       <button type="button" class="btn btn-default" ng-click="calop($event,'dgi')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -790,7 +790,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <th align="left" valign="top">Date of Job Offer</th>
               <td class="frminput" align="left" valign="top">
                   <p class="input-group">
-                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dojo" is-open="cals['dojo']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date of Job Offer" name="hmdojo"/>
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dojo" is-open="cals['dojo']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date of Job Offer" name="hmdojo"/>
                     <span class="input-group-btn" style="float:left; border:none; ">
                       <button type="button" class="btn btn-default" ng-click="calop($event,'dojo')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -801,7 +801,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <th align="left" valign="top">Date of Hire</th>
               <td class="frminput" align="left" valign="top">
                   <p class="input-group">
-                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.doh" is-open="cals['doh']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date of Hire" name="hmdoh" />
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.doh" is-open="cals['doh']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date of Hire" name="hmdoh" />
                     <span class="input-group-btn" style="float:left; border:none; ">
                       <button type="button" class="btn btn-default" ng-click="calop($event,'doh')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -813,7 +813,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <th class="frmlbl">Date Started Work</th>
             <td class="frminput" align="left" valign="top">
               <p class="input-group">
-                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dsw" is-open="cals['dsw']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Hiring Manager - Date Started Work" name="hmdsw" />
+                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dsw" is-open="cals['dsw']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close"  data-displayname="Hiring Manager - Date Started Work" name="hmdsw" />
                 <span class="input-group-btn"  style="float:left; border:none;">
                   <button type="button" class="btn btn-default" ng-click="calop($event,'dsw')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
