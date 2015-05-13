@@ -26,6 +26,9 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.thisPath='';
 	$scope.isATS=true;
 
+	$scope.plugin_type=document.getElementById('plugin_type').value;
+	console.log($scope.plugin_type);
+	
 	if ($routeParams.employeeid==undefined) {
 		$scope.alerts.push({type:'danger',msg: ''});
 	} else {
