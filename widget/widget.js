@@ -43,19 +43,27 @@
             apikey:'12345',
             // Always show the widget? Useful for testing lol.
             always_show_widget: true,
-            plugin_type: 'demo', 
+            compatibility_iframe: {
+                width: 500,
+                height: 400
+
+            },
+            button_class:"btn btn-huge btn-info",
+            button_text:"Open RetroTax Screening Plugin",
+            //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
+            plugin_type: 'demo',  
             prepopulate_basic_info_by_id: {
                 firstname:'first_name',
                 lastname:'last_name',
                 middleinitial:'middle_init',
-                city:false,
-                state:false,
-                stateid:false,
-                zip:false,
-                address:false,
-                address2:false,
-                countyid:false,
-                dob:false
+                city:'',
+                state:'',
+                stateid:'',
+                zip:'',
+                address:'',
+                address2:'',
+                countyid:'',
+                dob:''
             }
         };
 
