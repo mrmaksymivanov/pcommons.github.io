@@ -359,11 +359,18 @@ $scope.getCounties(16);
 		emp.maindata.unemploymentinfo.compensatedstart='';
 		emp.maindata.unemploymentinfo.compensatedstop='';
 
-		
-		emp.maindata.doh='2/11/2015';
-		emp.maindata.dgi='2/11/2015';
-		emp.maindata.dsw='2/11/2015';
-		emp.maindata.dojo='2/11/2015';
+		var today = new Date();
+    	var dd = today.getDate();
+    	var mm = today.getMonth()+1; //January is 0!
+    	var yyyy = today.getFullYear();
+    	if(dd<10){dd='0'+dd} 
+    	if(mm<10){mm='0'+mm} 
+        var today = dd+'/'+mm+'/'+yyyy;
+
+		emp.maindata.doh=today;
+		emp.maindata.dgi=today;
+		emp.maindata.dsw=today;
+		emp.maindata.dojo=today;
 		emp.maindata.startingwage=null;
 		emp.maindata.occupationid=null;
 		emp.maindata.hashiringmanager=0;

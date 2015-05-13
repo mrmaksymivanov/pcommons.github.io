@@ -73,7 +73,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
         </td>
         </tr>
-        <input type="text" id="plugin_type" ng-model="plugin_type" >
+        <input type="hidden" id="plugin_type" ng-model="plugin_type" >
 
         <input type="hidden" name="clientid" id="clientid">
         
@@ -188,7 +188,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tbody>
           <tr class="yesno req">
             <th width="*" align="right" valign="top">
-            Has this employee ever worked for this company before?
+            Have you ever worked for this company before?
             </th>
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
