@@ -645,9 +645,9 @@ $scope.getCounties(16);
             }else{
             	$scope.isATS=false;
             } 
-            $scope.authorizationReq = ($scope.tcid.employee.maindata.rehire==0 && $scope.isATS==false);
-            console.log("AUTH REQ");
-            console.log($scope.authorizationReq);
+            //$scope.authorizationReq = ($scope.tcid.employee.maindata.rehire==0 && $scope.isATS==false);
+            //console.log("AUTH REQ");
+            //console.log($scope.authorizationReq);
         });
         //$scope.plugin_type = document.getElementById("plugin_type").value;
         console.log($scope.plugin_type);

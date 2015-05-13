@@ -840,7 +840,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.authorization" btn-radio="1" 
-                    ng-required="authorizationReq"  data-displayname="Question: Authorization?" name="authorization">YES</label>
+                    ng-required="!isATS && tcid.employee.maindata.rehire==0"  data-displayname="Question: Authorization?" name="authorization">YES</label>
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.authorization" btn-radio="0">NO</label>
               </div>
             </td>
@@ -854,7 +854,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.esign" btn-radio="1" 
-                    data-displayname="Question: E-Sign?" name="esign"  ng-required="authorizationReq" >YES</label>
+                    data-displayname="Question: E-Sign?" name="esign"  ng-required="!isATS && tcid.employee.maindata.rehire==0" >YES</label>
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.esign" btn-radio="0">NO</label>
               </div>
             </td>
