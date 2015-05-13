@@ -433,8 +433,8 @@ var bindRetroTaxBtn = function() {
 		var div = document.getElementById('rt_widget');
 		if(compatible){
 			var newButton = document.createElement('button');
-			newButton.setAttribute('class', _bftn_options.apikey.button_class);
-			newButton.innerHTML = _bftn_options.apikey.button_text;
+			newButton.setAttribute('class', _bftn_options.button_class);
+			newButton.innerHTML = _bftn_options.button_text;
 			newButton.addEventListener('click', function(e) {
 				e.preventDefault();
 				ready();				
