@@ -161,7 +161,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <th class="frmlbl">SSN</th>
         <td class="frminput">
-        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssn" name="ssn" id="ssn" mask="999-99-9999"  ng-required="tcid.employee.maindata.ssn4==undefined"   data-displayname="Social Security Number">
+        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssn" name="ssn" id="ssn" mask="999-99-9999"  ng-required="!isATS" data-displayname="Social Security Number">
         </td>
         </tr>
         <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
@@ -842,7 +842,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.authorization" btn-radio="1" 
-                    ng-required="tcid.employee.maindata.rehire==0"  data-displayname="Question: Authorization?" name="authorization">YES</label>
+                    ng-required="authorizationReq"  data-displayname="Question: Authorization?" name="authorization">YES</label>
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.authorization" btn-radio="0">NO</label>
               </div>
             </td>
@@ -856,7 +856,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.esign" btn-radio="1" 
-                   ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: E-Sign?" name="esign"  ng-required="tcid.employee.maindata.rehire==0" >YES</label>
+                    data-displayname="Question: E-Sign?" name="esign"  ng-required="authorizationReq" >YES</label>
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.esign" btn-radio="0">NO</label>
               </div>
             </td>
