@@ -131,6 +131,49 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 			    return $q.reject(response.data);
 			});
 	},
+	plugin_auth: function(tcid) {
+					if (angular.isDefined(response.data.APIKEY)) {tcid.api_key=response.data.APIKEY;}
+					if (angular.isDefined(response.data.apikey)) {tcid.api_key=response.data.apikey;}
+					tcid.api_key='F5171AE353A64CD396A45F54EC10F373';
+					if (angular.isDefined(tcid.api_key) && tcid.api_key!='' && tcid.api_key.length==32 && tcid.u!='') {
+						localStorage.setItem("apikey", tcid.api_key);
+						localStorage.setItem("hasAccess", 1);
+
+						isLoggedIn=true; 
+						tcid.didlogin=true;
+						tcid.username=response.data.loggedInAPIUser.user.username;
+						tcid.privilegeid=response.data.loggedInAPIUser.user.privilegeid;
+						tcid.email=response.data.loggedInAPIUser.user.email;
+						tcid.name=response.data.loggedInAPIUser.user.firstname + ' ' +response.data.loggedInAPIUser.user.lastname;
+
+						tcid.client={};
+						tcid.client.name=response.data.loggedInAPIUser.user.client_name;
+						tcid.client.clientid=response.data.loggedInAPIUser.user.clientid;
+						
+						tcid.company={};
+						tcid.company.name='company name to be looked up';
+						tcid.company.companyid=response.data.loggedInAPIUser.user.companyid;
+						tcid.location={};
+						tcid.location.name='location name to be looked up';
+						tcid.location.locationid=response.data.loggedInAPIUser.user.locationid;
+
+						tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
+
+						lcurrentuser=tcid;
+
+						localStorage.setItem('cu', JSON.stringify(lcurrentuser));
+						localStorage.setItem('u',lcurrentuser.username);
+
+						console.log('(app.js) LOGGED IN USER: ',lcurrentuser);
+
+
+					} else {
+						localStorage.setItem("hasAccess", 0);
+						localStorage.setItem('u','');
+						console.log('LOGGED **NOT*** in USER: ',lcurrentuser);
+					}
+			        return lcurrentuser;
+	},
 	userLoggedIn: 	function() {
 		if (!isLoggedIn) {
 			var retuser = JSON.parse(localStorage.getItem('cu'));

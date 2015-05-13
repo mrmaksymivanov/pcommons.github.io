@@ -17,8 +17,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 	//$scope.calOpened=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false];
 
-	//$scope.isLoggedIn=function(){return AuthService.userLoggedIn();}; 
-	//$scope.currentuser=function(){return AuthService.currentuser();};
+	$scope.isLoggedIn=function(){return AuthService.plugin_auth();}; 
+	$scope.currentuser=function(){return AuthService.currentuser();};
 
 	$scope.thisPath='';
 

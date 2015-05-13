@@ -32,7 +32,8 @@
 	    }
 	}
 
- var _bftn_options = {
+if (typeof _bftn_options == "undefined")
+	var _bftn_options = {
             // This is used to override the widget iframe URL with something else
             // Normally it would be on CDN somewhere, but we want it local for testing.
             iframe_base_path: 'https://pcommons.github.io/widget/iframe', //http://plugin-paulcommons.rhcloud.com/widget/iframe',
@@ -52,7 +53,7 @@
             button_class:"btn btn-huge btn-info",
             button_text:"Open RetroTax Screening Plugin",
             //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
-            plugin_type: 'demo',  
+            plugin_type: 'ats',  
             prepopulate_basic_info_by_id: {
                 firstname:'first_name',
                 lastname:'last_name',
