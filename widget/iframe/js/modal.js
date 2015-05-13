@@ -44,7 +44,7 @@ var animations = {
             console.log(this.options.populated_fields);
             console.log(this.options.plugin_type);
             console.log(this.options.test);
-                       
+            console.log($scope);
             if(this.options.plugin_type){
 
                 if(this.options.plugin_type=='demo'){
@@ -58,6 +58,9 @@ var animations = {
                   $('#client').closest('tr').addClass('hide');
                   $('[name="companyid"]').closest('tr').addClass('hide');
                   $('[name="locationid"]').closest('tr').addClass('hide');
+                  $('#ssn').closest('tr').addClass('hide');
+                  $('#ssn4').closest('tr').addClass('hide');
+                  //hide HM info
                 }
 
 

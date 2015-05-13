@@ -33,7 +33,9 @@
 	}
 
 if (typeof _bftn_options == "undefined")
+	console.log(window.location.href);
 	var _bftn_options = {
+
             // This is used to override the widget iframe URL with something else
             // Normally it would be on CDN somewhere, but we want it local for testing.
             iframe_base_path: 'https://pcommons.github.io/widget/iframe',//https://pcommons.github.io/widget/iframe',//                     //http://plugin-paulcommons.rhcloud.com/widget/iframe',
