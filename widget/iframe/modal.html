@@ -174,7 +174,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
           <p class="input-group">
             <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dob" is-open="cals['dob']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Date of Birth" style="width:100px" name="dob" />
             <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="calop($event,'dob')"><i class="glyphicon glyphicon-calendar"></i></button>
+              <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dob')"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </p>
         </td>
@@ -517,7 +517,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
                 ng-required="tcid.employee.maindata.felon==1"
                  close-text="Close"  data-displayname="Conviction Date" name="dateconviction" />
                 <span class="input-group-btn"  style="float:left; border:none;">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'felondc')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'felondc')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -528,7 +528,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.feloninfo.daterelease" is-open="cals['felondr']" min-date="minDate" datepicker-options="dateOptions"  ng-ng-required="tcid.employee.maindata.felon==1" close-text="Close"  data-displayname="Conviction Date" name="daterelease" />
                 <span class="input-group-btn"  style="float:left; border:none;">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'felondr')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'felondr')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -614,7 +614,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel"  name="servicestart" style="width:100px" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestart" is-open="cals['vsdf']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date From" />
                 <span class="input-group-btn"  style="float:left; border:none; ">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'vsdf')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'vsdf')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -626,7 +626,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" name="servicestart" style="width:100px" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestop" is-open="cals['vsdt']" min-date="minDate" datepicker-options="dateOptions" ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date To" />
                 <span class="input-group-btn"  style="float:left; border:none; ">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'vsdt')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'vsdt')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -666,7 +666,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstart" is-open="cals['unemployedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed From" style="width:100px" name="unemployedstart" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'unemployedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'unemployedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -677,7 +677,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstop" is-open="cals['unemployedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed To" style="width:100px"  name="unemployedstop" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'unemployedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'unemployedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -707,7 +707,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstart" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated From" style="width:100px" name="compensatedstart"  />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'compensatedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'compensatedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -718,7 +718,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstop" is-open="cals['compensatedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated To" style="width:100px" name="compensatedstop" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'compensatedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'compensatedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -779,7 +779,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
                   <p class="input-group">
                     <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dgi" is-open="cals['dgi']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date Gave Information" name="hmdgi"/>
                     <span class="input-group-btn" style="float:left; border:none; ">
-                      <button type="button" class="btn btn-default" ng-click="calop($event,'dgi')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dgi')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
               </td>
@@ -790,7 +790,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
                   <p class="input-group">
                     <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dojo" is-open="cals['dojo']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date of Job Offer" name="hmdojo"/>
                     <span class="input-group-btn" style="float:left; border:none; ">
-                      <button type="button" class="btn btn-default" ng-click="calop($event,'dojo')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dojo')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
               </td>
@@ -801,7 +801,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
                   <p class="input-group">
                     <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.doh" is-open="cals['doh']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date of Hire" name="hmdoh" />
                     <span class="input-group-btn" style="float:left; border:none; ">
-                      <button type="button" class="btn btn-default" ng-click="calop($event,'doh')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'doh')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
               </td>
@@ -813,7 +813,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dsw" is-open="cals['dsw']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close"  data-displayname="Hiring Manager - Date Started Work" name="hmdsw" />
                 <span class="input-group-btn"  style="float:left; border:none;">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'dsw')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dsw')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>

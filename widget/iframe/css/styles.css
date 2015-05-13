@@ -481,3 +481,7 @@ input[readonly] {
 
 .ng-invalid {outline:red 1px solid;}
 form.ng-invalid {outline:none;}
+
+.calBtn{
+	padding-top:2px;
+}
