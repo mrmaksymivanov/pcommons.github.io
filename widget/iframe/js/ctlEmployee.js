@@ -17,10 +17,14 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 	//$scope.calOpened=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false];
 
-	$scope.isLoggedIn=function(){return AuthService.plugin_auth();}; 
+	$scope.isLoggedIn=function(){return AuthService.plugin_auth(tcid);}; 
 	$scope.currentuser=function(){return AuthService.currentuser();};
+    console.log("IN SCOPE");
+    console.log($scope.currentuser);
 
+    console.log($scope);
 	$scope.thisPath='';
+	$scope.isATS=true;
 
 	if ($routeParams.employeeid==undefined) {
 		$scope.alerts.push({type:'danger',msg: ''});
@@ -110,6 +114,35 @@ $scope.getCounties(16);
 		});
 	};
 
+	$scope.atsLoadCCL = function() {
+		//eid=$scope.currentemployeeid;
+		console.log('loading ccl via employee view id: ');
+		$http.get('http://tcid.retrotax.co/api/v1/api_employees/view?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username+'&employeeid=1')
+		.success(function (data) {
+			if (data.SUCCESS || !data.SUCCESS) {
+				// console.log('laoded employee data from server, source json is: ',data.rows[0]);
+				$scope.tcid.employee=setEmployee(data.rows[0]);
+
+				$scope.tcid.employee.SUCCESS=true;
+				console.log('employee loadded!');
+				console.log($scope.tcid.employee);
+$scope.getCounties(16);
+
+				return true;
+
+			} else {
+				$scope.tcid.employee={};
+				$scope.tcid.employee.SUCCESS=false;
+				$scope.alerts.push({type:'danger',msg: data.message});
+				return false;
+			}
+		})
+		.error(function (data, status, headers, config) {
+			console.log('http et eerror is', data);
+			return false;
+		});
+	};
+
 	function MergeRecursive(obj1, obj2) {
 
 	  for (var p in obj2) {
@@ -135,11 +168,19 @@ $scope.getCounties(16);
 
 	$scope.getSelectedClientIndex = function() {
  		if ($scope.tcid.employee.maindata == undefined) { return false; }
-		return getIndexOf($scope.currentuser().ccl.clients, $scope.tcid.employee.maindata.client.id, 'id');
+ 		if($scope.isATS){
+ 			return 364;
+ 		}else{
+			//return getIndexOf($scope.currentuser().ccl.clients, $scope.tcid.employee.maindata.client.id, 'id');
+ 		}
 	};
 	$scope.getSelectedCompanyIndex = function() {
 		if ($scope.tcid.employee.maindata == undefined) { return false; }
-		return getIndexOf($scope.currentuser().ccl.clients[$scope.getSelectedClientIndex()].companies, $scope.tcid.employee.maindata.company.id, 'id');
+ 		if($scope.isATS){
+ 			return 1054;
+ 		}else{
+			//return getIndexOf($scope.currentuser().ccl.clients[$scope.getSelectedClientIndex()].companies, $scope.tcid.employee.maindata.company.id, 'id');
+		}
 	};
 
 	function getIndexOf(arr, val, prop) {

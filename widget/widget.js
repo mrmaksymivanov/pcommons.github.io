@@ -36,7 +36,7 @@ if (typeof _bftn_options == "undefined")
 	var _bftn_options = {
             // This is used to override the widget iframe URL with something else
             // Normally it would be on CDN somewhere, but we want it local for testing.
-            iframe_base_path: 'https://pcommons.github.io/widget/iframe',//'../iframe', //http://plugin-paulcommons.rhcloud.com/widget/iframe',
+            iframe_base_path: '../iframe',//https://pcommons.github.io/widget/iframe',//                     //http://plugin-paulcommons.rhcloud.com/widget/iframe',
             // This is just a delay. You can have the animation start after page load.
             delay: 0,
             // This shows debug stuff in the console. For testing

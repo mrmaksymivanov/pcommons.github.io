@@ -132,6 +132,12 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 			});
 	},
 	plugin_auth: function(tcid) {
+		//return $http.get('http://tcid.retrotax.co/api/v1/api_employees/view?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username+'&employeeid=0')
+		return $http.get('http://tcid.retrotax.co/api/v1/companies/list?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&employeeid=0')
+
+			.then(function(response) {
+					console.log("PLUGIN AUTH");
+					console.log(response);
 					if (angular.isDefined(response.data.APIKEY)) {tcid.api_key=response.data.APIKEY;}
 					if (angular.isDefined(response.data.apikey)) {tcid.api_key=response.data.apikey;}
 					tcid.api_key='F5171AE353A64CD396A45F54EC10F373';
@@ -173,6 +179,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 						console.log('LOGGED **NOT*** in USER: ',lcurrentuser);
 					}
 			        return lcurrentuser;
+			    });
 	},
 	userLoggedIn: 	function() {
 		if (!isLoggedIn) {

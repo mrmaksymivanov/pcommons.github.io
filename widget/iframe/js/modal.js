@@ -53,7 +53,13 @@ var animations = {
                             $(this).attr({'readonly': 'readonly'});                 
                     });
                   $('#btnSave').attr({'disabled':'disabled'});
+                }else if(this.options.plugin_type=='ats'){
+                    console.log()
+                  $('[name="clientid"]').addClass('hidden');
+                  $('[name="companyid"]').addClass('hide');
+                  $('[name="locationid"]').attr('type','hidden');
                 }
+
 
             }
 
