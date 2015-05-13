@@ -628,7 +628,6 @@ $scope.getCounties(16);
 
     addEventListener('load', loadedPlugin, false);
     function loadedPlugin() {
-    	ng-model-options="{ updateOn: 'form.$submitted' }"
     	$scope.$apply(function () {
             $scope.plugin_type = document.getElementById("plugin_type").value;
         });
