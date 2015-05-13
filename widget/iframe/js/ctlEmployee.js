@@ -628,10 +628,12 @@ $scope.getCounties(16);
 
     addEventListener('load', loadIt, false);
     function loadIt() {
-        var el = document.getElementById("plugin_type");
-        console.log(el);
-        $scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
-        // do something with el
+    	$scope.$apply(function () {
+            $scope.plugin_type = document.getElementById("plugin_type").value;
+        });
+        //$scope.plugin_type = document.getElementById("plugin_type").value;
+        console.log($scope.plugin_type);
+        //$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
     }
 });
 
