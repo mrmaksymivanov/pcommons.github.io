@@ -104,6 +104,14 @@ if (typeof _bftn_options.prepopulate_basic_info_by_id == "undefined")
 
 if (typeof _bftn_options.plugin_type == "undefined")
 	_bftn_options.plugin_type = false;
+
+if (typeof _bftn_options.button_text == "undefined")
+	_bftn_options.button_text = 'RetroTax Screening';
+
+
+if (typeof _bftn_options.button_class == "undefined")
+	_bftn_options.button_class = '';
+
 /**
 --------------------------------------------------------------------------------
 ANIMATION DEFINITIONS
@@ -425,7 +433,8 @@ var bindRetroTaxBtn = function() {
 		var div = document.getElementById('rt_widget');
 		if(compatible){
 			var newButton = document.createElement('button');
-			newButton.setAttribute('class', 'btn');
+			newButton.setAttribute('class', _bftn_options.apikey.button_class);
+			newButton.innerHTML = _bftn_options.apikey.button_text;
 			newButton.addEventListener('click', function(e) {
 				e.preventDefault();
 				ready();				
