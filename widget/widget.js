@@ -108,7 +108,6 @@ if (typeof _bftn_options.plugin_type == "undefined")
 if (typeof _bftn_options.button_text == "undefined")
 	_bftn_options.button_text = 'RetroTax Screening';
 
-
 if (typeof _bftn_options.button_class == "undefined")
 	_bftn_options.button_class = '';
 
