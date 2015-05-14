@@ -9,13 +9,10 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	
 	$scope.tcid.counties=[];
 	$scope.tcid.gettingcounties=[];
-	//var $scope.calopenee = [];
-	//$scope.calopenee["main"]=false;
-	// $scope.calopenee["dgi"]=true;
+
 	$scope.currentemployeeid=0;
 	$routeParams.employeeid='new';
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
-	//$scope.calOpened=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false];
 
 	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
 	$scope.currentuser=function(){return AuthService.currentuser();};
@@ -65,10 +62,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		// console.log('geting counties 3: ',$scope.getCounties(3));
 	};
 
-	$scope.gotoEmployee=function(eid){
-		console.log('navigating to employeed: ',eid);
-		//$location.path("/employee/"+eid);
-	};
 
 
 	$scope.atsLoadCCL = function() {
@@ -157,18 +150,6 @@ $scope.getCounties(16);
 		$scope.alerts.splice(index, 1);
 	};
 
-
-
-        // // function to submit the form after all validation has occurred            
-        // $scope.submitForm = function(isValid) {
-
-        //     // check to make sure the form is completely valid
-        //     if (isValid) {
-        //         alert('our form is amazing');
-        //     }
-
-        // };
-
 	$scope.save = function(isValid) {
 		console.log("--> Submitting form.. isValid?? ",isValid,'now check for $errors');
 
@@ -213,7 +194,6 @@ $scope.getCounties(16);
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 		var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=F5171AE353A64CD396A45F54EC10F373&u=demoapi.hiring.manager&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 
-		
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
@@ -487,85 +467,10 @@ $scope.getCounties(16);
 		return emp;
 	}	
 
-
-
-
-
-
 	$scope.searchinit = function() {
 		$scope.tcid.searchform={"firstname":"","lastname":"","appstatus":"*","ssn4":""};
 	}
 
-
-	$scope.getEmployees = function(prm) {
-		$scope.alerts=[];
-		if (prm==undefined) {prm={};}
-		if (prm.ref==undefined) {prm.ref=false;}
-		
-		console.log('search form criteria:',$scope.tcid.searchform);
-		
-		addURL='';
-		if ($scope.tcid.searchform.firstname.length > 1) {addURL+='&firstname='+$scope.tcid.searchform.firstname;}
-		if ($scope.tcid.searchform.lastname.length > 1) {addURL+='&lastname='+$scope.tcid.searchform.lastname;}
-		if ($scope.tcid.searchform.ssn4.length==4) {addURL+='&ssn4='+$scope.tcid.searchform.ssn4;}
-	
-		if ($scope.tcid.searchform.appstatus=='*') {
-			addURL+='&sortField=id&sortDir=DESC';
-		}
-		if ($scope.tcid.searchform.appstatus=='recent') {
-			addURL+='&sortField=id&sortDir=DESC';
-		}
-		if ($scope.tcid.searchform.appstatus=='incomplete') {
-			addURL+='&applicationstatusid=';
-		}
-		if ($scope.tcid.searchform.appstatus.length==2) {
-			addURL+='&applicationstatusid='+$scope.tcid.searchform.appstatus;
-		}
-		
-
-		console.log('getemployees.. passed params: ',prm);
-
-		if ($scope.tcid.employees == undefined) {$scope.tcid.employees=[];}	
-
-		if (!prm.ref) {
-			if ($scope.tcid.employees.length>0) {
-				console.log('using exising employees data');
-				return true;
-			} else {
-				var tmpemps = JSON.parse(localStorage.getItem('employees'));
-				console.log('setting employees data from local sorage successfully');
-				if (angular.isArray(tmpemps)) {
-					$scope.tcid.employees=tmpemps;
-					return true;
-				}
-			}
-		}
-
-		doref=($scope.tcid.employees.length==0);
-		if (prm.ref!=undefined) {doref=prm.ref;} 
-
-		if (doref) {
-			$http.get('http://tcid.retrotax.co/api/v1/api_employees/list?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username +addURL)
-			.success(function (data) {
-				if (angular.isArray(data.rows)) {
-					$scope.tcid.employees=data.rows;
-					console.log('employees loadded from ajax!');
-					localStorage.setItem("employees", JSON.stringify($scope.tcid.employees));
-					return true;
-
-				} else {
-					console.log('dailed to get fata::::::::::: ',data);
-					$scope.alerts.push({type:'danger',msg: 'nodata: '+data.message});
-					return false;
-				}
-			})
-			.error(function (data, status, headers, config) {
-				console.log('http et eerror is', data);
-				return false;
-			});
-		} else {
-			console.log('not refreshing employees list',$scope.tcid.employees);}
-	};
 
 	 $scope.getCounties=function(st){
 	 	if (st == undefined) {return false;}
@@ -591,12 +496,7 @@ $scope.getCounties(16);
 
 	    return;
 	}
-/*
-    console.log(angular.element(document.querySelector('#plugin_type')).val());
-	console.log(angular.element('plugin_type'));
-	$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
-	console.log($scope.plugin_type);
-*/
+
 
     addEventListener('load', loadedPlugin, false);
     function loadedPlugin() {
@@ -613,7 +513,6 @@ $scope.getCounties(16);
             //console.log("AUTH REQ");
             //console.log($scope.authorizationReq);
         });
-        //$scope.plugin_type = document.getElementById("plugin_type").value;
         console.log($scope.plugin_type);
         console.log($scope.firstname);
         //$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
