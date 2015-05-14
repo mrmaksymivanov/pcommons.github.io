@@ -40,9 +40,8 @@ if (typeof _bftn_options == "undefined")
             // Normally it would be on CDN somewhere, but we want it local for testing.
             iframe_base_path: 'https://pcommons.github.io/widget/iframe',//https://pcommons.github.io/widget/iframe',//                     //http://plugin-paulcommons.rhcloud.com/widget/iframe',
             // This is just a delay. You can have the animation start after page load.
-            delay: 0,
-            // This shows debug stuff in the console. For testing
-            debug: true,
+            delay: 1000, 
+            debug: true, // This shows debug stuff in the console. For testing
             username:'DemoAPI.New.Employee',
             apikey:'111BC0B55FEF6737944B37B1CA2DBED3',
             // Always show the widget? Useful for testing lol.
@@ -54,8 +53,7 @@ if (typeof _bftn_options == "undefined")
             },
             button_class:"btn btn-huge btn-info",
             button_text:"Open RetroTax Screening Plugin",
-            //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
-            plugin_type: 'ats',  
+            plugin_type: 'ats',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
             prepopulate_basic_info_by_id: {
                 firstname:'first_name',
                 lastname:'last_name',
