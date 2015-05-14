@@ -309,7 +309,7 @@ var _bftn_util = {
 			}
 		}, false);
 	},
-
+/*
 	// Set a cookie. Used to only show the widget once (unless you override).
 	setCookie: function(name,val,exdays)
 	{
@@ -332,7 +332,7 @@ var _bftn_util = {
   		}
 		return "";
 	},
-
+*/
 	// Get the hostname of the web page. Used to track stats for leaderboards
 	getHostname: function() {
 		var hostname = window.location.host.replace('www.', '');
@@ -362,11 +362,13 @@ console.log("Test0");
 	if (!_bftn_options.always_show_widget && url_override == false) {
 		// Only show once.
 console.log("Test1");
+
+/*
 		if (_bftn_util.getCookie('_BFTN_WIDGET_SHOWN')) {
 			console.log("Cookies");
 			return;
 		}
-
+*/
 		// Only show on September 10th 2014.
 		// JL HACK ~ remove before the end of September >_>
 		if (new Date().getDate() < 10) {
