@@ -53,7 +53,7 @@ if (typeof _bftn_options == "undefined")
             },
             button_class:"btn btn-huge btn-info",
             button_text:"Open RetroTax Screening Plugin",
-            plugin_type: 'ats',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
+            plugin_type: 'demo',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
             prepopulate_basic_info_by_id: {
                 firstname:'first_name',
                 lastname:'last_name',
