@@ -33,7 +33,7 @@
 	}
 
 if (typeof _bftn_options == "undefined")
-	console.log(window.location.href);
+	//console.log(window.location.href);
 	var _bftn_options = {
 
             // This is used to override the widget iframe URL with something else
