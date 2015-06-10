@@ -527,8 +527,8 @@ $scope.getCounties(16);
 	if (frmEmployee) {
 	  console.log("yes to if form");
 	  console.log($scope.form);
-      $scope.form.$setUntouched();
-      $scope.form.$setValidity();
+      frmEmployee.$setUntouched();
+      frmEmployee.$setValidity();
     }
 });
 
