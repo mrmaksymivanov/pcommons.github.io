@@ -521,14 +521,33 @@ $scope.getCounties(16);
     }
 
     
-    $scope.form=frmEmployee;
+    $scope.frmEmployee=frmEmployee;
     console.log($scope.form);
     console.log($scope);
+
 	if (frmEmployee) {
 	  console.log("yes to if form");
 	  console.log($scope.form);
-      frmEmployee.$setUntouched();
-      frmEmployee.$setValidity();
+      //frmEmployee.$setUntouched();
+      //frmEmployee.$setValidity();
     }
+
+
+  $scope.master = {};
+
+  $scope.update = function(tcid) {
+    $scope.master = angular.copy(user);
+  };
+
+  $scope.reset = function(form) {
+    if (form) {
+      form.$setPristine();
+      form.$setUntouched();
+    }
+    $scope.tcid = angular.copy($scope.master);
+  };
+
+  $scope.reset(frmEmployee);
+
 });
 
