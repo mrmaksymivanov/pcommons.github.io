@@ -520,12 +520,15 @@ $scope.getCounties(16);
         */
     }
 
+    
+    $scope.form=frmEmployee;
+    console.log($scope.form);
     console.log($scope);
-    console.log($scope.frmEmployee);
 	if (frmEmployee) {
 	  console.log("yes to if form");
-      $scope.frmEmployee.$setUntouched();
-      $scope.frmEmployee.$setValidity();
+	  console.log($scope.form);
+      $scope.form.$setUntouched();
+      $scope.form.$setValidity();
     }
 });
 
