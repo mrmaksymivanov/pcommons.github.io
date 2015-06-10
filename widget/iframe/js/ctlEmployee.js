@@ -547,7 +547,9 @@ $scope.getCounties(16);
     $scope.tcid = angular.copy($scope.master);
   };
 
-  $scope.reset($scope.frmEmployee);
+  $scope.frmEmployee.firstname.$setUntouched();
+  $scope.frmEmployee.lastname.$setPristine();
+  //$scope.reset($scope.frmEmployee);
 
 });
 
