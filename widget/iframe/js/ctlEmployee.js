@@ -522,12 +522,10 @@ $scope.getCounties(16);
 
     
     $scope.frmEmployee=frmEmployee;
-    console.log($scope.form);
     console.log($scope);
 
 	if (frmEmployee) {
 	  console.log("yes to if form");
-	  console.log($scope.form);
       //frmEmployee.$setUntouched();
       //frmEmployee.$setValidity();
     }
@@ -540,6 +538,8 @@ $scope.getCounties(16);
   };
 
   $scope.reset = function(form) {
+  	console.log(form);
+  	console.log("IN RESET");
     if (form) {
       form.$setPristine();
       form.$setUntouched();
@@ -547,7 +547,7 @@ $scope.getCounties(16);
     $scope.tcid = angular.copy($scope.master);
   };
 
-  $scope.reset(frmEmployee);
+  $scope.reset($scope.frmEmployee);
 
 });
 
