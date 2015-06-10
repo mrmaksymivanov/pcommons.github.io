@@ -49,8 +49,9 @@ var animations = {
                 $('#plugin_type').val(this.options.plugin_type);
                 if(this.options.plugin_type=='demo'){
                   $('input').each(function() {
-                        console.log($(this));
-                            $(this).attr({'readonly': 'readonly'});                 
+                            console.log($(this));
+                            $(this).attr({'readonly': 'readonly'});
+                            $(this).$setPristine();                 
                     });
                   $('#btnSave').attr({'disabled':'disabled'});
                 }else if(this.options.plugin_type=='ats'){
