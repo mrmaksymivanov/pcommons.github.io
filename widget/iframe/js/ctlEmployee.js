@@ -520,7 +520,7 @@ $scope.getCounties(16);
         */
     }
 
-    
+    /*
     $scope.frmEmployee=frmEmployee;
     console.log($scope);
 
@@ -552,6 +552,6 @@ $scope.getCounties(16);
   //$scope.tcid.employee.maindata.lastname.$setPristine();
   //$scope.reset($scope.frmEmployee);
   //$scope.frmEmployee.$setUntouched();
-
+*/
 });
 
