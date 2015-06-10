@@ -541,8 +541,8 @@ $scope.getCounties(16);
   	console.log(form);
   	console.log("IN RESET");
     if (form) {
-      form.$setPristine();
-      form.$setUntouched();
+     //form.$setPristine();
+      //form.$setUntouched();
     }
     $scope.tcid = angular.copy($scope.master);
   };
