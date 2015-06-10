@@ -521,11 +521,11 @@ $scope.getCounties(16);
     }
 
     console.log($scope);
-    console.log(form);
-	if (form) {
+    console.log(frmEmployee);
+	if (frmEmployee) {
 	  console.log("yes to if form");
-      form.$setPristine();
-      form.$setUntouched();
+      frmEmployee.$setPristine();
+      frmEmployee.$setUntouched();
     }
 });
 
