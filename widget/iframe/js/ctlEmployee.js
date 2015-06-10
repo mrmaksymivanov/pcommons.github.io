@@ -517,5 +517,13 @@ $scope.getCounties(16);
         console.log($scope.firstname);
         //$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
     }
+
+    console.log($scope);
+    console.log(form);
+	if (form) {
+	  console.log("yes to if form");
+      form.$setPristine();
+      form.$setUntouched();
+    }
 });
 
