@@ -501,6 +501,7 @@ $scope.getCounties(16);
     addEventListener('load', loadedPlugin, false);
     function loadedPlugin() {
     	$scope.$apply(function () {
+    		/*
             $scope.plugin_type = document.getElementById("plugin_type").value;
             $scope.firstname = document.getElementById("firstname").value;
             $scope.lastname = document.getElementById("lastname").value;
@@ -516,6 +517,7 @@ $scope.getCounties(16);
         console.log($scope.plugin_type);
         console.log($scope.firstname);
         //$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
+        */
     }
 
     console.log($scope);
