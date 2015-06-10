@@ -500,7 +500,7 @@ $scope.getCounties(16);
 
     addEventListener('load', loadedPlugin, false);
     function loadedPlugin() {
-    	$scope.$apply(function () {
+    	//$scope.$apply(function () {
     		/*
             $scope.plugin_type = document.getElementById("plugin_type").value;
             $scope.firstname = document.getElementById("firstname").value;
