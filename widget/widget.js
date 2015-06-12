@@ -74,6 +74,7 @@ if (typeof _bftn_options == "undefined")
 // Default URL for animation iframe. This gets overlay'ed over your page.
 var dfurl = 'https://pcommons.github.io/widget/iframe'; //http://plugin-paulcommons.rhcloud.com/iframe';
 var rt_iframeContentWindow=null;
+var iframeCopy={};
 
 /**
 --------------------------------------------------------------------------------
@@ -93,7 +94,6 @@ if (typeof _bftn_options == "undefined")
 if (typeof _bftn_options.iframe_base_path == "undefined")
 	_bftn_options.iframe_base_path = dfurl;
 
-// Which design to show, either "modal" or "banner" (see _bftn_animations below)
 if (typeof _bftn_options.animation == "undefined")
 	_bftn_options.animation = 'modal';
 
@@ -105,12 +105,27 @@ if (typeof _bftn_options.delay == "undefined")
 if (typeof _bftn_options.debug == "undefined")
 	_bftn_options.debug = false;
 
+// If set to true, we will log errors externally
+if (typeof _bftn_options.ajax_logging == "undefined")
+	_bftn_options.ajax_logging = false;
+
+// If set to true, we will log errors externally
+if (typeof _bftn_options.ajax_logging_url == "undefined")
+	_bftn_options.ajax_logging_url = 'http://plugin_logs.retrotax.co';
+
+// who to email logs to - always emails tech@retro so this is in addition to
+if (typeof _bftn_options.ajax_logging_email == "undefined")
+	_bftn_options.ajax_logging_email = false;
+
 // Usually a cookie is used to only show the widget once. You can override here.
 if (typeof _bftn_options.always_show_widget == "undefined")
 	_bftn_options.always_show_widget = false;
 
 if (typeof _bftn_options.prepopulate_basic_info_by_id == "undefined")
 	_bftn_options.prepopulate_basic_info_by_id = false;
+
+if (typeof _bftn_options.prepopulate_basic_info_by_name == "undefined")
+	_bftn_options.prepopulate_basic_info_by_name = false;
 
 if (typeof _bftn_options.plugin_type == "undefined")
 	_bftn_options.plugin_type = false;
@@ -121,17 +136,12 @@ if (typeof _bftn_options.button_text == "undefined")
 if (typeof _bftn_options.button_class == "undefined")
 	_bftn_options.button_class = '';
 
-/**
---------------------------------------------------------------------------------
-ANIMATION DEFINITIONS
---------------------------------------------------------------------------------
-Here's where the functionality and defaults for each of the animations (either
-"modal" or "banner" to begin with). Each animation has its own options property,
-which is an object containing default behaviors for that animation. These can be
-overridden by passing the appropriately-named properties into the _bftn_options
-object (above). This will get merged over the defaults when init is called.
---------------------------------------------------------------------------------
-*/
+if (typeof _bftn_options.logo == "undefined")
+	_bftn_options.logo = 'iframe/images/retrotax_plugin_logo.png';
+
+if (typeof _bftn_options.env_url == "undefined")
+	_bftn_options.env_url = 'https://webscreen.retrotax-aci.com';
+
 var _bftn_animations = {
 
 	// MODAL ANIMATION
@@ -157,8 +167,10 @@ var _bftn_animations = {
 			_bftn_util.injectCSS('_bftn_iframe_css', css);
 
 			var iframe = _bftn_util.createIframe(this.options.modalAnimation);
+			iframeCopy=iframe;
             console.log("IFRAME CREATED");
             console.log(iframe);
+            console.log(iframeCopy);
 			//console.log(this.options.prepopulate_basic_info_by_id.firstname);
 			console.log(this); 
 			var populated_fields={};
@@ -176,9 +188,7 @@ var _bftn_animations = {
 				}
 			}
 			if(this.options.prepopulate_basic_info_by_id){
-
 				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
-
 				populated_fields={
 	                firstname:document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
 	                lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
@@ -198,6 +208,13 @@ var _bftn_animations = {
 				this.options.populated_fields=populated_fields;
 
 			}
+			if(this.options.prepopulate_basic_info_by_name && !this.options.prepopulate_basic_info_by_id){
+				populated_fields={
+	             
+				};
+				this.options.populated_fields=populated_fields;
+			}
+
 			console.log("BINDING COMMUNICATION");
 			//setTimeout(function() {bftn_util.bindIframeCommunicator(iframe, this);}, 50);
 			_bftn_util.bindIframeCommunicator(iframe, this);
@@ -248,7 +265,11 @@ var _bftn_util = {
 	// Destroy the iframe used to display the animation
 	destroyIframe: function() {
 		var iframe = document.getElementById('_bftn_iframe');
-		iframe.remove();
+		iframe.setAttribute('class', 'hidden');
+		alert("Hidden...about to remove");
+		iframe.remove();//original code is to rm it. Going to try and hide it
+
+		//iframe.style.display='hidden';
 		//iframe.parentNode.removeChild(iframe);
 		//console.log(iframe);
 		//iframe=null;
@@ -307,30 +328,7 @@ var _bftn_util = {
 			}
 		}, false);
 	},
-/*
-	// Set a cookie. Used to only show the widget once (unless you override).
-	setCookie: function(name,val,exdays)
-	{
-		var d = new Date();
-		d.setTime(d.getTime()+(exdays*24*60*60*1000));
-		var expires = "expires="+d.toGMTString();
-		document.cookie = name + "=" + val + "; " + expires;
-	},
 
-	// Get the cookie. Used to only show the widget once.
-	getCookie: function(cname)
-	{
-		var name = cname + "=";
-		var ca = document.cookie.split(';');
-		for(var i=0; i<ca.length; i++)
-  		{
-  			var c = ca[i].trim();
-  			if (c.indexOf(name)==0)
-  				return c.substring(name.length,c.length);
-  		}
-		return "";
-	},
-*/
 	// Get the hostname of the web page. Used to track stats for leaderboards
 	getHostname: function() {
 		var hostname = window.location.host.replace('www.', '');
