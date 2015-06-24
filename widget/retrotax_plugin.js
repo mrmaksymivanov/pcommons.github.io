@@ -190,6 +190,7 @@ var _bftn_animations = {
 				}
 			}
 			if(this.options.prepopulate_basic_info_by_id){
+				console.log("prepopulate_basic_info_by_id");
 				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
 				populated_fields={
 	                firstname:document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
@@ -206,17 +207,14 @@ var _bftn_animations = {
 	                dob:dob.value				
 	                */
 				};
-
-				this.options.populated_fields=populated_fields;
-
 			}
 			if(this.options.prepopulate_basic_info_by_name && !this.options.prepopulate_basic_info_by_id){
+				console.log("prepopulate_basic_info_by_name");
 				populated_fields={
 	             
 				};
-				this.options.populated_fields=populated_fields;
 			}
-
+			this.options.populated_fields=populated_fields;
 			console.log("BINDING COMMUNICATION");
 			//setTimeout(function() {bftn_util.bindIframeCommunicator(iframe, this);}, 50);
 			_retrotax_util.bindIframeCommunicator(iframe, this);
@@ -393,7 +391,7 @@ console.log("Test1");
 }
 
 var bindRetroTaxBtn = function() {
-	var myEl = document.getElementById('retrotax_widget');
+	var myEl = document.getElementById('retrotax_plugin');
 	if (typeof(myEl) != 'undefined' && myEl != null){
 		console.log(myEl);
 
@@ -443,7 +441,7 @@ var bindRetroTaxBtn = function() {
 		console.log(_retrotax_options);
 		console.log("Compatible?");
 		console.log(compatible);
-		var div = document.getElementById('rt_widget');
+		var div = document.getElementById('retrotax_plugin');
 		if(compatible){
 			var newButton = document.createElement('button');
 			newButton.setAttribute('class', _retrotax_options.button_class);

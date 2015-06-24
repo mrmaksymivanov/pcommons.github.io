@@ -1,7 +1,9 @@
 # pcommons.github.io
 Plugin Demo
 
-
+Installation
+============
+Place `<script type="text/javascript" src="retrotax_plugin.js"></script>` either before the end of your `</head>` tag or at the end before your `</body>` tag (better)
 
 https://www.retrotax-aci.com/plugin-demo/
 ============

@@ -43,7 +43,8 @@
         }
 */
 
-	var _bftn_options = {
+
+	var _retrotax_options = {
 
             iframe_base_path: 'http://plugin-paulcommons.rhcloud.com/widget/iframe?param1=PostMsgParam1',
 	/*
@@ -81,7 +82,6 @@
         };
 
     </script>
-    <script type="text/javascript" src="widget/widget.js"></script>
 	<!--
 	END RTN WIDGET EMBED CODE
 	-->
@@ -90,11 +90,14 @@
 <h2>Demo: This demo's iframe is generated from OpenShit: http://plugin-paulcommons.rhcloud.com/widget/iframe</h2>
     <div role="main">
         <div class="wrap">
-        <div id="rt_widget">Trigger Screening</div>
+        <div id="retrotax_plugin">Trigger Screening</div>
         <input id="first_name" value="Paul">
         <input id="middle_init" value="M">
         <input id="last_name" value="Commons">
         </div><!-- close .wrap -->
     </div><!-- close .main -->
+        <script type="text/javascript" src="widget/retrotax_plugin.js"></script>
+
 </body>
+
 </html>
