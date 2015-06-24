@@ -235,7 +235,7 @@ var _retrotax_util = {
 		//console.log(animation);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
-		iframe.src = _retrotax_options.iframe_base_path + '/index.html?param1=testing';
+		iframe.src = _retrotax_options.iframe_base_path + '/modal.html';
 		iframe.frameBorder = 0;
 		iframe.allowTransparency = true; 
 		iframe.style.display = 'none';
@@ -282,7 +282,7 @@ var _retrotax_util = {
 				*	Here we can routeParams
 				*/
 
-				iframe.src = _retrotax_options.iframe_base_path + '/index.html?param1=testing';
+				iframe.src = _retrotax_options.iframe_base_path + '/modal.html';
 				iframe.frameBorder = 0;
 				iframe.allowTransparency = true; 
 				iframe.style.display = 'none';
