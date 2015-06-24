@@ -304,7 +304,7 @@ var _retrotax_util = {
 			switch (e.data.requestType) {
 				case 'getAnimation':
 					iframe.style.display = 'block';
-					sendMessage('putAnimation', JSON.stringify(animation.options), iframe);
+					sendMessage('putAnimation', animation.options, iframe);
 					break;
 				case 'stop':
 					animation.stop();
