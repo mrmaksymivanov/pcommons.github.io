@@ -91,7 +91,7 @@ var animations = {
                 console.log(x);
                 angular.element(x).val(this.options.populated_fields.lastname);
                 console.log("WORK");
-                console.log(angular.element(tcid.employee.maindata.firstname));
+               //console.log(angular.element(tcid.employee.maindata.firstname));
             }
 
             // ------------------------------ Optimizely test vvv
