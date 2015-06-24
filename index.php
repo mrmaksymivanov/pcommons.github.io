@@ -46,7 +46,7 @@
 
 	var _retrotax_options = {
 
-            iframe_base_path: 'http://plugin-paulcommons.rhcloud.com/widget/iframe?param1=PostMsgParam1',
+            iframe_base_path: 'http://plugin-paulcommons.rhcloud.com/widget/iframe',
 	/*
            https://pcommons.github.io/widget/iframe',             <-- Set this for SSL Testing and ACI Demo Website (https://www.retrotax-aci.com/plugin-demo/) 
            http://plugin-paulcommons.rhcloud.com/widget/iframe',  <-- Set this for http cross-domain testing

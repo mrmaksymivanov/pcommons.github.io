@@ -45,7 +45,7 @@ var animations = {
             console.log(this.options.plugin_type);
             console.log(this.options.test);
             //console.log($scope);
-            var variable1="passingVariable1";
+            var variable1=this.options.plugin_type;
             if(this.options.plugin_type){
                 $('#plugin_type').val(this.options.plugin_type);
                 if(this.options.plugin_type=='demo'){
@@ -75,28 +75,13 @@ var animations = {
                     sendMessage('stop');
                 }, 750);
             });
-
+            console.log(this.options.populated_fields);
+            if(typeof this.options.populated_fields != 'undefined'){
             //console.log(this.options.populated_fields.firstname);
-            $("#firstname").val(this.options.populated_fields.firstname);
-            $("#lastname").val(this.options.populated_fields.lastname);
-/*          
-            if (this.options.skipEmailSignup)
-            {
-                $('#direct_call').show();
-                $('#petition').hide();
-                $('.bottom-link').hide();
-                $('.bottom-link').hide();
-                $('#last-donation-ask').hide();
+                $("#firstname").val(this.options.populated_fields.firstname);
+                $("#lastname").val(this.options.populated_fields.lastname);
             }
-            if (this.options.skipCallTool)
-                this.phoneCallAllowed = false;
 
-            if (this.options.boxUnchecked)
-            {
-                $('#opt-in').attr('checked', false);
-                $('.disclosure').removeClass('nice-check');
-            }
-*/
             // ------------------------------ Optimizely test vvv
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {

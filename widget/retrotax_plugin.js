@@ -32,49 +32,12 @@
 	    }
 	}
 /* Altering these defaults may break retrotax-aci.com/plugin-demo */
-if (typeof window._retrotax_options == "undefined"){
-	//console.log(window.location.href);
-
-alert();
-	var _retrotax_options = {
-
-            // This is used to override the widget iframe URL with something else
-            // Normally it would be on CDN somewhere, but we want it local for testing.
-            iframe_base_path: 'https://pcommons.github.io/widget/iframe',//https://pcommons.github.io/widget/iframe',//                     //http://plugin-paulcommons.rhcloud.com/widget/iframe',
-            // This is just a delay. You can have the animation start after page load.
-            delay: 1000, 
-            debug: true, // This shows debug stuff in the console. For testing
-            username:'DemoAPI.New.Employee',
-            apikey:'111BC0B55FEF6737944B37B1CA2DBED3',
-            // Always show the widget? Useful for testing lol.
-            always_show_widget: true,
-            compatibility_iframe: {
-                width: 500,
-                height: 400
-
-            },
-            button_class:"btn btn-huge btn-info",
-            button_text:"Open RetroTax Screening Plugin",
-            plugin_type: 'demo',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
-            prepopulate_basic_info_by_id: {
-                firstname:'first_name',
-                lastname:'last_name',
-                middleinitial:'middle_init',
-                city:'',
-                state:'',
-                stateid:'',
-                zip:'',
-                address:'',
-                address2:'',
-                countyid:'',
-                dob:''
-            }
-        };
+if (typeof window._retrotax_options != "undefined"){
+	var _retrotax_options=window._retrotax_options;
 }
 
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
-var dfurl = 'https://pcommons.github.io/widget/iframe'; //http://plugin-paulcommons.rhcloud.com/iframe';
 var rt_iframeContentWindow=null;
 var iframeCopy={};
 
@@ -94,7 +57,7 @@ if (typeof _retrotax_options == "undefined")
 
 // The path to the iframe that gets injected over your page
 if (typeof _retrotax_options.iframe_base_path == "undefined")
-	_retrotax_options.iframe_base_path = dfurl;
+	_retrotax_options.iframe_base_path = 'https://pcommons.github.io/widget/iframe';
 
 if (typeof _retrotax_options.animation == "undefined")
 	_retrotax_options.animation = 'modal';
@@ -130,10 +93,10 @@ if (typeof _retrotax_options.prepopulate_basic_info_by_name == "undefined")
 	_retrotax_options.prepopulate_basic_info_by_name = false;
 
 if (typeof _retrotax_options.plugin_type == "undefined")
-	_retrotax_options.plugin_type = false;
+	_retrotax_options.plugin_type = 'demo';
 
 if (typeof _retrotax_options.button_text == "undefined")
-	_retrotax_options.button_text = 'RetroTax Screening';
+	_retrotax_options.button_text = 'Open RetroTax Screening Plugin';
 
 if (typeof _retrotax_options.button_class == "undefined")
 	_retrotax_options.button_class = '';
@@ -143,6 +106,25 @@ if (typeof _retrotax_options.logo == "undefined")
 
 if (typeof _retrotax_options.env_url == "undefined")
 	_retrotax_options.env_url = 'https://webscreen.retrotax-aci.com';
+
+if (typeof _retrotax_options.compatibility_iframe == "undefined")
+	_retrotax_options.compatibility_iframe = {width: 500,height: 400};
+
+if (typeof _retrotax_options.username == "undefined")
+	_retrotax_options.username = false;
+
+if (typeof _retrotax_options.apikey == "undefined")
+	_retrotax_options.apikey = false;
+
+
+
+
+
+
+
+
+
+
 
 var _bftn_animations = {
 
