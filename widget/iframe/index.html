@@ -835,11 +835,18 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
   <button id="btnSave" type="submit" class="btn btn-primary btn-block">SAVE</button>
 
+
+
   <div style="height:30px; clear:both;width:100%"></div>
 </form>
 <alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
 
-
+    <br>
+    <button ng-click="sendMessage();">Send response</button>
+    <br>
+    <ol>
+      <li ng-repeat="message in messages">{{message}}</li>
+    </ol>
   </div><!-- /modal -->
 </div><!--/scene-->
 <!--
