@@ -29,7 +29,9 @@
       	console.log(event);
         var error, response;
         event = event.originalEvent || event;
+        console.log(event);
         if (event && event.data) {
+          console.log("event and event.data");
           response = null;
           $rootScope.sender = event.source;
           try {
@@ -53,6 +55,7 @@
       $messages = [];
       api = {
         messages: function(_message_) {
+        	console.log(_message_);
           if (_message_) {
             $messages.push(_message_);
             $rootScope.$digest();

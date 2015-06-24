@@ -41,6 +41,8 @@ var animations = {
         start: function() {
             console.log("IN Modal.js");
             console.log(this);
+            this.options.response="angularjs response";
+            this.options._message_="_MESSAGE_";
 
             /*
             console.log(this.options.populated_fields);
