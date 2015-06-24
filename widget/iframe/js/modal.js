@@ -45,6 +45,7 @@ var animations = {
             console.log(this.options.plugin_type);
             console.log(this.options.test);
             //console.log($scope);
+            var variable1="passingVariable1";
             if(this.options.plugin_type){
                 $('#plugin_type').val(this.options.plugin_type);
                 if(this.options.plugin_type=='demo'){

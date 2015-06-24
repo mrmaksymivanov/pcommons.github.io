@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ngRoute','ui.bootstrap','ngMask']);
+var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngMask']);
 
 
 

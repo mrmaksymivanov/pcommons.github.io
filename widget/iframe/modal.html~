@@ -3,14 +3,6 @@
     <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 	<link rel="stylesheet" type="text/css" href="css/min/modal.min.css">
-<!--
-    	<script type="text/javascript" src="//use.typekit.net/aml1eoz.js"></script>
-    	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
--->
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
 	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
