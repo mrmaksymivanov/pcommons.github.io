@@ -10,7 +10,7 @@ app.config(function($routeProvider, $locationProvider){
 
 	$routeProvider.
 		when("/:param1",
-			{	templateUrl: "/widget/iframe/index.html",
+			{	templateUrl: "/widget/iframe/modal.html",
 				controller: "ctlEmployee"});
 
 	//$locationProvider.html5Mode(false);
