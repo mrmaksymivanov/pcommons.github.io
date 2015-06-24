@@ -734,6 +734,7 @@ $scope.getCounties(16);
 	    return;
 	}
 
+	console.log($scope.tcid);
 
     addEventListener('load', loadedPlugin, false);
     function loadedPlugin() {
