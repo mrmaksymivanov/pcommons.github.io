@@ -281,7 +281,8 @@ var _retrotax_util = {
 				/*
 				*	Here we can routeParams
 				*/
-				iframe.src = _retrotax_options.iframe_base_path + '/' + animation + '.html?param1=testing';
+
+				iframe.src = _retrotax_options.iframe_base_path + '/index.html?param1=testing';
 				iframe.frameBorder = 0;
 				iframe.allowTransparency = true; 
 				iframe.style.display = 'none';
@@ -290,13 +291,10 @@ var _retrotax_util = {
 			}
 			iframe.contentWindow.postMessage(data, '*');
 		}
-//console.log("test2");
 		var method = window.addEventListener ? "addEventListener":"attachEvent";
 		var eventer = window[method];
 		var messageEvent = method == "attachEvent" ? "onmessage":"message";
-
 		var hostname = this.getHostname();
-//console.log("test3");
 		eventer(messageEvent,function(e) {
 			if (!e.data || !e.data.BFTN_IFRAME_MSG)
 				return;
