@@ -235,7 +235,7 @@ var _retrotax_util = {
 		//console.log(animation);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
-		iframe.src = _retrotax_options.iframe_base_path + '/' + animation + '.html';
+		iframe.src = _retrotax_options.iframe_base_path + '/index.html?param1=testing';
 		iframe.frameBorder = 0;
 		iframe.allowTransparency = true; 
 		iframe.style.display = 'none';
@@ -304,7 +304,7 @@ var _retrotax_util = {
 			switch (e.data.requestType) {
 				case 'getAnimation':
 					iframe.style.display = 'block';
-					sendMessage('putAnimation', animation.options, iframe);
+					sendMessage('putAnimation', JSON.stringify(animation.options), iframe);
 					break;
 				case 'stop':
 					animation.stop();

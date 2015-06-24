@@ -20,7 +20,7 @@
 <div id="scene">
   <div id="modal" >
  
-<div ng-controller="ctlEmployee" ng-init="initEdit({{add_html_metadata|tojson}})">
+<div ng-controller="ctlEmployee" ng-init="initEdit()">
 
 <form name="frmEmployee" id="frmEmployee" class="form-horizontal" role="form"
 ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmployee.$valid)" novalidate style="padding_top:50px">

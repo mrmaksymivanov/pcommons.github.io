@@ -296,9 +296,9 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.initView = function() {
 		//console.log('geting counties: ',$scope.getCounties(17));
 	};
-	$scope.initEdit = function(html_metadata) {
-        $scope.html_metadata = html_metadata;
-        console.log($scope.html_metadata);
+	$scope.initEdit = function() {
+        //$scope.html_metadata = html_metadata;
+        //console.log($scope.html_metadata);
 	};
 
 
