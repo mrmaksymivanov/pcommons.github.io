@@ -45,7 +45,8 @@ var animations = {
             console.log(this.options.plugin_type);
             console.log(this.options.test);
             //console.log($scope);
-            var variable1=this.options.plugin_type;
+            window.variable1=this.options.plugin_type;
+
             if(this.options.plugin_type){
                 $('#plugin_type').val(this.options.plugin_type);
                 if(this.options.plugin_type=='demo'){
@@ -92,148 +93,7 @@ var animations = {
             {
                 setTimeout(stupidIEZoomFix, 2250);
             }
-/*
-            // Optimizely test vvv
-            if (!document.skipOptimizely && document.showCTATextImmediately)
-            {
-                $('#header h1').css('opacity', 0);
-                $('#header .cta').css('opacity', 1);
-            }
 
-            // Optimizely test vvv
-            this.optimizelyTextAB();
-
-            // If no org is set, then 16% chance of free press
-            if (!this.options.org && Math.random() < 0.16) {
-                this.options.org = 'fp';
-            }
-
-            if (this.options.org == 'fp')
-            {
-                $('#fftf_disclosure').hide();
-                $('#fp_disclosure').show();
-            }
-            else if (this.options.org == 'dp')
-            {
-                $('#fftf_disclosure').hide();
-                $('#dp_disclosure').show();
-            }
-            else if (this.options.org == 'fftf_org')
-            {
-                $('#fftf_disclosure').hide();
-                $('#fftf_org_disclosure').show();
-            }
-
-            $('a.close').click(function(e) {
-                e.preventDefault();
-                $('body').addClass('closed');
-                trackLeaderboardStat({stat: 'close_widget', data: 'modal'});
-                setTimeout(function() {
-                    sendMessage('stop');
-                }, 750);
-            });
-
-            $('a.letter').click(function(e) {
-                e.preventDefault();
-                $('#overlay').css('display', 'block');
-                setTimeout(function() {
-                    $('#overlay').addClass('visible');
-                }, 50);
-                
-            });
-
-            $('a.continue').click(function(e) {
-                $('#overlay').removeClass('visible');
-
-                setTimeout(function() {
-                    $('#overlay').css('display', 'none');
-                }, 750);
-            });
-
-            $('a#cantcall').click(function(e) {
-                e.preventDefault();
-                this.showFinal()
-            }.bind(this));
-
-            $("form[name=petition]").submit(function(e) {
-                e.preventDefault();
-                if (this.postUser($(this))) {
-                    
-                    $("input:not([type=image],[type=button],[type=submit])").val('');
-
-                    if (this.phoneCallAllowed)
-                        this.showPhoneCall();
-                    else
-                        this.showFinal();
-                    
-                } else {
-                    // alert('Please complete the rest of the form. Thanks!');
-                }
-            }.bind(this));
-
-            $("form[name=direct_call]").submit(function(e) {
-                e.preventDefault();
-                var phone = this.validatePhone($('#phone_front').val());
-
-                if (!phone)
-                {
-                    $('#phone_front').addClass('error');
-                }
-                else
-                {
-                    this.placePhonecall(phone);
-                    this.showFinalWithCallInstructions();
-                }
-            }.bind(this));
-
-            $('a.facebook').click(function(e) {
-                trackLeaderboardStat({stat: 'share', data: 'facebook'});
-            });
-
-            $('a.twitter').click(function(e) {
-                trackLeaderboardStat({stat: 'share', data: 'twitter'});
-            });
-
-            $('#call').click(function(e) {
-                e.preventDefault();
-
-                var phone = this.validatePhone($('#phone').val());
-
-                if (!phone)
-                    return $('#phone').addClass('error');
-
-                $('#call').attr('disabled', true);
-                $('#phone').attr('disabled', true);
-
-                this.placePhonecall(phone);
-
-                setTimeout(function() {
-                    this.showFinalWithCallInstructions();
-                }.bind(this), 1000);
-            }.bind(this));
-
-            $.ajax({
-                url: '//fftf-geocoder.herokuapp.com/',
-                dataType: 'json',
-                type: 'get',
-                success: function(data) {
-                    if (data.country && data.country.iso_code)
-                    {
-                        $('#country').val(data.country.iso_code);
-                        if (data.country.iso_code != "US")
-                        {
-                            this.phoneCallAllowed = false;
-
-                            if (this.options.skipEmailSignup)
-                            {
-                                // Nothing to do. Close the modal now.
-                                sendMessage('stop');
-                            }
-                        }
-                    }
-                }.bind(this)
-            });
-*/
         },
         log: function() {
             if (this.options.debug)
@@ -243,41 +103,10 @@ var animations = {
 }
 
 $(document).ready(function() {
-/*
-    $('#header h1').html($('h1.headline').html());
-    $('#header .cta p').html($('p.cta-hidden-trust-me').html());
-
-    setTimeout(function() {
-        $('#header .cta').css('height', $('#header').outerHeight()+'px');
-        $('#letter').css('height', $('#modal').outerHeight()+'px');
-        $('#letter').css('opacity', 1);
-    }, 1000);
-*/
     var loc = window.location.href;
-
     if (loc.indexOf('EMBED') != -1) {
-
         document.body.className = 'embedded';
-        document.skipOptimizely = true;
-/*
-        if (loc.indexOf('NOCALL') != -1)
-            animations.modal.options.skipCallTool = true; 
-
-        if (loc.indexOf('NOEMAIL') != -1)
-            animations.modal.options.skipEmailSignup = true;
-
-        if (loc.indexOf('UNCHECK') != -1)
-            animations.modal.options.boxUnchecked = true;
-
-        if (loc.indexOf('DP') != -1)
-            animations.modal.options.org = 'dp';
-
-        if (loc.indexOf('FP') != -1)
-            animations.modal.options.org = 'fp'; 
-
-        if (loc.indexOf('FFF') != -1)
-            animations.modal.options.org = 'fftf_org'; 
-*/               
+        document.skipOptimizely = true;             
         animations.modal.options.fastAnimation = true;
         animations.modal.start(); 
     } 
@@ -286,9 +115,9 @@ $(document).ready(function() {
 
 
 /**
- *  -------------------------- OMG ---------------------------------------------
+ *  -----------------------------------------------------------------------
  *  The rest of this file is all Internet Explorer's fault.
- *  -------------------------- OMG ---------------------------------------------
+ *  -----------------------------------------------------------------------
  */
 
 
