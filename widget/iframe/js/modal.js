@@ -46,7 +46,7 @@ var animations = {
             console.log(this.options.test);
             //console.log($scope);
             window.variable1=this.options.plugin_type;
-            $window.variable1=this.options.plugin_type;
+            console.log(window);
 
             switch(this.options.plugin_type) {
                 case 'demo':

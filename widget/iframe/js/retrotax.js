@@ -232,11 +232,11 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, window){
 	console.log("POST MESSAGE");
 	var param1 = $routeParams.param1;
 	console.log(param1);
-	$scope.variable1 = $window.variable1;
+	$scope.variable1 = window.variable1;
 	console.log($scope.variable1);
 	$scope.currentemployeeid;
 	$scope.alerts = [];
@@ -294,11 +294,9 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.initView = function() {
 		//console.log('geting counties: ',$scope.getCounties(17));
 	};
-	$scope.initEdit = function() {
-
-		// console.log('geting counties 1: ',$scope.getCounties(1));
-		// console.log('geting counties 2: ',$scope.getCounties(2));
-		// console.log('geting counties 3: ',$scope.getCounties(3));
+	$scope.initEdit = function(html_metadata) {
+        $scope.html_metadata = html_metadata;
+        console.log($scope.html_metadata);
 	};
 
 
