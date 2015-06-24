@@ -85,7 +85,13 @@ var animations = {
             //console.log(this.options.populated_fields.firstname);
                 angular.element("#firstname").val(this.options.populated_fields.firstname);
                 console.log(angular.element("#firstname").scope());
+
                 $("#lastname").val(this.options.populated_fields.lastname);
+                var x=angular.element("#firstname").scope();
+                console.log(x);
+                angular.element(x).val(this.options.populated_fields.lastname);
+                console.log("WORK");
+                console.log(angular.element(tcid.employee.maindata.firstname));
             }
 
             // ------------------------------ Optimizely test vvv
