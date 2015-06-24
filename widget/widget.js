@@ -31,7 +31,7 @@
 	        }
 	    }
 	}
-
+/* Altering these defaults may break retrotax-aci.com/plugin-demo */
 if (typeof _bftn_options == "undefined")
 	//console.log(window.location.href);
 	var _bftn_options = {

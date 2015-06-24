@@ -1,21 +1,30 @@
 <!doctype html>
-<html>
 <head>
+    <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 	<link rel="stylesheet" type="text/css" href="css/min/modal.min.css">
-	<script type="text/javascript" src="//use.typekit.net/aml1eoz.js"></script>
+<!--
+    	<script type="text/javascript" src="//use.typekit.net/aml1eoz.js"></script>
     	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
-  	<script src="http://m.retrotax.co/assets/js/ui-bootstrap-custom-tpls-0.12.0.js"></script>  
-  	<script src="http://m.retrotax.co/assets/js/angular-toggle-switch.min.js"></script>
-	<script src="http://m.retrotax.co/assets/js/angular-local-storage.js"></script>
-  	<script src="http://m.retrotax.co/assets/js/ngMask.min.js"></script>
 
+-->
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+	  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+
+  	<script src="js/min/ui-bootstrap-custom-tpls-0.12.0.js"></script>  
+    <!--
+  	<script src="js/min/angular-toggle-switch.min.js"></script>
+	  <script src="js/angular-local-storage.js"></script>
+    -->
+  	<script src="js/min/ngMask.min.js"></script>
+
+<!--
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    --
   	<link href="css/styles.css" rel="stylesheet"> 
 
 
@@ -31,7 +40,7 @@
 
 </head>
 <base href="/">
-<body ng-app="app">
+<body style="background-color: transparent;" ng-app="app">
 
 <div id="scene">
 <!--
@@ -54,14 +63,12 @@
  
 <div ng-controller="ctlEmployee" ng-init="initEdit()">
 
-<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
-
 <form name="frmEmployee" id="frmEmployee" class="form-horizontal" role="form"
 ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmployee.$valid)" novalidate style="padding_top:50px">
 
 <accordion close-others="1">
+<a class="close" href="#">Close</a>
     <accordion-group heading="Employee Info - {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1">
-    <a class="close" href="#"></a>
       <input type="hidden" name="employeeid" id="employeeid" value="{{tcid.employee.maindata.id}}">
 
         <table class="table table-user-information table-responsive">
@@ -71,6 +78,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
         </td>
         </tr>
+        <input type="hidden" id="plugin_type" ng-model="plugin_type" >
 
         <input type="hidden" name="clientid" id="clientid">
         
@@ -88,9 +96,10 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req">
         <th class="frmlbl">Company</th>
         <td class="frminput" >
-            <select class="input-sm" ng-model="tcid.employee.maindata.company.id" ng-required="true" data-displayname="Company" name="companyid">
+            <select class="input-sm" ng-model="tcid.employee.maindata.company.id" ng-required="!isATS" data-displayname="Company" name="companyid">
                 <option ng-repeat="cmpny in currentuser().ccl.clients[getSelectedClientIndex()].companies" 
                         ng-selected="{{cmpny.id == tcid.employee.maindata.company.id}}" 
+                        ng-model-options="{ updateOn: 'loadedPlugin' }"
                         value="{{cmpny.id}}">{{cmpny.legal_name}}
                 </option>
             </select>
@@ -100,9 +109,10 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req">
         <th class="frmlbl">Location</th>
         <td class="frminput"  >
-            <select class="input-sm" ng-model="tcid.employee.maindata.location.id" ng-required="true" data-displayname="Location" name="locationid">
+            <select class="input-sm" ng-model="tcid.employee.maindata.location.id" ng-required="!isATS" data-displayname="Location" name="locationid">
                 <option ng-repeat="loc in currentuser().ccl.clients[0].companies[getSelectedCompanyIndex()].locations"
                         ng-selected="{{loc.id == tcid.employee.maindata.location.locationid}}" 
+                        ng-model-options="{ updateOn: 'loadedPlugin' }"
                         value="{{loc.id}}">{{loc.location_name}}
                 </option>
             </select>
@@ -112,13 +122,13 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req">
         <th class="frmlbl">First Name</th>
         <td class="frminput">
-        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50">
+        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50" value="{{firstname}}" ng-model-options="{ updateOn: 'blur' }">
         </td>
         </tr>
         <tr class="req">
         <th class="frmlbl">Last Name</th>
         <td class="frminput">
-        <input class="input-sm" type="text" placeholder="enter last name" ng-model="tcid.employee.maindata.lastname" name="lastname" id="lastname" ng-required="true" data-displayname="Last Name"  ng-minlength="2" ng-maxlength="50" ></td>
+        <input class="input-sm" type="text" placeholder="enter last name" ng-model="tcid.employee.maindata.lastname" name="lastname" id="lastname" ng-required="true" data-displayname="Last Name"  ng-minlength="2" ng-maxlength="50" ng-model-options="{ updateOn: 'default blur' }"></td>
         </tr>
 
         <tr class="req">
@@ -156,13 +166,13 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <th class="frmlbl">SSN</th>
         <td class="frminput">
-        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssn" name="ssn" id="ssn" mask="999-99-9999"  ng-required="tcid.employee.maindata.ssn4==undefined"   data-displayname="Social Security Number">
+        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssn" name="ssn" id="ssn" mask="999-99-9999"  ng-required="!isATS" data-displayname="Social Security Number">
         </td>
         </tr>
         <tr class="req" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <th class="frmlbl">Confirm SSN</th>
         <td class="frminput">
-        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999" ng-required="tcid.employee.maindata.ssn4==undefined"  data-displayname="Confirmed Social Security Number">
+        <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999" ng-required="!isATS"  data-displayname="Confirmed Social Security Number">
         </td>
         </tr>        
         <tr class="req contdob">
@@ -171,7 +181,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
           <p class="input-group">
             <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dob" is-open="cals['dob']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Date of Birth" style="width:100px" name="dob" />
             <span class="input-group-btn">
-              <button type="button" class="btn btn-default" ng-click="calop($event,'dob')"><i class="glyphicon glyphicon-calendar"></i></button>
+              <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dob')"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
           </p>
         </td>
@@ -183,7 +193,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tbody>
           <tr class="yesno req">
             <th width="*" align="right" valign="top">
-            Has this employee ever worked for this company before?
+            Have you ever worked for this company before?
             </th>
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
@@ -225,7 +235,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
           <tr class="yesno req">
             <th width="*" align="right" valign="top">
-            <strong>Have you received Supplemental Security Income (SSI) at any time within the past 3 months?</strong><br /><small>Please note, this is not the same as Social Security benefits (SS) or Social Security Disability (SSDI) benefits.</small>
+            <strong>Have you received Supplemental Security Income (SSI) at any time within the past 3 months?</strong><br /><small><i>Note, this is not the same as Social Security benefits (SS) or Social Security Disability (SSDI) benefits.</i></small>
             </th>
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
@@ -514,7 +524,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
                 ng-required="tcid.employee.maindata.felon==1"
                  close-text="Close"  data-displayname="Conviction Date" name="dateconviction" />
                 <span class="input-group-btn"  style="float:left; border:none;">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'felondc')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'felondc')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -525,7 +535,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.feloninfo.daterelease" is-open="cals['felondr']" min-date="minDate" datepicker-options="dateOptions"  ng-ng-required="tcid.employee.maindata.felon==1" close-text="Close"  data-displayname="Conviction Date" name="daterelease" />
                 <span class="input-group-btn"  style="float:left; border:none;">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'felondr')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'felondr')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -611,7 +621,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel"  name="servicestart" style="width:100px" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestart" is-open="cals['vsdf']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date From" />
                 <span class="input-group-btn"  style="float:left; border:none; ">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'vsdf')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'vsdf')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -623,7 +633,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" name="servicestart" style="width:100px" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestop" is-open="cals['vsdt']" min-date="minDate" datepicker-options="dateOptions" ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date To" />
                 <span class="input-group-btn"  style="float:left; border:none; ">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'vsdt')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'vsdt')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -663,7 +673,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstart" is-open="cals['unemployedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed From" style="width:100px" name="unemployedstart" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'unemployedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'unemployedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -674,7 +684,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstop" is-open="cals['unemployedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed To" style="width:100px"  name="unemployedstop" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'unemployedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'unemployedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -704,7 +714,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstart" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated From" style="width:100px" name="compensatedstart"  />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'compensatedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'compensatedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -715,7 +725,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <p class="input-group">
                 <input type="tel" class="form-control input-sm" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstop" is-open="cals['compensatedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated To" style="width:100px" name="compensatedstop" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'compensatedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'compensatedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -774,9 +784,9 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <td class="frminput" align="left" valign="top">
 
                   <p class="input-group">
-                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dgi" is-open="cals['dgi']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date Gave Information" name="hmdgi"/>
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dgi" is-open="cals['dgi']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date Gave Information" name="hmdgi"/>
                     <span class="input-group-btn" style="float:left; border:none; ">
-                      <button type="button" class="btn btn-default" ng-click="calop($event,'dgi')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dgi')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
               </td>
@@ -785,9 +795,9 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <th align="left" valign="top">Date of Job Offer</th>
               <td class="frminput" align="left" valign="top">
                   <p class="input-group">
-                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dojo" is-open="cals['dojo']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date of Job Offer" name="hmdojo"/>
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dojo" is-open="cals['dojo']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date of Job Offer" name="hmdojo"/>
                     <span class="input-group-btn" style="float:left; border:none; ">
-                      <button type="button" class="btn btn-default" ng-click="calop($event,'dojo')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dojo')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
               </td>
@@ -796,9 +806,9 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
               <th align="left" valign="top">Date of Hire</th>
               <td class="frminput" align="left" valign="top">
                   <p class="input-group">
-                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.doh" is-open="cals['doh']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close" data-displayname="Hiring Manager - Date of Hire" name="hmdoh" />
+                    <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.doh" is-open="cals['doh']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close" data-displayname="Hiring Manager - Date of Hire" name="hmdoh" />
                     <span class="input-group-btn" style="float:left; border:none; ">
-                      <button type="button" class="btn btn-default" ng-click="calop($event,'doh')"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'doh')"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
               </td>
@@ -808,9 +818,9 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <th class="frmlbl">Date Started Work</th>
             <td class="frminput" align="left" valign="top">
               <p class="input-group">
-                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dsw" is-open="cals['dsw']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Hiring Manager - Date Started Work" name="hmdsw" />
+                <input type="tel" class="form-control input-sm" style="width:100px" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dsw" is-open="cals['dsw']" min-date="minDate" datepicker-options="dateOptions"  ng-required="!isATS" close-text="Close"  data-displayname="Hiring Manager - Date Started Work" name="hmdsw" />
                 <span class="input-group-btn"  style="float:left; border:none;">
-                  <button type="button" class="btn btn-default" ng-click="calop($event,'dsw')"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default calBtn" ng-click="calop($event,'dsw')"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </td>
@@ -837,7 +847,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.authorization" btn-radio="1" 
-                    ng-required="tcid.employee.maindata.rehire==0"  data-displayname="Question: Authorization?" name="authorization">YES</label>
+                    ng-required="!isATS && tcid.employee.maindata.rehire==0"  data-displayname="Question: Authorization?" name="authorization">YES</label>
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.authorization" btn-radio="0">NO</label>
               </div>
             </td>
@@ -851,7 +861,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.esign" btn-radio="1" 
-                   ng-required="tcid.employee.maindata.stateid==5" data-displayname="Question: E-Sign?" name="esign"  ng-required="tcid.employee.maindata.rehire==0" >YES</label>
+                    data-displayname="Question: E-Sign?" name="esign"  ng-required="!isATS && tcid.employee.maindata.rehire==0" >YES</label>
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.esign" btn-radio="0">NO</label>
               </div>
             </td>
@@ -868,17 +878,18 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
   <div style="height:30px; clear:both;width:100%"></div>
 </form>
+<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
 
 
   </div><!-- /modal -->
 </div><!--/scene-->
-
+<!--
 <div id="overlay">
 
 		<div class="content"></div>
 
 </div>
-
+-->
 
 <!-- JavaScript 
 <script type="text/javascript" src="js/min/jquery-1.11.1.min.js"></script>
@@ -887,8 +898,17 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 <script type="text/javascript" src="js/min/ui-bootstrap-custom-tpls-0.12.0.js"></script>
 <script type="text/javascript" src="js/min/angular-toggle-switch.min.js"></script>
 -->
-<script type="text/javascript" src="/widget/iframe/js/min/modal.min.js"></script>
+<script type="text/javascript" src="/widget/iframe/js/modal.js"></script>
 <script type="text/javascript" src="/widget/iframe/js/common.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+  ga('create', 'UA-64043626-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
