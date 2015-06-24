@@ -313,12 +313,12 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
 	console.log("POST MESSAGE");
 	var param1 = $routeParams.param1;
 	console.log(param1);
 	$scope.variable1 = window.variable1;
-	console.log($scope.variable1);
+	console.log($spostMessage);
 	$scope.currentemployeeid;
 	$scope.alerts = [];
     $scope.tcid={};
