@@ -318,7 +318,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	var param1 = $routeParams.param1;
 	console.log(param1);
 	$scope.variable1 = window.variable1;
-	console.log($spostMessage);
+	console.log($postMessage);
 	$scope.currentemployeeid;
 	$scope.alerts = [];
     $scope.tcid={};
