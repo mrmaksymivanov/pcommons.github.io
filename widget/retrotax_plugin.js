@@ -277,7 +277,11 @@ var _retrotax_util = {
 				
 				var iframe = document.createElement('iframe');
 				iframe.id = '_bftn_iframe';
-				iframe.src = _retrotax_options.iframe_base_path + '/' + animation + '.html';
+
+				/*
+				*	Here we can routeParams
+				*/
+				iframe.src = _retrotax_options.iframe_base_path + '/' + animation + '.html?param1=testing';
 				iframe.frameBorder = 0;
 				iframe.allowTransparency = true; 
 				iframe.style.display = 'none';
@@ -354,19 +358,11 @@ console.log("Test1");
 			return;
 		}
 	}
-	//_retrotax_util.setCookie('_BFTN_WIDGET_SHOWN', 'true', 365);
-	// JL HACK ~ Force iPhone / iPod to show banner while we fix issues
-	if(/(iPhone|iPod)/g.test(navigator.userAgent))
-		_retrotax_options.animation = 'modal';
-
-	if (typeof _bftn_animations[_retrotax_options.animation] == "undefined")
-		return _retrotax_util.log('Animation undefined: '+_retrotax_options.animation);
 
 	var animation = _bftn_animations[_retrotax_options.animation];
-//console.log(animation);
 	var images = new Array()
 	var preloaded = 0;
-//console.log(_retrotax_options);
+
 	setTimeout(function() {
 		animation.init(_retrotax_options).start();
 	}, _retrotax_options.delay);

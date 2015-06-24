@@ -47,26 +47,30 @@ var animations = {
             //console.log($scope);
             window.variable1=this.options.plugin_type;
 
-            if(this.options.plugin_type){
-                $('#plugin_type').val(this.options.plugin_type);
-                if(this.options.plugin_type=='demo'){
-                  $('input').each(function() {
-                            console.log($(this));
-                            $(this).attr({'readonly': 'readonly'});            
-                    });
-                  $('#btnSave').attr({'disabled':'disabled'});
-                }else if(this.options.plugin_type=='ats'){
-                    console.log()
-                  $('#client').closest('tr').addClass('hide');
-                  $('[name="companyid"]').closest('tr').addClass('hide');
-                  $('[name="locationid"]').closest('tr').addClass('hide');
-                  $('#ssn').closest('tr').addClass('hide');
-                  $('#ssn4').closest('tr').addClass('hide');
-                  //hide HM info
-                }
+            
+            switch(this.options.plugin_type) {
+                case 'demo':
+                      $('input').each(function() {
+                                console.log($(this));
+                                $(this).attr({'readonly': 'readonly'});            
+                        });
+                      $('#btnSave').attr({'disabled':'disabled'});        
+                      break;
+                case 'ats':
+                      $('#client').closest('tr').addClass('hide');
+                      $('[name="companyid"]').closest('tr').addClass('hide');
+                      $('[name="locationid"]').closest('tr').addClass('hide');
+                      $('#ssn').closest('tr').addClass('hide');
+                      $('#ssn4').closest('tr').addClass('hide');        
+                      break;
+                case 'obs':
+                    
+                    break;
 
-
+                default:
+                    sendMessage('stop');
             }
+
 
 
             $('a.close').click(function(e) {
