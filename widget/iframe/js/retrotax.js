@@ -232,7 +232,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, window){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService){
 	console.log("POST MESSAGE");
 	var param1 = $routeParams.param1;
 	console.log(param1);
