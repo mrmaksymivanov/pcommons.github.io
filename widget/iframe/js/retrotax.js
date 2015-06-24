@@ -316,7 +316,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
 	console.log("POST MESSAGE");
 	var param1 = $routeParams.param1;
-	console.log(param1);
+	console.log($rootScope);
 	$scope.variable1 = window.variable1;
 	console.log($postMessage);
 	$scope.currentemployeeid;
@@ -871,7 +871,11 @@ $scope.getCounties(16);
   //$scope.tcid.employee.maindata.lastname.$setPristine();
   //$scope.reset($scope.frmEmployee);
   //$scope.frmEmployee.$setUntouched();
+
 */
+	console.log($rootScope);
+	$scope.variable1 = window.variable1;
+	console.log($postMessage);
 });
 
 
