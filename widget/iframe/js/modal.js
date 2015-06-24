@@ -83,7 +83,8 @@ var animations = {
             console.log(this.options.populated_fields);
             if(typeof this.options.populated_fields != 'undefined'){
             //console.log(this.options.populated_fields.firstname);
-                $("#firstname").val(this.options.populated_fields.firstname);
+                angular.element("#firstname").val(this.options.populated_fields.firstname);
+                console.log(angular.element("#firstname").scope());
                 $("#lastname").val(this.options.populated_fields.lastname);
             }
 
