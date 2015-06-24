@@ -223,8 +223,8 @@ $scope.getCounties(16);
 		emp.maindata.id=0;
 
 		emp.maindata.applicationstatusid='';
-		emp.maindata.ssn='325-80-2657';
-		emp.maindata.ssnconfirmation='325-80-2657';
+		emp.maindata.ssn='111-11-1111';
+		emp.maindata.ssnconfirmation='111-11-1111';
 		emp.maindata.ssn4='';
 		emp.maindata.firstname='tom';
 		emp.maindata.lastname='test';
