@@ -916,7 +916,7 @@ $scope.getCounties(16);
 	$scope.$on('$messageIncoming', function(event, args) {
 		console.log(args);
 		console.log(args.populated_fields.firstname);
-		consolelog($scope.tcid);
+		console.log($scope.tcid);
 		$scope.tcid.employee=defEmployee(args.populated_fields);
 		console.log($scope.tcid);
     // do what you want to do
