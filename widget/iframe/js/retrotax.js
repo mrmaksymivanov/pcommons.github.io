@@ -1,4 +1,3 @@
-//(function(){"use strict";var a;a=angular.module("ngPostMessage",["ng"]),a.run(["$window","$postMessage","$rootScope",function(a,b,c){c.$on("$messageOutgoing",function(b,d,e){var f;return null==e&&(e="*"),f=c.sender||a.parent,f.postMessage(d,e)}),angular.element(a).bind("message",function(a){var d,e;if(a=a.originalEvent||a,a&&a.data){e=null,c.sender=a.source;try{e=angular.fromJson(a.data)}catch(f){d=f,console.error("ahem",d),e=a.data}return c.$root.$broadcast("$messageIncoming",e),b.messages(e)}})}]),a.factory("$postMessage",["$rootScope",function(a){var b,c;return b=[],c={messages:function(c){return c&&(b.push(c),a.$digest()),b},lastMessage:function(){return b[b.length-1]},post:function(b,c){return c||(c="*"),a.$broadcast("$messageOutgoing",b,c)}}}])}).call(this);
 
 /*!
 * angular-post-message v1.3.0
@@ -306,10 +305,18 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
+/*
+// TODO: create gulp file
+// TODO: remove common.js file and test PostMessage sans it
+// TODO: remove jQuery
+// TODO: create MaterialDesign option, like demo.html is but should be bootstrap
+// TODO: use strict mode
+*/
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope){
+
+app.controller("ctlEmployee",['$scope', '$http', '$route', '$routeParams', '$location', '$window', '$postMessage', '$rootScope', function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -677,6 +684,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		var m = JSON.stringify({status: 200, message: 'stop'});
 		scope.sender.postMessage(m, '*');
 	}
-});
+}]);
 
 
