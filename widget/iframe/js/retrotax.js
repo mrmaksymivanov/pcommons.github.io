@@ -918,7 +918,7 @@ $scope.getCounties(16);
 		console.log(args.populated_fields.firstname);
 		consolelog($scope.tcid);
 		$scope.tcid.employee=defEmployee(args.populated_fields);
-		consolelog($scope.tcid);
+		console.log($scope.tcid);
     // do what you want to do
 	});
 });
