@@ -82,7 +82,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req">
         <th class="frmlbl">First Name</th>
         <td class="frminput">
-        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50" value="{{firstname}}" ng-model-options="{ updateOn: 'blur' }">
+        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50" value="{{firstname}}" ng-model-options="{ updateOn: 'blur' }" valBubble>
         </td>
         </tr>
         <tr class="req">
@@ -838,7 +838,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
   <div style="height:30px; clear:both;width:100%"></div>
 </form>
-<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+<alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>s
     <ol>
       <li ng-repeat="message in messages">{{message}}</li>
     </ol>
