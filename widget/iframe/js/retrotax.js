@@ -520,7 +520,7 @@ $scope.getCounties(16);
 	};
 
 
-	defEmployee = function(user_provided_data) {
+	defEmployee = function(user_provided_data, currentuser) {
 		emp={};
 		emp.isNew=true;
 		emp.isDirty=true;
@@ -548,8 +548,8 @@ $scope.getCounties(16);
 		emp.maindata.client={};
 		emp.maindata.company={};
 		emp.maindata.location={};
-		emp.maindata.client.id=$scope.tcid.client.clientid;
-		emp.maindata.client.name=$scope.tcid.client.name;
+		emp.maindata.client.id= typeof currentuser.client.clientid!='undefined' ? currentuser.client.clientid : null;
+		emp.maindata.client.name=typeof currentuser.client.name!='undefined' ? currentuser.client.name : null;
 		emp.maindata.company.id=null;
 		emp.maindata.company.name='';
 		emp.maindata.location.id=null;
@@ -872,7 +872,7 @@ $scope.getCounties(16);
 		console.log(args);
 		console.log(args.populated_fields.firstname);
 		console.log($scope.tcid);
-		$scope.tcid.employee=defEmployee(args.populated_fields);
+		$scope.tcid.employee=defEmployee(args.populated_fields.$scope.tcid);
 		console.log($scope.tcid);
     // do what you want to do
 
