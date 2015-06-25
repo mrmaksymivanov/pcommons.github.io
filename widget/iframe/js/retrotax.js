@@ -302,45 +302,6 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.directive('valBubble', function (formHelper) {
-    return {
-        require: 'ngModel',
-        restrict: "A",
-        link: function (scope, element, attr, ctrl) {
-
-            if (!attr.name) {
-                throw "valBubble must be set on an input element that has a 'name' attribute";
-            }
-                
-            var currentForm = formHelper.getCurrentForm(scope);
-            if (!currentForm || !currentForm.$name)
-                throw "valBubble requires that a name is assigned to the ng-form containing the validated input";
-
-            //watch the current form's validation for the current field name
-            scope.$watch(currentForm.$name + "." + ctrl.$name + ".$valid", function (isValid, lastValue) {
-                if (isValid != undefined) {
-                    //emit an event upwards 
-                    scope.$emit("valBubble", {
-                        isValid: isValid,       // if the field is valid
-                        element: element,       // the element that the validation applies to
-                        expression: this.exp,   // the expression that was watched to check validity
-                        scope: scope,           // the current scope
-                        ctrl: ctrl              // the current controller
-                    });
-                }
-            });
-        }
-    };
-});
-
-
-
-
-
-
-
-
-
 
 app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
 	console.log("POST MESSAGE");
@@ -374,8 +335,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 
 	$scope.thisPath='';
-	//$scope.isATS=true;
-	
+	$scope.isATS=false; //asssume it's not ATS
+	$scope.isDisabled=false; //for submit button
 
 	if ($routeParams.employeeid==undefined) {
 		$scope.alerts.push({type:'danger',msg: ''});
@@ -568,23 +529,21 @@ $scope.getCounties(16);
 		emp.maindata={};
 		
 		emp.maindata.id=0;
-
 		emp.maindata.applicationstatusid='';
 		emp.maindata.ssn='';
 		emp.maindata.ssnconfirmation='';
 		emp.maindata.ssn4='';
-		emp.maindata.firstname='';
-		if(typeof user_provided_data.firstname!='undefined'){emp.maindata.firstname=user_provided_data.firstname;}
-		emp.maindata.lastname='';
-		emp.maindata.middleinitial='';
-		emp.maindata.city='';
+		emp.maindata.firstname= typeof user_provided_data.firstname!='undefined' ? user_provided_data.firstname : '';
+		emp.maindata.lastname= typeof user_provided_data.lastname!='undefined' ? user_provided_data.lastname : '';
+		emp.maindata.middleinitial= typeof user_provided_data.middleinitial!='undefined' ? user_provided_data.middleinitial : '';
+		emp.maindata.city= typeof user_provided_data.city!='undefined' ? user_provided_data.city : '';
 		//emp.maindata.state='IL';
 		emp.maindata.stateid=0;
-		emp.maindata.zip='';
-		emp.maindata.address='';
-		emp.maindata.address2='';
+		emp.maindata.zip=typeof user_provided_data.zip!='undefined' ? user_provided_data.zip : '';
+		emp.maindata.address=typeof user_provided_data.address!='undefined' ? user_provided_data.address : '';
+		emp.maindata.address2=typeof user_provided_data.address2!='undefined' ? user_provided_data.address2 : '';
 		//emp.maindata.countyid=null;
-		emp.maindata.dob='';
+		emp.maindata.dob=typeof dob.zip!='undefined' ? user_provided_data.dob : '';
 
 		emp.maindata.client={};
 		emp.maindata.company={};
@@ -909,10 +868,6 @@ $scope.getCounties(16);
 	console.log($scope.tcid);
 
 
-	$scope.$on("valBubble", function(evt, args) {
-    	alert("Validation changed for field " + args.ctrl.$name + ". Valid? " + args.isValid);
-	});
-
 	$scope.$on('$messageIncoming', function(event, args) {
 		console.log(args);
 		console.log(args.populated_fields.firstname);
@@ -920,6 +875,21 @@ $scope.getCounties(16);
 		$scope.tcid.employee=defEmployee(args.populated_fields);
 		console.log($scope.tcid);
     // do what you want to do
+
+        switch(args.plugin_type) {
+                case 'demo':
+                      $scope.isATS=false;
+                      $scope.isDisabled=true;     
+                      break;
+                case 'ats':
+                      $scope.isATS=true;       
+                      break;
+                case 'obs':
+                	$scope.isATS=false;
+                    break;
+                default:
+                    sendMessage('stop');
+          }
 	});
 });
 

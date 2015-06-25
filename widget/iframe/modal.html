@@ -82,7 +82,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
         <tr class="req">
         <th class="frmlbl">First Name</th>
         <td class="frminput">
-        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50" value="{{firstname}}" ng-model-options="{ updateOn: 'blur' }" valBubble>
+        <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50" ng-model-options="{ updateOn: 'blur' }">
         </td>
         </tr>
         <tr class="req">
@@ -120,13 +120,13 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 
         <input class="input-sm" type="hidden" ng-model="tcid.employee.maindata.ssn4" name="ssn4" id="ssn4" >
 
-        <tr class="req" ng-if"!isATS" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
+        <tr class="req" ng-if="!isATS" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <th class="frmlbl">SSN</th>
         <td class="frminput">
         <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssn" name="ssn" id="ssn" mask="999-99-9999"  ng-required="!isATS" data-displayname="Social Security Number">
         </td>
         </tr>
-        <tr class="req" ng-if"!isATS"  ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
+        <tr class="req" ng-if="!isATS"  ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <th class="frmlbl">Confirm SSN</th>
         <td class="frminput">
         <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999" ng-required="!isATS"  data-displayname="Confirmed Social Security Number">
@@ -691,7 +691,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
           </tbody>
         </table>
     </accordion-group>
-    <accordion-group  ng-if"!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
         <accordion-heading>
             Hiring Manager Information {{emp.maindata.hiring_manager_completed}}
         </accordion-heading>
@@ -789,7 +789,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
     </accordion-group>
 
 
-    <accordion-group  ng-if"!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
         <accordion-heading>
            Authorization Confirmation <i class="pull-right glyphicon" ></i>
         </accordion-heading>
@@ -831,7 +831,7 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
     </accordion-group>    
 </accordion>
 
-  <button id="btnSave" type="submit" class="btn btn-primary btn-block">SAVE</button>
+  <button id="btnSave" type="{{'submit':!isDisabled,'button':isDisabled}}" class="btn btn-primary btn-block" ng-disabled="isDisabled">SAVE</button>
 
   <div style="height:30px; clear:both;width:100%"></div>
 </form>
