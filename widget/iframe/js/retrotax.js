@@ -471,7 +471,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-		var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
+		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
@@ -626,7 +626,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		if ($scope.tcid.counties[st] == undefined) {
 			console.log(st,'*** hopefully only once*****   counties for this state yet, so load it up!!!',st);
 
-			$http.get('http://tcid.retrotax.co/counties/getbystate?stateid='+st)
+			$http.get($scope.apiURL+'/counties/getbystate?stateid='+st)
 			.success(function (data) {
 				$scope.tcid.counties[st]=data.rows;
 				$scope.tcid.gettingcounties[st]=false;
