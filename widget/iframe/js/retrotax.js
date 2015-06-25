@@ -314,7 +314,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
-	console.log("EMPLOYEE CONTROLLER");
+	console.log("POST MESSAGE");
 	var param1 = $routeParams.param1;
 	console.log($rootScope);
 	$scope.variable1 = window.variable1;
@@ -330,6 +330,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.tcid.counties=[];
 	$scope.tcid.gettingcounties=[];
 
+	$scope.currentemployeeid=0;
+	$routeParams.employeeid='new';
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 
 	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
@@ -344,149 +346,28 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 	$scope.thisPath='';
 	//$scope.isATS=true;
-
-	defEmployee = function() {
-		emp={};
-		emp.isNew=true;
-		emp.isDirty=true;
-		
-		emp.showhminfo=true;
-		emp.maindata={};
-		
-		emp.maindata.id=0;
-
-		emp.maindata.applicationstatusid='';
-		emp.maindata.ssn='111-11-1111';
-		emp.maindata.ssnconfirmation='111-11-1111';
-		emp.maindata.ssn4='';
-		emp.maindata.firstname='tom';
-		emp.maindata.lastname='test';
-		emp.maindata.middleinitial='';
-		emp.maindata.city='chicago';
-		//emp.maindata.state='IL';
-		emp.maindata.stateid=13;
-		emp.maindata.zip='60606';
-		emp.maindata.address='123 main street';
-		emp.maindata.address2='';
-		//emp.maindata.countyid=null;
-		emp.maindata.dob='11/11/1973';
-
-		emp.maindata.client={};
-		emp.maindata.company={};
-		emp.maindata.location={};
-		emp.maindata.client.id=$scope.currentuser().client.clientid;
-		emp.maindata.client.name=$scope.currentuser().client.name;
-		emp.maindata.company.id=null;
-		emp.maindata.company.name='';
-		emp.maindata.location.id=null;
-		emp.maindata.location.name='';
-
-		emp.maindata.clientid=function() {return emp.maindata.client.id};
-		emp.maindata.companyid=function() {return emp.maindata.company.id;};
-		emp.maindata.locationid=emp.maindata.location.id;
-
-
-		emp.maindata.rehire=0;
-		emp.maindata.afdc=0;
-		emp.maindata.foodstamps=0;
-		emp.maindata.ssi=0;
-		emp.maindata.ttw=0;
-		emp.maindata.vocrehab=0;
-		emp.maindata.deptva=0;
-		emp.maindata.vocrehabagency=0;
-		emp.maindata.veteran=0;
-		emp.maindata.felon=0;
-		emp.maindata.unemployed=0;
-		emp.maindata.cdib=0;
-		emp.maindata.cafoster=0;
-		emp.maindata.cawia=0;
-		emp.maindata.cacalworks=0;
-		emp.maindata.cafarmer=0;
-		emp.maindata.camisdemeanor=0;
-
-		emp.maindata.feloninfo={};
-		emp.maindata.feloninfo.stateid=null;
-		emp.maindata.feloninfo.countyid=null;
-		emp.maindata.feloninfo.isstateconviction=0;
-		emp.maindata.feloninfo.isfederalconviction=0;
-		emp.maindata.feloninfo.dateconviction=null;
-		emp.maindata.feloninfo.daterelease=null;
-		emp.maindata.feloninfo.paroleofficer=null;
-		emp.maindata.feloninfo.paroleofficerphone=null;
-
-		emp.maindata.veteraninfo={};
-		emp.maindata.veteraninfo.branchid=null;
-		emp.maindata.veteraninfo.disabled=null;
-		emp.maindata.veteraninfo.servicestart='';
-		emp.maindata.veteraninfo.servicestop='';
-
-		emp.maindata.vocrehabinfo={};
-		emp.maindata.vocrehabinfo.address='';
-		emp.maindata.vocrehabinfo.city='';
-		emp.maindata.vocrehabinfo.address2='';
-		emp.maindata.vocrehabinfo.agency='';
-		emp.maindata.vocrehabinfo.countyid='';
-		emp.maindata.vocrehabinfo.phone='';
-		emp.maindata.vocrehabinfo.stateid='';
-		emp.maindata.vocrehabinfo.zip='';
-
-		emp.maindata.unemploymentinfo={};
-		emp.maindata.unemploymentinfo.unemployedstart='';
-		emp.maindata.unemploymentinfo.unemployedstop='';
-		emp.maindata.unemploymentinfo.compensated=null;
-		emp.maindata.unemploymentinfo.compensatedstart='';
-		emp.maindata.unemploymentinfo.compensatedstop='';
-
-		var today = new Date();
-    	var dd = today.getDate();
-    	var mm = today.getMonth()+1; //January is 0!
-    	var yyyy = today.getFullYear();
-    	if(dd<10){dd='0'+dd} 
-    	if(mm<10){mm='0'+mm} 
-        var today = dd+'/'+mm+'/'+yyyy;
-
-		emp.maindata.doh=today;
-		emp.maindata.dgi=today;
-		emp.maindata.dsw=today;
-		emp.maindata.dojo=today;
-		emp.maindata.startingwage=null;
-		emp.maindata.occupationid=null;
-		emp.maindata.hashiringmanager=0;
-		emp.maindata.userentered=$scope.currentuser().id;
-
-		emp.maindata.hiring_manager_completed=0;
-		
-
-		emp.maindata.esign=0;
-		emp.maindata.authorization=0;
-
-		emp.maindata.formQualify=0;
-		emp.maindata.autoQualify=0;
-		emp.maindata.qualifications = [];
-		emp.maindata.tractid = '';
-		emp.maindata.geoqualify = null;
-		emp.maindata.ruralrenewalcity = '';
-
-		return emp;
-	}
-
-	$scope.currentemployeeid=0;
-	$routeParams.employeeid='new';
-	if ($routeParams.employeeid=='new') {
-		$scope.currentemployeeid=0;
-		$scope.tcid.employee=defEmployee();
-		console.log('called defEmployee to get default employee info:',$scope.tcid.employee);
-	} 
-
-
 	
 
 	if ($routeParams.employeeid==undefined) {
 		$scope.alerts.push({type:'danger',msg: ''});
 	} else {
 		$scope.$on('$routeChangeSuccess', function() {
-			console.log("ROUTECHANGESUCCES");
-			$scope.thisPath=$location.path();		
+			$scope.thisPath=$location.path();
+			
+			// console.log('.... clemployee $ROUTECHANGESUCCESS function hit..... '+$scope.thisPath,($scope.thisPath.length<3));
+			
+			if (!$scope.isLoggedIn()) {
+				$location.path("/login");
+			}
+
+			if ($routeParams.employeeid=='new') {
+				$scope.alerts.push({type:'success',msg: 'ENTERING NEW EMPLOYEE...'});
+				$scope.currentemployeeid=0;
+				$scope.tcid.employee=defEmployee();
+				// console.log('called defEmployee to get default employee info:',$scope.tcid.employee);
+
+			} 
+
 		});
 	}
 
@@ -649,6 +530,130 @@ $scope.getCounties(16);
 	};
 
 
+	defEmployee = function() {
+		emp={};
+		emp.isNew=true;
+		emp.isDirty=true;
+		
+		emp.showhminfo=true;
+		emp.maindata={};
+		
+		emp.maindata.id=0;
+
+		emp.maindata.applicationstatusid='';
+		emp.maindata.ssn='111-11-1111';
+		emp.maindata.ssnconfirmation='111-11-1111';
+		emp.maindata.ssn4='';
+		emp.maindata.firstname='tom';
+		emp.maindata.lastname='test';
+		emp.maindata.middleinitial='';
+		emp.maindata.city='chicago';
+		//emp.maindata.state='IL';
+		emp.maindata.stateid=13;
+		emp.maindata.zip='60606';
+		emp.maindata.address='123 main street';
+		emp.maindata.address2='';
+		//emp.maindata.countyid=null;
+		emp.maindata.dob='11/11/1973';
+
+		emp.maindata.client={};
+		emp.maindata.company={};
+		emp.maindata.location={};
+		emp.maindata.client.id=$scope.currentuser().client.clientid;
+		emp.maindata.client.name=$scope.currentuser().client.name;
+		emp.maindata.company.id=null;
+		emp.maindata.company.name='';
+		emp.maindata.location.id=null;
+		emp.maindata.location.name='';
+
+		emp.maindata.clientid=function() {return emp.maindata.client.id};
+		emp.maindata.companyid=function() {return emp.maindata.company.id;};
+		emp.maindata.locationid=emp.maindata.location.id;
+
+
+		emp.maindata.rehire=0;
+		emp.maindata.afdc=0;
+		emp.maindata.foodstamps=0;
+		emp.maindata.ssi=0;
+		emp.maindata.ttw=0;
+		emp.maindata.vocrehab=0;
+		emp.maindata.deptva=0;
+		emp.maindata.vocrehabagency=0;
+		emp.maindata.veteran=0;
+		emp.maindata.felon=0;
+		emp.maindata.unemployed=0;
+		emp.maindata.cdib=0;
+		emp.maindata.cafoster=0;
+		emp.maindata.cawia=0;
+		emp.maindata.cacalworks=0;
+		emp.maindata.cafarmer=0;
+		emp.maindata.camisdemeanor=0;
+
+		emp.maindata.feloninfo={};
+		emp.maindata.feloninfo.stateid=null;
+		emp.maindata.feloninfo.countyid=null;
+		emp.maindata.feloninfo.isstateconviction=0;
+		emp.maindata.feloninfo.isfederalconviction=0;
+		emp.maindata.feloninfo.dateconviction=null;
+		emp.maindata.feloninfo.daterelease=null;
+		emp.maindata.feloninfo.paroleofficer=null;
+		emp.maindata.feloninfo.paroleofficerphone=null;
+
+		emp.maindata.veteraninfo={};
+		emp.maindata.veteraninfo.branchid=null;
+		emp.maindata.veteraninfo.disabled=null;
+		emp.maindata.veteraninfo.servicestart='';
+		emp.maindata.veteraninfo.servicestop='';
+
+		emp.maindata.vocrehabinfo={};
+		emp.maindata.vocrehabinfo.address='';
+		emp.maindata.vocrehabinfo.city='';
+		emp.maindata.vocrehabinfo.address2='';
+		emp.maindata.vocrehabinfo.agency='';
+		emp.maindata.vocrehabinfo.countyid='';
+		emp.maindata.vocrehabinfo.phone='';
+		emp.maindata.vocrehabinfo.stateid='';
+		emp.maindata.vocrehabinfo.zip='';
+
+		emp.maindata.unemploymentinfo={};
+		emp.maindata.unemploymentinfo.unemployedstart='';
+		emp.maindata.unemploymentinfo.unemployedstop='';
+		emp.maindata.unemploymentinfo.compensated=null;
+		emp.maindata.unemploymentinfo.compensatedstart='';
+		emp.maindata.unemploymentinfo.compensatedstop='';
+
+		var today = new Date();
+    	var dd = today.getDate();
+    	var mm = today.getMonth()+1; //January is 0!
+    	var yyyy = today.getFullYear();
+    	if(dd<10){dd='0'+dd} 
+    	if(mm<10){mm='0'+mm} 
+        var today = dd+'/'+mm+'/'+yyyy;
+
+		emp.maindata.doh=today;
+		emp.maindata.dgi=today;
+		emp.maindata.dsw=today;
+		emp.maindata.dojo=today;
+		emp.maindata.startingwage=null;
+		emp.maindata.occupationid=null;
+		emp.maindata.hashiringmanager=0;
+		emp.maindata.userentered=$scope.currentuser().id;
+
+		emp.maindata.hiring_manager_completed=0;
+		
+
+		emp.maindata.esign=0;
+		emp.maindata.authorization=0;
+
+		emp.maindata.formQualify=0;
+		emp.maindata.autoQualify=0;
+		emp.maindata.qualifications = [];
+		emp.maindata.tractid = '';
+		emp.maindata.geoqualify = null;
+		emp.maindata.ruralrenewalcity = '';
+
+		return emp;
+	}
 
 	setEmployee = function(src) {
 		emp={};
