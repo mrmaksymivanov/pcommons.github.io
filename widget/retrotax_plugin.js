@@ -134,8 +134,8 @@ if (typeof _retrotax_options.locationid == "undefined")
 
 
 
-var elements=window.document.body.getElementsByClassName('retrotax');
-console.log(elements);
+//var elements=window.document.body.getElementsByClassName('retrotax');
+//console.log(elements);
 
 
 

@@ -32,12 +32,6 @@ window.addEventListener('message', function(e) {
 
 	switch (e.data.requestType) {
 		case 'putAnimation':
-        /*
-            trackLeaderboardStat({
-                stat: 'display_widget',
-                data: e.data.modalAnimation
-            });
-*/
 			animations[e.data.modalAnimation].init(e.data).start();
 			break;
 	}
@@ -57,38 +51,7 @@ var sendMessage = function(requestType, data)
 	data.BFTN_IFRAME_MSG = true;
 	parent.postMessage(data, '*');
 }
-/*
-var trackLeaderboardStat = function(options)
-{
-    options || (options = {});
-    options.stat || (options.stat = 'unknown');
-    options.data || (options.data = null);
-    options.callback || (options.callback = function() {});
 
-    if (!host)
-        return;
-
-    var data = {
-        campaign: 'internetslowdown',
-        stat: options.stat,
-        data: options.data,
-        host: host,
-        session: session
-    };
-
-    $.ajax({
-        url: "https://leaderboard.fightforthefuture.org/log",
-        // url: "http://debbie:3019/log",    // JL TEST ~ 
-        type: "post",
-        dataType: "json",
-        data: data,
-        success: function(res) {
-            options.callback(res);
-        }
-    });
-
-}
-*/
 /**
  * Generates a GUID string.
  * @returns {String} The generated GUID.
