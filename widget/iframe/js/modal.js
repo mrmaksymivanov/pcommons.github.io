@@ -39,7 +39,9 @@ var animations = {
             return this;
         },
         start: function() {
-            console.log("IN Modal.js");
+
+            console.log("IN Modal.js - start");
+            console.log(window);
             console.log(this);
             this.options.response="angularjs response";
             this.options._message_="_MESSAGE_";
@@ -119,6 +121,8 @@ var animations = {
 }
 
 $(document).ready(function() {
+                console.log("IN Modal.js - document.ready");
+    console.log(window);
     var loc = window.location.href;
     if (loc.indexOf('EMBED') != -1) {
         document.body.className = 'embedded';
