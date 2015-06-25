@@ -83,18 +83,21 @@ var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngMask','ngPostM
 
 
 
-app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+app.config(function($routeProvider, $locationProvider){
+//app.config(function($routeProvider){
+
 	$routeProvider.
 		when("/:param1",
 			{	templateUrl: "/widget/iframe/modal.html",
 				controller: "ctlEmployee"});
 
+	//$locationProvider.html5Mode(false);
 	$locationProvider.html5Mode({
   		enabled: true,
   		requireBase: false
 	});
 
-}]);
+});
 
 
 app.factory('AuthService', ['$http', '$q', function ($http, $q) {
