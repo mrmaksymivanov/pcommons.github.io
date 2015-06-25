@@ -41,43 +41,8 @@ var animations = {
         start: function() {
 
             console.log("IN Modal.js - start");
-            console.log(window);
-            console.log(this);
-            this.options.response="angularjs response";
-            this.options._message_="_MESSAGE_";
-
-            /*
-            console.log(this.options.populated_fields);
-            console.log(this.options.plugin_type);
-            console.log(this.options.test);
-            //console.log($scope);
-            window.variable1=this.options.plugin_type;
-            console.log(window);
-
-            switch(this.options.plugin_type) {
-                case 'demo':
-                      $('input').each(function() {
-                                console.log($(this));
-                                $(this).attr({'readonly': 'readonly'});            
-                        });
-                      $('#btnSave').attr({'disabled':'disabled'});        
-                      break;
-                case 'ats':
-                      $('#client').closest('tr').addClass('hide');
-                      $('[name="companyid"]').closest('tr').addClass('hide');
-                      $('[name="locationid"]').closest('tr').addClass('hide');
-                      $('#ssn').closest('tr').addClass('hide');
-                      $('#ssn4').closest('tr').addClass('hide');        
-                      break;
-                case 'obs':
-                    
-                    break;
-
-                default:
-                    sendMessage('stop');
-            }
-            */
-
+            //console.log(window);
+            //console.log(this);
 
             $('a.close').click(function(e) {
                 e.preventDefault();
@@ -87,19 +52,6 @@ var animations = {
                 }, 750);
             });
             
-            console.log(this.options.populated_fields);
-            if(typeof this.options.populated_fields != 'undefined'){
-            //console.log(this.options.populated_fields.firstname);
-                angular.element("#firstname").val(this.options.populated_fields.firstname);
-                console.log(angular.element("#firstname").scope());
-
-                $("#lastname").val(this.options.populated_fields.lastname);
-                var x=angular.element("#firstname").scope();
-                console.log(x);
-                angular.element(x).val(this.options.populated_fields.lastname);
-                console.log(x);
-               //console.log(angular.element(tcid.employee.maindata.firstname));
-            }
             
             // ------------------------------ Optimizely test vvv
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
@@ -121,8 +73,6 @@ var animations = {
 }
 
 $(document).ready(function() {
-                console.log("IN Modal.js - document.ready");
-    console.log(window);
     var loc = window.location.href;
     if (loc.indexOf('EMBED') != -1) {
         document.body.className = 'embedded';
