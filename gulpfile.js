@@ -18,29 +18,22 @@ var $ = require('gulp-load-plugins')({
 // Concatenate JS Files
 gulp.task('scripts', function() {
     return gulp.src([
-'assets/js/angular.min.js',
-'assets/js/angular-route.min.js',
-'assets/js/mobile-angular-ui.min.js',
-'assets/js/mobile-angular-ui.min.js',
-'assets/js/ui-bootstrap-custom-tpls-0.13.0.min.js',
-'assets/js/ngMask.min.js',
-'assets/js/angular-local-storage.js',
-'assets/js/angular-loading-spinner.min.js',
-'assets/main.js',
-'assets/js/tcid/*.js'])
-      .pipe($.concat('app.js'))
+      'widget/js/angular.min.js',
+      'widget/js/angular-route.js',
+      'widget/js/ui-bootstrap-custom-tpls-0.13.0.min.js',
+      'widget/js/ngPostMessage.js',
+      'widget/js/retrotax_plugin.js'])
+      .pipe($.concat('retrotax_plugin.min.js'))
       .pipe($.rename({suffix: '.min'}))
       .pipe($.ngAnnotate())
       .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
-      //.pipe(annotate()) //makes angular safe to minify?
-      //.pipe($.uglify())
-      .pipe(gulp.dest(paths.dist+'/assets/js'));
+      .pipe(gulp.dest(paths.dist+'/widget/js'));
 });
 
 
 gulp.task('images', function () {
-  return gulp.src(paths.src + '/assets/img/**/**/*')
-    .pipe(gulp.dest(paths.dist + '/assets/img/'));
+  return gulp.src(paths.src + '/widget/iframe/images/*')
+    .pipe(gulp.dest(paths.dist + '/widget/iframe/images/'));
 });
 
 gulp.task('fonts', function () {
@@ -50,18 +43,10 @@ gulp.task('fonts', function () {
     .pipe(gulp.dest(paths.dist + '/assets/fonts/'));
 });
 
-gulp.task('misc', function () {
-  return gulp.src(paths.src + '/**/*.ico')
-    .pipe(gulp.dest(paths.dist + '/'));
-});
 
-gulp.task('cordova', function () {
-  return gulp.src([paths.src + '/*.js', paths.src + '/*.abproject',paths.src + '/*.abignore'])
-    .pipe(gulp.dest(paths.dist + '/'));
-});
 
 gulp.task('styles', function() {
-  return gulp.src(paths.src + '/assets/css/*.css')
+  return gulp.src(paths.src + '/widget/iframe/css/*.css')
     .pipe($.minifyCss({compatibility: 'ie8'}))
     .pipe($.concat('styles.css'))
     .pipe($.rename({suffix: '.min'}))
@@ -69,41 +54,8 @@ gulp.task('styles', function() {
 });
 
 
-// Copy Cordova Resource FOLDER
-gulp.task('copyfiles', function () {
-    gulp.src(paths.src +'/App_Resources/*')
-        .pipe(gulp.dest(paths.dist+'/App_Resources'));
-});
 
-
-gulp.task('partials', function () {
-  return gulp.src([
-    paths.src + '/assets/js/tcid/views/*.html'
-  ])
-    .pipe($.minifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true
-    }))
-    .pipe($.angularTemplatecache('templateCacheHtml.js', {
-      module: 'app'
-    }))
-    .pipe(gulp.dest(paths.dist+'/partials/'));
-});
-
-
-gulp.task('inject', ['scripts','styles','partials'], function () {
-
-  var partialsInjectFile = gulp.src(paths.dist + '/partials/templateCacheHtml.js', { read: false });
-  var partialsInjectOptions = {
-    starttag: '<!-- inject:partials -->',
-    ignorePath: paths.dist,
-    addRootSlash: false
-  };
-  var partialsInjectOptionsProduction = {
-    starttag: '<!-- inject:partials -->',
-    addRootSlash: false
-   };
+gulp.task('inject', ['scripts','styles'], function () {
 
     var injectStyles = gulp.src([paths.dist+'/assets/css/*']);
 
@@ -142,28 +94,23 @@ gulp.task('html', ['inject'], function () {
   var cssFilter = $.filter('**/*.css');
   var assets;
 
-  return gulp.src(paths.dist + '/*.html')
-    //.pipe($.rev()) //revision 
+  return gulp.src('widget/iframe/*.html')
     .pipe(jsFilter) // takes subset of files working on
     .pipe($.ngAnnotate())
     .pipe($.uglify({preserveComments: $.uglifySaveLicense}))
     .pipe(jsFilter.restore())
-    //.pipe($.useref())
-    //.pipe($.revReplace())
-    //.pipe(htmlFilter)
     .pipe($.minifyHtml({
       empty: true,
       spare: true,
       quotes: true
     }))
-    //.pipe(htmlFilter.restore())
-    .pipe(gulp.dest(paths.dist + '/'))
+    .pipe(gulp.dest(paths.dist + '/widget/iframe/'))
     .pipe($.size({ title: paths.dist + '/', showFiles: true }));
 });
 
 // generate a todo.md from your javascript files 
 gulp.task('todo', function() {
-    gulp.src('assets/js/**/**/*.js')
+    gulp.src('widget/iframe/js/*.js')
         .pipe($.todo())
         .pipe(gulp.dest('./'));
         // -> Will output a TODO.md with your todos 
@@ -171,7 +118,7 @@ gulp.task('todo', function() {
  
 
 // Default Task
-gulp.task('default', ['fonts', 'scripts', 'styles', 'partials', 'images', 'misc', 'cordova','copyfiles','html','todo']);
+gulp.task('default', ['scripts', 'styles', 'partials', 'images', 'misc', 'cordova','copyfiles','html','todo']);
 
 
 
