@@ -651,7 +651,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 								console.log(args.locationid);
 
 
-
+		$scope.tcid.api_key=args.apikey;
+		$scope.tcid.username=args.username;
 		console.log($scope.tcid);
 		$scope.tcid.employee=defEmployee(args,$scope.tcid);
 		console.log($scope.tcid);
