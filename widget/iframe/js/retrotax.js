@@ -876,7 +876,7 @@ $scope.getCounties(16);
 	console.log($rootScope);
 	$scope.variable1 = window.variable1;
 	console.log($postMessage);
-	console.log($scope.tcid.maindata.firstname);
+	console.log($scope.tcid);
 });
 
 
