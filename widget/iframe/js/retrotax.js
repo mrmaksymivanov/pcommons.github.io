@@ -304,11 +304,9 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
-	console.log("POST MESSAGE");
+	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
-	console.log($rootScope);
-	$scope.variable1 = window.variable1;
-	console.log($window);
+	console.log(param1);
 	$scope.currentemployeeid;
 	$scope.alerts = [];
     $scope.tcid={};
@@ -326,22 +324,16 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
 	$scope.currentuser=function(){return AuthService.currentuser();};
-    console.log("IN SCOPE");
     console.log($scope.currentuser);
 
-    console.log($scope);
     $scope.isLoggedIn($scope.tcid);
-    console.log($scope);
-
 
 	$scope.thisPath='';
 	$scope.isATS=false; //asssume it's not ATS
 	$scope.isDisabled=false; //for submit button
 
-	if ($routeParams.employeeid==undefined) {
-		$scope.alerts.push({type:'danger',msg: ''});
-	} else {
-		$scope.$on('$routeChangeSuccess', function() {
+
+	$scope.$on('$routeChangeSuccess', function() {
 			$scope.thisPath=$location.path();
 			
 			// console.log('.... clemployee $ROUTECHANGESUCCESS function hit..... '+$scope.thisPath,($scope.thisPath.length<3));
@@ -358,8 +350,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 			} 
 
-		});
-	}
+	});
+
 
 
 	$scope.initView = function() {
@@ -370,36 +362,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
         //console.log($scope.html_metadata);
 	};
 
-
-
-	$scope.atsLoadCCL = function() {
-		//eid=$scope.currentemployeeid;
-		console.log('loading ccl via employee view id: ');
-		$http.get('http://tcid.retrotax.co/api/v1/api_employees/view?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username+'&employeeid=1')
-		.success(function (data) {
-			if (data.SUCCESS || !data.SUCCESS) {
-				// console.log('laoded employee data from server, source json is: ',data.rows[0]);
-				$scope.tcid.employee=setEmployee(data.rows[0]);
-
-				$scope.tcid.employee.SUCCESS=true;
-				console.log('employee loadded!');
-				console.log($scope.tcid.employee);
-$scope.getCounties(16);
-
-				return true;
-
-			} else {
-				$scope.tcid.employee={};
-				$scope.tcid.employee.SUCCESS=false;
-				$scope.alerts.push({type:'danger',msg: data.message});
-				return false;
-			}
-		})
-		.error(function (data, status, headers, config) {
-			console.log('http et eerror is', data);
-			return false;
-		});
-	};
 
 	function MergeRecursive(obj1, obj2) {
 
@@ -459,7 +421,8 @@ $scope.getCounties(16);
 	};
 
 	$scope.save = function(isValid) {
-		console.log("--> Submitting form.. isValid?? ",isValid,'now check for $errors');
+		console.log("--> Submitting form.. isValid?? ");
+		console.log(isValid);
 
 
 		if (!isValid) {
@@ -505,7 +468,8 @@ $scope.getCounties(16);
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
-				//$location.path("/employee/"+dataFromServer.SAVEDID);
+				$location.path("/new");
+				//dataFromServer.SAVEDID
 			}
 		});
 		responsePromise.error(function(data, status, headers, config) {
@@ -644,135 +608,6 @@ $scope.getCounties(16);
 		return emp;
 	}
 
-	setEmployee = function(src) {
-		emp={};
-		emp.isNew=false;
-		emp.isDirty=false;
-		
-		emp.showhminfo=true;
-		emp.maindata={};
-		emp.maindata.id=src.maindata.id;
-		emp.maindata.employeeid=src.maindata.id;
-		emp.maindata.applicationstatusid=src.maindata.applicationstatusid;
-		emp.maindata.ssn=src.maindata.ssn;
-		emp.maindata.ssnconfirmation=src.maindata.ssnconfirmation;
-		emp.maindata.ssn4=src.maindata.ssn4;
-		emp.maindata.firstname=src.maindata.firstname;
-		emp.maindata.lastname=src.maindata.lastname;
-		emp.maindata.middleinitial=src.maindata.middleinitial;
-		emp.maindata.city=src.maindata.city;
-		// emp.maindata.state=src.maindata.state;
-		emp.maindata.stateid=src.maindata.stateid;
-		emp.maindata.zip=src.maindata.zip;
-		emp.maindata.address=src.maindata.address;
-		emp.maindata.address2=src.maindata.address2;
-		//emp.maindata.county=src.maindata.county;
-		emp.maindata.dob=src.maindata.dob;
-
-		emp.maindata.client={};
-		emp.maindata.company={};
-		emp.maindata.location={};
-		emp.maindata.client.id=src.maindata.clientid;
-		emp.maindata.client.name=$scope.currentuser().client.name;
-		emp.maindata.company.id=src.maindata.companyid;
-		emp.maindata.company.name='';
-		emp.maindata.location.id=src.maindata.locationid;
-		emp.maindata.location.name='';
-
-		emp.maindata.clientid=function() {return emp.maindata.client.id};
-		emp.maindata.companyid=function() {return emp.maindata.company.id;};
-		emp.maindata.locationid=emp.maindata.location.id;
-
-		emp.maindata.rehire=src.maindata.rehire;
-		emp.maindata.afdc=src.maindata.afdc;
-		emp.maindata.foodstamps=src.maindata.foodstamps;
-		emp.maindata.ssi=src.maindata.ssi;
-		emp.maindata.ttw=src.maindata.ttw;
-		emp.maindata.vocrehab=src.maindata.vocrehab;
-		emp.maindata.deptva=src.maindata.deptva;
-		emp.maindata.vocrehabagency=src.maindata.vocrehabagency;
-		emp.maindata.veteran=src.maindata.veteran;
-		emp.maindata.felon=src.maindata.felon;
-		emp.maindata.unemployed=src.maindata.unemployed;
-		emp.maindata.cdib=src.maindata.cdib;
-		emp.maindata.cafoster=src.maindata.cafoster;
-		emp.maindata.cawia=src.maindata.cawia;
-		emp.maindata.cacalworks=src.maindata.cacalworks;
-		emp.maindata.cafarmer=src.maindata.cafarmer;
-		emp.maindata.camisdemeanor=src.maindata.camisdemeanor;
-		
-		emp.maindata.recipient={};
-		if (src.maindata.afdc != undefined || src.maindata.foodstamps != undefined) {
-
-			emp.maindata.recipient=src.maindata.recipient;
-			
-			// emp.maindata.recipient.recipient_name=src.maindata.recipient.recipient_name;
-			// emp.maindata.recipient.recipient_relationship=src.maindata.recipient.recipient_relationship;
-			// emp.maindata.recipient.recipient_cityreceived=src.maindata.recipient.recipient_cityreceived;
-			// emp.maindata.recipient.recipient_countyreceived=src.maindata.recipient.recipient_countyreceived;
-			// emp.maindata.recipient.recipient_statereceived=src.maindata.recipient.recipient_statereceived;
-		}
-
-		emp.maindata.feloninfo={};
-		if (src.maindata.feloninfo != undefined) {
-			emp.maindata.feloninfo.stateid=src.maindata.feloninfo.stateid;
-			emp.maindata.feloninfo.countyid=src.maindata.feloninfo.countyid;
-			emp.maindata.feloninfo.isstateconviction=src.maindata.feloninfo.isstateconviction;
-			emp.maindata.feloninfo.isfederalconviction=src.maindata.feloninfo.isfederalconviction;
-			emp.maindata.feloninfo.dateconviction=src.maindata.feloninfo.dateconviction;
-			emp.maindata.feloninfo.daterelease=src.maindata.feloninfo.daterelease;
-			emp.maindata.feloninfo.paroleofficer=src.maindata.feloninfo.paroleofficer;
-			emp.maindata.feloninfo.paroleofficerphone=src.maindata.feloninfo.paroleofficerphone;
-		}
-		emp.maindata.veteraninfo={};
-		if (src.maindata.veteraninfo != undefined) {
-			emp.maindata.veteraninfo.branchid=src.maindata.veteraninfo.branchid;
-			emp.maindata.veteraninfo.disabled=src.maindata.veteraninfo.disabled;
-			emp.maindata.veteraninfo.servicestart=src.maindata.veteraninfo.servicestart;
-			emp.maindata.veteraninfo.servicestop=src.maindata.veteraninfo.servicestop;
-		}
-		emp.maindata.vocrehabinfo={};
-		if (src.maindata.vocrehabinfo != undefined) {
-			emp.maindata.vocrehabinfo.address=src.maindata.vocrehabinfo.address;
-			emp.maindata.vocrehabinfo.city=src.maindata.vocrehabinfo.city;
-			emp.maindata.vocrehabinfo.address2=src.maindata.vocrehabinfo.address2;
-			emp.maindata.vocrehabinfo.agency=src.maindata.vocrehabinfo.agency;
-			emp.maindata.vocrehabinfo.countyid=src.maindata.vocrehabinfo.countyid;
-			emp.maindata.vocrehabinfo.phone=src.maindata.vocrehabinfo.phone;
-			emp.maindata.vocrehabinfo.stateid=src.maindata.vocrehabinfo.stateid;
-			emp.maindata.vocrehabinfo.zip=src.maindata.vocrehabinfo.zip;
-		}
-		emp.maindata.unemploymentinfo={};
-		if (src.maindata.unemploymentinfo != undefined) {
-			emp.maindata.unemploymentinfo.unemployedstart=src.maindata.unemploymentinfo.unemployedstart;
-			emp.maindata.unemploymentinfo.unemployedstop=src.maindata.unemploymentinfo.unemployedstop;
-			emp.maindata.unemploymentinfo.compensated=src.maindata.unemploymentinfo.compensated;
-			emp.maindata.unemploymentinfo.compensatedstart=src.maindata.unemploymentinfo.compensatedstart;
-			emp.maindata.unemploymentinfo.compensatedstop=src.maindata.unemploymentinfo.compensatedstop;
-		}
-		
-		emp.maindata.doh=src.maindata.doh;
-		emp.maindata.dgi=src.maindata.dgi;
-		emp.maindata.dsw=src.maindata.dsw;
-		emp.maindata.dojo=src.maindata.dojo;
-		emp.maindata.startingwage=src.maindata.startingwage;
-		emp.maindata.occupationid=src.maindata.occupationid;
-		emp.maindata.hashiringmanager=src.maindata.hashiringmanager;
-		emp.maindata.userentered=src.maindata.userentered;
-
-		emp.maindata.hiring_manager_completed=src.maindata.hiring_manager_completed;
-		emp.maindata.esign=1;
-		emp.maindata.authorization=1;
-
-		emp.maindata.formQualify=0;
-		emp.maindata.autoQualify=0;
-		emp.maindata.qualifications = [];
-		emp.maindata.tractid = '';
-		emp.maindata.geoqualify = null;
-		emp.maindata.ruralrenewalcity = '';
-
-		return emp;
-	}	
 
 	$scope.searchinit = function() {
 		$scope.tcid.searchform={"firstname":"","lastname":"","appstatus":"*","ssn4":""};
@@ -804,77 +639,12 @@ $scope.getCounties(16);
 	    return;
 	}
 
-	console.log($scope.tcid);
-
-    addEventListener('load', loadedPlugin, false);
-    function loadedPlugin() {
-    	//$scope.$apply(function () {
-    		/*
-            $scope.plugin_type = document.getElementById("plugin_type").value;
-            $scope.firstname = document.getElementById("firstname").value;
-            $scope.lastname = document.getElementById("lastname").value;
-            if($scope.plugin_type=='ats'){
-            	$scope.isATS=true;
-            }else{
-            	$scope.isATS=false;
-            } 
-            //$scope.authorizationReq = ($scope.tcid.employee.maindata.rehire==0 && $scope.isATS==false);
-            //console.log("AUTH REQ");
-            //console.log($scope.authorizationReq);
-        });
-        console.log($scope.plugin_type);
-        console.log($scope.firstname);
-        //$scope.plugin_type=angular.element(document.querySelector('#plugin_type')).val();
-        */
-    }
-
-    /*
-    $scope.frmEmployee=frmEmployee;
-    console.log($scope);
-
-	if (frmEmployee) {
-	  console.log("yes to if form");
-      //frmEmployee.$setUntouched();
-      //frmEmployee.$setValidity();
-    }
-
-
-  $scope.master = {};
-
-  $scope.update = function(tcid) {
-    $scope.master = angular.copy(user);
-  };
-
-  $scope.reset = function(form) {
-  	console.log(form);
-  	console.log("IN RESET");
-    if (form) {
-     //form.$setPristine();
-      //form.$setUntouched();
-    }
-    $scope.tcid = angular.copy($scope.master);
-  };
-
-  //$scope.tcid.employee.maindata.lastname.$setUntouched();
-  
-  //$scope.tcid.employee.maindata.lastname.$setPristine();
-  //$scope.reset($scope.frmEmployee);
-  //$scope.frmEmployee.$setUntouched();
-
-*/
-	console.log($rootScope);
-	$scope.variable1 = window.variable1;
-	console.log($postMessage);
-	console.log($scope.tcid);
-
-
 	$scope.$on('$messageIncoming', function(event, args) {
 		console.log(args);
 		console.log(args.populated_fields.firstname);
 		console.log($scope.tcid);
-		$scope.tcid.employee=defEmployee(args.populated_fields.$scope.tcid);
+		$scope.tcid.employee=defEmployee(args.populated_fields,$scope.tcid);
 		console.log($scope.tcid);
-    // do what you want to do
 
         switch(args.plugin_type) {
                 case 'demo':
