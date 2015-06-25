@@ -314,11 +314,11 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
-	console.log("POST MESSAGE");
+	console.log("EMPLOYEE CONTROLLER");
 	var param1 = $routeParams.param1;
 	console.log($rootScope);
 	$scope.variable1 = window.variable1;
-	console.log($postMessage);
+	console.log($window);
 	$scope.currentemployeeid;
 	$scope.alerts = [];
     $scope.tcid={};
@@ -329,6 +329,21 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	
 	$scope.tcid.counties=[];
 	$scope.tcid.gettingcounties=[];
+
+	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
+
+	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
+	$scope.currentuser=function(){return AuthService.currentuser();};
+    console.log("IN SCOPE");
+    console.log($scope.currentuser);
+
+    console.log($scope);
+    $scope.isLoggedIn($scope.tcid);
+    console.log($scope);
+
+
+	$scope.thisPath='';
+	//$scope.isATS=true;
 
 	defEmployee = function() {
 		emp={};
@@ -464,20 +479,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	} 
 
 
-	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
-
-	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
-	$scope.currentuser=function(){return AuthService.currentuser();};
-    console.log("IN SCOPE");
-    console.log($scope.currentuser);
-
-    console.log($scope);
-    $scope.isLoggedIn($scope.tcid);
-    console.log($scope);
-
-
-	$scope.thisPath='';
-	//$scope.isATS=true;
 	
 
 	if ($routeParams.employeeid==undefined) {
