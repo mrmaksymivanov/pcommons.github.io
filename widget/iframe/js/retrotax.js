@@ -346,7 +346,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.isATS=false; //asssume it's not ATS
 	$scope.isDisabled=false; //for submit button
 
-
+/*
 	$scope.$on('$routeChangeSuccess', function() {
 			$scope.thisPath=$location.path();
 			
@@ -365,7 +365,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			} 
 
 	});
-
+*/
 
 
 	$scope.initView = function() {
@@ -465,13 +465,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
 		console.log($scope);
-		//$scope.tcid.employee.maindata.clientid=$scope.tcid.employee.maindata.client.id;
-		//$scope.tcid.employee.maindata.companyid=$scope.tcid.employee.maindata.company.id;
-		//$scope.tcid.employee.maindata.locationid=$scope.tcid.employee.maindata.location.id;
-
-		$scope.tcid.employee.maindata.clientid=$scope.tcid.client.clientid;
-		$scope.tcid.employee.maindata.companyid=$scope.tcid.company.companyid;
-		$scope.tcid.employee.maindata.locationid=$scope.tcid.location.locationid;
 
 		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
 
@@ -535,8 +528,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.location.id=typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : null;
 		emp.maindata.location.name='';
 
-		emp.maindata.clientid=function() {return emp.maindata.client.id};
-		emp.maindata.companyid=function() {return emp.maindata.company.id;};
+		emp.maindata.clientid=emp.maindata.client.id;
+		emp.maindata.companyid=emp.maindata.company.id;
 		emp.maindata.locationid=emp.maindata.location.id;
 
 
