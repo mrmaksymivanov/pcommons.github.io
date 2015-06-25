@@ -332,6 +332,14 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 	$scope.currentemployeeid=0;
 	$routeParams.employeeid='new';
+	if ($routeParams.employeeid=='new') {
+
+				$scope.currentemployeeid=0;
+				$scope.tcid.employee=defEmployee();
+				console.log('called defEmployee to get default employee info:',$scope.tcid.employee);
+	} 
+
+
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 
 	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
@@ -352,22 +360,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		$scope.alerts.push({type:'danger',msg: ''});
 	} else {
 		$scope.$on('$routeChangeSuccess', function() {
-			$scope.thisPath=$location.path();
-			
-			// console.log('.... clemployee $ROUTECHANGESUCCESS function hit..... '+$scope.thisPath,($scope.thisPath.length<3));
-			
-			if (!$scope.isLoggedIn()) {
-				$location.path("/login");
-			}
-
-			if ($routeParams.employeeid=='new') {
-				$scope.alerts.push({type:'success',msg: 'ENTERING NEW EMPLOYEE...'});
-				$scope.currentemployeeid=0;
-				$scope.tcid.employee=defEmployee();
-				// console.log('called defEmployee to get default employee info:',$scope.tcid.employee);
-
-			} 
-
+			console.log("ROUTECHANGESUCCES");
+			$scope.thisPath=$location.path();		
 		});
 	}
 
