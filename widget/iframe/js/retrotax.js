@@ -215,7 +215,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	plugin_auth: function(tcid) {
 		console.log(tcid);
 		//return $http.get('http://tcid.retrotax.co/api/v1/api_employees/view?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username+'&employeeid=0')
-		return $http.get('https://webscreen.retrotax-aci.com/api/v1/documents/list?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&employeeid=0')
+		return $http.get(this.getRetroURL()+'/api/v1/documents/list?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&employeeid=0')
 
 			.then(function(response) {
 					console.log("PLUGIN AUTH");
@@ -309,7 +309,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, AuthService, $window, $postMessage, $rootScope){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -328,13 +328,19 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$routeParams.employeeid='new';
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 
-	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
-	$scope.currentuser=function(){return AuthService.currentuser();};
-	$scope.apiURL=AuthService.getRetroURL(false);
-	console.log($scope.apiURL);
-    console.log($scope.currentuser);
+	//$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
+	//$scope.currentuser=function(){return AuthService.currentuser();};
+	function getRetroURL=(debug){
+		console.log(window.location.hostname);
+        if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
+ 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+    }
 
-    $scope.isLoggedIn($scope.tcid);
+	$scope.apiURL=getRetroURL(false);
+	console.log($scope.apiURL);
+    //console.log($scope.currentuser);
+
+    //$scope.isLoggedIn($scope.tcid);
 
 	$scope.thisPath='';
 	$scope.isATS=false; //asssume it's not ATS
@@ -471,7 +477,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
+		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
@@ -600,7 +606,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.startingwage=null;
 		emp.maindata.occupationid=null;
 		emp.maindata.hashiringmanager=0;
-		emp.maindata.userentered=$scope.currentuser().id;
+		//emp.maindata.userentered=$scope.currentuser().id;
 
 		emp.maindata.hiring_manager_completed=0;
 		

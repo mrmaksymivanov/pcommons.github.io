@@ -55,8 +55,8 @@
 
             delay: 1000, 
             debug: true, // This shows debug stuff in the console. For testing
-            username:'DemoAPI.New.Employee',
-            apikey:'111BC0B55FEF6737944B37B1CA2DBED3',
+            username:'demoapi.hiring.manager',
+            apikey:'3AED82E2006D43BDA850D790BFF937AE',
             always_show_widget: true,
             compatibility_iframe: {
                 width: 500,
