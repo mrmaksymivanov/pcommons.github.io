@@ -471,7 +471,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-		var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=F5171AE353A64CD396A45F54EC10F373&u=demoapi.hiring.manager&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
+		var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
@@ -522,9 +522,9 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.location={};
 		emp.maindata.client.id= typeof currentuser.client.clientid!='undefined' ? currentuser.client.clientid : null;
 		emp.maindata.client.name=typeof currentuser.client.name!='undefined' ? currentuser.client.name : null;
-		emp.maindata.company.id=null;
+		emp.maindata.company.id=typeof user_provided_data.companyid!='undefined' ? user_provided_data.companyid : null;
 		emp.maindata.company.name='';
-		emp.maindata.location.id=null;
+		emp.maindata.location.id=typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : null;
 		emp.maindata.location.name='';
 
 		emp.maindata.clientid=function() {return emp.maindata.client.id};

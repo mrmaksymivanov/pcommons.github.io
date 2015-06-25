@@ -63,6 +63,8 @@
                 height: 400
 
             },
+            companyid:1054,
+            locationid:8557,
             button_class:"btn btn-huge btn-info",
             button_text:"Open RetroTax Screening Plugin",
             plugin_type: 'ats',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
@@ -91,8 +93,8 @@
     <div role="main">
         <div class="wrap">
         <div id="retrotax_plugin">Trigger Screening</div>
-        <input id="first_name" value="Paul">
-        <input id="middle_init" value="M">
+        <input id="first_name" class="retrotax" value="Paul">
+        <input id="middle_init" class="retrotax" value="M">
         <input id="last_name" value="Commons">
         </div><!-- close .wrap -->
     </div><!-- close .main -->
