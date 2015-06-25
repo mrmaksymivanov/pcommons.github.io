@@ -559,7 +559,7 @@ $scope.getCounties(16);
 	};
 
 
-	defEmployee = function() {
+	defEmployee = function(user_provided_data) {
 		emp={};
 		emp.isNew=true;
 		emp.isDirty=true;
@@ -570,26 +570,27 @@ $scope.getCounties(16);
 		emp.maindata.id=0;
 
 		emp.maindata.applicationstatusid='';
-		emp.maindata.ssn='111-11-1111';
-		emp.maindata.ssnconfirmation='111-11-1111';
+		emp.maindata.ssn='';
+		emp.maindata.ssnconfirmation='';
 		emp.maindata.ssn4='';
-		emp.maindata.firstname='tom';
-		emp.maindata.lastname='test';
+		emp.maindata.firstname='';
+		if(typeof user_provided_data.firstname!='undefined'){emp.maindata.firstname=user_provided_data.firstname;}
+		emp.maindata.lastname='';
 		emp.maindata.middleinitial='';
-		emp.maindata.city='chicago';
+		emp.maindata.city='';
 		//emp.maindata.state='IL';
-		emp.maindata.stateid=13;
-		emp.maindata.zip='60606';
-		emp.maindata.address='123 main street';
+		emp.maindata.stateid=0;
+		emp.maindata.zip='';
+		emp.maindata.address='';
 		emp.maindata.address2='';
 		//emp.maindata.countyid=null;
-		emp.maindata.dob='11/11/1973';
+		emp.maindata.dob='';
 
 		emp.maindata.client={};
 		emp.maindata.company={};
 		emp.maindata.location={};
-		emp.maindata.client.id=$scope.currentuser().client.clientid;
-		emp.maindata.client.name=$scope.currentuser().client.name;
+		emp.maindata.client.id=$scope.tcid.client.clientid;
+		emp.maindata.client.name=$scope.tcid.client.name;
 		emp.maindata.company.id=null;
 		emp.maindata.company.name='';
 		emp.maindata.location.id=null;
@@ -913,9 +914,11 @@ $scope.getCounties(16);
 	});
 
 	$scope.$on('$messageIncoming', function(event, args) {
-		alert("messageIncoming");
-		console.log(event);
 		console.log(args);
+		console.log(args.populated_fields.firstname);
+		consolelog($scope.tcid);
+		$scope.tcid.employee=defEmployee(args.populated_fields);
+		consolelog($scope.tcid);
     // do what you want to do
 	});
 });
