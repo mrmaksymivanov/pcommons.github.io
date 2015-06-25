@@ -293,7 +293,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	getRetroURL: function(debug){
 		console.log(window.location.hostname);
         if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname=="http://plugin-paulcommons.rhcloud.com" || window.location.hostname=="http://localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+ 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
     }
 
 	};
@@ -331,7 +331,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
 	$scope.currentuser=function(){return AuthService.currentuser();};
 	$scope.apiURL=AuthService.getRetroURL(false);
-	console.log(apiURL);
+	console.log($scope.apiURL);
     console.log($scope.currentuser);
 
     $scope.isLoggedIn($scope.tcid);
@@ -617,11 +617,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	}
 
 
-	$scope.searchinit = function() {
-		$scope.tcid.searchform={"firstname":"","lastname":"","appstatus":"*","ssn4":""};
-	}
-
-
 	 $scope.getCounties=function(st){
 	 	if (st == undefined) {return false;}
 	 	if (st.length==0) {return false;}
@@ -669,6 +664,11 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
                     sendMessage('stop');
           }
 	});
+
+	$scope.stopIFRAME=function(){
+		var m = JSON.stringify({status: 200, message: 'stop'});
+		scope.sender.postMessage(m, '*');
+	}
 });
 
 
