@@ -288,7 +288,13 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 		console.log('****** USER LOGGED OUT **********');
 		return true;
 	},
-	currentuser: function() {return lcurrentuser;}
+	currentuser: function() {return lcurrentuser;},
+
+	getRetroURL: function(debug){
+		console.log(window.location.hostname);
+        if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
+ 		return (window.location.hostname=="http://plugin-paulcommons.rhcloud.com" || window.location.hostname=="http://localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+    }
 
 	};
 
@@ -324,6 +330,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
 	$scope.currentuser=function(){return AuthService.currentuser();};
+	$scope.apiURL=AuthService.getRetroURL(false);
+	console.log(apiURL);
     console.log($scope.currentuser);
 
     $scope.isLoggedIn($scope.tcid);
