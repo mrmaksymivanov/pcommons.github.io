@@ -505,17 +505,17 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.ssn='';
 		emp.maindata.ssnconfirmation='';
 		emp.maindata.ssn4='';
-		emp.maindata.firstname= typeof user_provided_data.firstname!='undefined' ? user_provided_data.firstname : '';
-		emp.maindata.lastname= typeof user_provided_data.lastname!='undefined' ? user_provided_data.lastname : '';
-		emp.maindata.middleinitial= typeof user_provided_data.middleinitial!='undefined' ? user_provided_data.middleinitial : '';
-		emp.maindata.city= typeof user_provided_data.city!='undefined' ? user_provided_data.city : '';
+		emp.maindata.firstname= typeof user_provided_data.populated_fields.firstname!='undefined' ? user_provided_data.populated_fields.firstname : '';
+		emp.maindata.lastname= typeof user_provided_data.populated_fields.lastname!='undefined' ? user_provided_data.populated_fields.lastname : '';
+		emp.maindata.middleinitial= typeof user_provided_data.populated_fields.middleinitial!='undefined' ? user_provided_data.populated_fields.middleinitial : '';
+		emp.maindata.city= typeof user_provided_data.populated_fields.city!='undefined' ? user_provided_data.populated_fields.city : '';
 		//emp.maindata.state='IL';
 		emp.maindata.stateid=0;
-		emp.maindata.zip=typeof user_provided_data.zip!='undefined' ? user_provided_data.zip : '';
-		emp.maindata.address=typeof user_provided_data.address!='undefined' ? user_provided_data.address : '';
-		emp.maindata.address2=typeof user_provided_data.address2!='undefined' ? user_provided_data.address2 : '';
+		emp.maindata.zip=typeof user_provided_data.populated_fields.zip!='undefined' ? user_provided_data.populated_fields.zip : '';
+		emp.maindata.address=typeof user_provided_data.populated_fields.address!='undefined' ? user_provided_data.populated_fields.address : '';
+		emp.maindata.address2=typeof user_provided_data.populated_fields.address2!='undefined' ? user_provided_data.populated_fields.address2 : '';
 		//emp.maindata.countyid=null;
-		emp.maindata.dob=typeof dob.zip!='undefined' ? user_provided_data.dob : '';
+		emp.maindata.dob=typeof user_provided_data.populated_fields.dob!='undefined' ? user_provided_data.populated_fields.dob : '';
 
 		emp.maindata.client={};
 		emp.maindata.company={};
@@ -646,8 +646,14 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.$on('$messageIncoming', function(event, args) {
 		console.log(args);
 		console.log(args.populated_fields.firstname);
+				console.log(args.clientid);
+						console.log(args.companyid);
+								console.log(args.locationid);
+
+
+
 		console.log($scope.tcid);
-		$scope.tcid.employee=defEmployee(args.populated_fields,$scope.tcid);
+		$scope.tcid.employee=defEmployee(args,$scope.tcid);
 		console.log($scope.tcid);
 
         switch(args.plugin_type) {
