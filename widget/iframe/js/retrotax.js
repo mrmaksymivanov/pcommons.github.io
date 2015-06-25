@@ -330,7 +330,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 	//$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
 	//$scope.currentuser=function(){return AuthService.currentuser();};
-	function getRetroURL=(debug){
+	var getRetroURL=function(debug){
 		console.log(window.location.hostname);
         if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
  		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
