@@ -17,7 +17,7 @@
       $rootScope.$on('$messageOutgoing', function(event, message, domain) {
         var sender;
         if (domain == null) {
-          domain = '*';
+          domain = "*";
         }
         sender = $rootScope.sender || $window.parent;
         return sender.postMessage(message, domain);
@@ -94,7 +94,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
   		requireBase: false
 	});
 
-});
+}]);
+
+
+
+
 
 
 /*
@@ -131,8 +135,8 @@ app.controller("ctlEmployee",['$scope', '$http', '$route', '$routeParams', '$loc
 	//$scope.currentuser=function(){return AuthService.currentuser();};
 	var getRetroURL=function(debug){
 		console.log(window.location.hostname);
-        if(typeof device != "undefined") return (debug===true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname==="plugin-paulcommons.rhcloud.com" || window.location.hostname==="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+        if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
+ 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
     }
 
 	$scope.apiURL=getRetroURL(false);
