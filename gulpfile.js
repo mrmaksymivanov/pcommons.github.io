@@ -15,21 +15,22 @@ var $ = require('gulp-load-plugins')({
 });
 
 gulp.task('lint', function() {
-  return gulp.src('widget/**/*.js')
-    .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('jshint-stylish'));
+  return gulp.src([
+      'widget/iframe/js/ie8.js',
+      'widget/iframe/js/retrotax.js',
+      'widget/iframe/js/modal.js',
+      'widget/iframe/js/common.js'])
+    .pipe($.jshint())
+    .pipe($.jshint.reporter('jshint-stylish'));
 });
 
 // Concatenate JS Files
 gulp.task('scripts', function() {
     return gulp.src([
-      'widget/js/angular.min.js',
-      'widget/js/angular-route.min.js',
-      'widget/js/ui-bootstrap-custom-tpls-0.13.0.min.js',
-      'widget/js/ngPostMessage.js',
-      'widget/js/retrotax.js',
-      'widget/js/modal.js',
-      'widget/js/common.js'])
+      'widget/iframe/js/ie8.js',
+      'widget/iframe/js/retrotax.js',
+      'widget/iframe/js/modal.js',
+      'widget/iframe/js/common.js'])
       .pipe($.concat('retrotax.js'))
       .pipe($.rename({suffix: '.min'}))
       .pipe($.ngAnnotate())
@@ -62,12 +63,12 @@ gulp.task('styles', function() {
 
 
 
-gulp.task('inject', ['scripts','styles'], function () {
+gulp.task('inject', ['scripts'], function () {
 
-    var injectStyles = gulp.src([paths.dist+'/assets/css/*']);
+    //var injectStyles = gulp.src([paths.dist+'/assets/css/*']);
 
     var injectScripts = gulp.src([
-        paths.dist+'/assets/js/*',
+        paths.dist+'/widget/iframe/js/retrotax.min.js',
 	'!' + paths.src + '/**/*.spec.js',
 	'!' + paths.src + '/*.mock.js'
     ]).pipe($.angularFilesort());
@@ -79,16 +80,14 @@ gulp.task('inject', ['scripts','styles'], function () {
    };
 
    var injectOptionsProduction ={
-      addRootSlash: false
+      addRootSlash: true
    };
 
   return gulp.src(paths.src + '/*.html')
-    .pipe($.inject(injectStyles, injectOptions))
+    //.pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
-    .pipe($.inject(injectStyles, injectOptionsProduction))
+    //.pipe($.inject(injectStyles, injectOptionsProduction))
     .pipe($.inject(injectScripts, injectOptionsProduction))
-    .pipe($.inject(partialsInjectFile, partialsInjectOptions))
-    .pipe($.inject(partialsInjectFile, partialsInjectOptionsProduction))
     .pipe(gulp.dest(paths.dist + '/'));
 
 });
@@ -96,9 +95,9 @@ gulp.task('inject', ['scripts','styles'], function () {
 gulp.task('html', ['inject'], function () {
 
 
-  var htmlFilter = $.filter('*.html');
-  var jsFilter = $.filter('**/*.js');
-  var cssFilter = $.filter('**/*.css');
+  var htmlFilter = $.filter('widget/iframe/*.html');
+  var jsFilter = $.filter('widget/iframe/js/*.js');
+ // var cssFilter = $.filter('**/*.css');
   var assets;
 
   return gulp.src('widget/iframe/*.html')
@@ -125,7 +124,7 @@ gulp.task('todo', function() {
  
 
 // Default Task
-gulp.task('default', ['scripts', 'styles', 'partials', 'images', 'misc', 'cordova','copyfiles','html','todo']);
+gulp.task('default', ['lint', 'scripts', 'images','html','todo']);
 
 
 
