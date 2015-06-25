@@ -911,6 +911,13 @@ $scope.getCounties(16);
 	$scope.$on("valBubble", function(evt, args) {
     	alert("Validation changed for field " + args.ctrl.$name + ". Valid? " + args.isValid);
 	});
+
+	$scope.$on('$messageIncoming', function(event, args) {
+		alert("messageIncoming");
+		console.log(event);
+		console.log(args);
+    // do what you want to do
+	});
 });
 
 
