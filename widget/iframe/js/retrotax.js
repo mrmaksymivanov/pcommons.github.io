@@ -89,13 +89,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			{	templateUrl: "/widget/iframe/modal.html",
 				controller: "ctlEmployee"});
 
-	//$locationProvider.html5Mode(false);
 	$locationProvider.html5Mode({
   		enabled: true,
   		requireBase: false
 	});
 
-});
+}]);
 
 
 app.factory('AuthService', ['$http', '$q', function ($http, $q) {
