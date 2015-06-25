@@ -14,16 +14,23 @@ var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*']
 });
 
+gulp.task('lint', function() {
+  return gulp.src('widget/**/*.js')
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('jshint-stylish'));
+});
 
 // Concatenate JS Files
 gulp.task('scripts', function() {
     return gulp.src([
       'widget/js/angular.min.js',
-      'widget/js/angular-route.js',
+      'widget/js/angular-route.min.js',
       'widget/js/ui-bootstrap-custom-tpls-0.13.0.min.js',
       'widget/js/ngPostMessage.js',
-      'widget/js/retrotax_plugin.js'])
-      .pipe($.concat('retrotax_plugin.min.js'))
+      'widget/js/retrotax.js',
+      'widget/js/modal.js',
+      'widget/js/common.js'])
+      .pipe($.concat('retrotax.js'))
       .pipe($.rename({suffix: '.min'}))
       .pipe($.ngAnnotate())
       .pipe($.uglify({preserveComments: $.uglifySaveLicense}))

@@ -9,10 +9,18 @@
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	  <script src="js/angular.min.js"></script>
 	  <script src="js/angular-route.min.js"></script>
+    <!--
   	<script src="js/ui-bootstrap-custom-tpls-0.13.0.min.js"></script>  
+    -->
+    <script src="js/min/ui-bootstrap-custom-tpls-0.12.0.js"></script>  
   	<script src="js/ngMask.min.js"></script>
-  <script type="text/javascript" src="js/ngPostMessage.js"></script>
-	<script type="text/javascript" src="js/retrotax.js"></script>
+    <script type="text/javascript" src="js/ngPostMessage.js"></script>
+	  <script type="text/javascript" src="js/retrotax.js"></script>
+
+    <!-- build:js(dist,src) js/retrotax.min.js -->
+    <!-- inject:js -->
+    <!-- js files will be automaticaly insert here -->
+    <!-- endinject -->
 
 
 </head>
@@ -838,8 +846,8 @@ ng-show="tcid.employee.SUCCESS || currentemployeeid==0" ng-submit="save(frmEmplo
 <alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>s
   </div><!-- /modal -->
 </div><!--/scene-->
-<script type="text/javascript" src="js/modal.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="/widget/iframe/js/modal.js"></script>
+<script type="text/javascript" src="/widget/iframe/js/common.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
