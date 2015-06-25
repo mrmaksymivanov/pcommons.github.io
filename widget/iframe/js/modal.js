@@ -84,7 +84,7 @@ var animations = {
                     sendMessage('stop');
                 }, 750);
             });
-            /*
+            
             console.log(this.options.populated_fields);
             if(typeof this.options.populated_fields != 'undefined'){
             //console.log(this.options.populated_fields.firstname);
@@ -95,10 +95,10 @@ var animations = {
                 var x=angular.element("#firstname").scope();
                 console.log(x);
                 angular.element(x).val(this.options.populated_fields.lastname);
-                console.log("WORK");
+                console.log(x);
                //console.log(angular.element(tcid.employee.maindata.firstname));
             }
-            */
+            
             // ------------------------------ Optimizely test vvv
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {

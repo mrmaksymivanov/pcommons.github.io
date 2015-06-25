@@ -38,7 +38,7 @@
             response = angular.fromJson(event.data);
           } catch (_error) {
             error = _error;
-            console.error('ahem', error);
+            console.log('ahem', error);
             response = event.data;
           }
           $rootScope.$root.$broadcast('$messageIncoming', response);
@@ -876,6 +876,7 @@ $scope.getCounties(16);
 	console.log($rootScope);
 	$scope.variable1 = window.variable1;
 	console.log($postMessage);
+	console.log($scope.tcid.maindata.firstname);
 });
 
 
