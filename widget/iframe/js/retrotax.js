@@ -520,8 +520,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.client={};
 		emp.maindata.company={};
 		emp.maindata.location={};
-		emp.maindata.client.id= typeof currentuser.client.clientid!='undefined' ? currentuser.client.clientid : null;
-		emp.maindata.client.name=typeof currentuser.client.name!='undefined' ? currentuser.client.name : null;
+		emp.maindata.client.id= typeof user_provided_data.clientid!='undefined' ? user_provided_data.clientid : null;
+		emp.maindata.client.name=typeof $scope.tcid.client.name!='undefined' ? $scope.tcid.client.name : null;
 		emp.maindata.company.id=typeof user_provided_data.companyid!='undefined' ? user_provided_data.companyid : null;
 		emp.maindata.company.name='';
 		emp.maindata.location.id=typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : null;
