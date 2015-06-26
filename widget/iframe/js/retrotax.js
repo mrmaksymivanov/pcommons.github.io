@@ -316,7 +316,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee",['$scope', '$http', '$route', '$routeParams', '$location', '$window', '$postMessage', '$rootScope', function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -684,6 +684,6 @@ app.controller("ctlEmployee",['$scope', '$http', '$route', '$routeParams', '$loc
 		var m = JSON.stringify({status: 200, message: 'stop'});
 		scope.sender.postMessage(m, '*');
 	}
-}]);
+});
 
 
