@@ -37,6 +37,13 @@ window.addEventListener('message', function(e) {
 	}
 });
 
+var sanitize = function(str)
+{
+    str = str.replace(/\</g, '&lt;');
+    str = str.replace(/javascript\:/gi, 'java script -');
+    return str;
+}
+
 var sendMessage = function(requestType, data)
 {
 	data || (data = {});
@@ -52,7 +59,6 @@ var sendMessage = function(requestType, data)
  * @author Slavik Meltser (slavik@meltser.info).
  * @link http://slavik.meltser.info/?p=142
  */
-/*
 var guid = function() {
     var _p8 = function(s) {
         var p = (Math.random().toString(16)+"000000000").substr(2,8);
@@ -70,6 +76,6 @@ $(document).ready(function() {
 		sendMessage('stop');
 	});
 });
-*/
+
 var host = null;  // this will get populated with the domain of the widget install
-//var session = guid();
+var session = guid();
