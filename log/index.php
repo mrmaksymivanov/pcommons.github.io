@@ -1,6 +1,6 @@
 <?php
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require_once 'google-api-php-client/src/Google_Client.php';
 require_once 'google-api-php-client/src/contrib/Google_Oauth2Service.php';
@@ -31,6 +31,22 @@ if (isset($_REQUEST['logout'])) {
   unset($_SESSION['token']);
   $client->revokeToken();
 }
+if ($client->getAccessToken()) {
+  $user = $oauth2->userinfo->get();
+  $gmail = filter_var($user['email'], FILTER_SANITIZE_EMAIL);
+  $_SESSION['token'] = $client->getAccessToken();
+  $gmailArray = explode("@",$gmail);
+  if($gmailArray[1] != "retrotax-aci.com") {
+    unset($_SESSION['token']);
+    $client->revokeToken();	  
+	$authUrl = $client->createAuthUrl();
+   }	
+} else {
+  $authUrl = $client->createAuthUrl();
+  if(isset($authUrl)) {
+  }
+}
+/*
 if ($client->getAccessToken()) {
 	
   $user = $oauth2->userinfo->get();
@@ -90,7 +106,7 @@ if ($client->getAccessToken()) {
 	</div>';
   }
 }
-
+*/
 
 
 if(isset($_ENV['OPENSHIFT_DATA_DIR'])){
