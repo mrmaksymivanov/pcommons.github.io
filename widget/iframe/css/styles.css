@@ -311,9 +311,9 @@
          body{
          position:relative;
          }
-         .clear-20{
+         .clear-30{
          clear: both;
-         height:20px;
+         height:30px;
          }
          .clear-60{
          clear: both;
@@ -471,4 +471,31 @@ form.ng-invalid {outline:none;}
 
 .calBtn{
 	padding-top:3px;
+}
+
+.btn{
+	border-radius:0px !important;
+}
+i.iconAcc{
+	margin-right:15px !important;
+}
+
+.alert {
+padding-top: 15px;
+margin-bottom: 10px;
+border: 1px solid transparent;
+border-radius: 0px;
+}
+
+
+.form-group .help-block {
+  display: none;
+}
+
+.form-group.has-error .help-block {
+  display: block;
+}
+
+.logo{
+	border:0px;
 }

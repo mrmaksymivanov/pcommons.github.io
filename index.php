@@ -44,9 +44,10 @@
 */
 
 
+
 	var _retrotax_options = {
 
-            iframe_base_path: 'http://plugin-paulcommons.rhcloud.com/widget/iframe',
+            iframe_base_path: 'widget/iframe',
 	/*
            https://pcommons.github.io/widget/iframe',             <-- Set this for SSL Testing and ACI Demo Website (https://www.retrotax-aci.com/plugin-demo/) 
            http://plugin-paulcommons.rhcloud.com/widget/iframe',  <-- Set this for http cross-domain testing
@@ -65,25 +66,38 @@
             },
             clientid:364,
             companyid:1054,
-            locationid:8557,
+            //logo:'/plugin/widget/iframe/images/test.png',
+            //locationid:8557,
             button_class:"btn btn-huge btn-info",
             button_text:"Open RetroTax Screening Plugin",
+            button_class_error:"btn btn-huge btn-danger",
+            button_text_error:"Aw, snap! Something broke",
             plugin_type: 'ats',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
-            prepopulate_basic_info_by_id: {
+            prepopulate_by:'id',
+            populated_fields: {
                 firstname:'first_name',
                 lastname:'last_name',
                 middleinitial:'middle_init',
                 city:'',
-                state:'',
-                stateid:'',
+                state:'state',
+                state:'state',
                 zip:'',
-                address:'',
+                address:'address',
                 address2:'',
-                countyid:'',
-                dob:''
+                dob:'dateOfBirth'
             }
         };
-
+        /*
+(function (d, t) {
+  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+  bh.type = 'text/javascript';
+  bh.src = 'widget/retrotax_plugin.js';
+  console.log(d);
+  console.log(s);
+  console.log(bh);
+  s.parentNode.insertBefore(bh, s);
+  })(document, 'script');
+*/
     </script>
 	<!--
 	END RTN WIDGET EMBED CODE
@@ -95,12 +109,29 @@
         <div class="wrap">
         <div id="retrotax_plugin">Trigger Screening</div>
         <input id="first_name" class="retrotax" value="Paul">
-        <input id="middle_init" class="retrotax" value="M">
-        <input id="last_name" value="Commons">
+        <input id="middle_init" class="retrotax" value="">
+        <input id="last_name" value="">
+        <input id="address" value="3130 2nd St W">
+        <input id="state" class="retrotax" value="FL">
+        <input id="address2" class="retrotax" value="blah">
+        <input id="dateOfBirth" class="retrotax" value="03/02/1987">
+
+
+        <input name="first_name" class="retrotax" value="Pablo">
+        <input name="middle_init" class="retrotax" value="C">
+        <input name="last_name" value="Com">
+        <input name="address" value="3130 1nd St W">
+        <input name="city" class="retrotax" value="St. Pete">
+        <input name="state" class="retrotax" value="IN">
+        <input name="zip-code" class="retrotax" value="11111">
+        <input name="address2" class="retrotax" value="blah">
+        <input name="dateOfBirth" class="retrotax" value="03-02-1987">
+
+
+
         </div><!-- close .wrap -->
     </div><!-- close .main -->
-        <script type="text/javascript" src="widget/retrotax_plugin.js"></script>
-
+<script src="widget/retrotax_plugin.js"></script>
 </body>
 
 </html>

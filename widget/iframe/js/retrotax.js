@@ -81,13 +81,18 @@
 var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngMask','ngPostMessage']);
 
 
+//Constants & Values
+app.constant('debug', true);
+app.value('debug', true);
 
-
-app.config(function($routeProvider, $locationProvider){
+app.config(function($routeProvider, $locationProvider, $provide, debug){
 //app.config(function($routeProvider){
 
 	$routeProvider.
-		when("/:param1",
+		when("/:bootstrap",
+			{	templateUrl: "/widget/iframe/bootstrap.html",
+				controller: "ctlEmployee"}).
+		when("/:modal",
 			{	templateUrl: "/widget/iframe/modal.html",
 				controller: "ctlEmployee"});
 
@@ -97,210 +102,62 @@ app.config(function($routeProvider, $locationProvider){
   		requireBase: false
 	});
 
+
+
+    
+    
+    
+    // catch exceptions in angular
+    $provide.decorator('$exceptionHandler', ['$delegate', function($delegate){
+      return function(exception, cause){
+        $delegate(exception, cause);
+
+        var data = {
+          type: 'angular',
+          url: window.location.hash,
+          localtime: Date.now()
+        };
+        if(cause)               { data.cause    = cause;              }
+        if(exception){
+          if(exception.message) { data.message  = exception.message;  }
+          if(exception.name)    { data.name     = exception.name;     }
+          if(exception.stack)   { data.stack    = exception.stack;    }
+        }
+
+        if(debug){
+          console.log('exception', data);
+        } else {
+          $.error(data);
+        }
+      };
+    }]);
+    // catch exceptions out of angular
+    window.onerror = function(message, url, line, col, error){
+      var stopPropagation = debug ? false : true;
+      var data = {
+        type: 'javascript',
+        url: window.location.hash,
+        localtime: Date.now()
+      };
+      if(message)       { data.message      = message;      }
+      if(url)           { data.fileName     = url;          }
+      if(line)          { data.lineNumber   = line;         }
+      if(col)           { data.columnNumber = col;          }
+      if(error){
+        if(error.name)  { data.name         = error.name;   }
+        if(error.stack) { data.stack        = error.stack;  }
+      }
+
+      if(debug){
+        console.log('exception', data);
+      } else {
+          $.error(data);
+      }
+      return stopPropagation;
+    };
+
+
 });
-
-
-app.factory('AuthService', ['$http', '$q', function ($http, $q) {
-	var lcurrentuser={};
-	var lcu_locations=[];
-	var lcu_companies=[];
-	var lcu_clients=[];
-	var TCID_DOMAIN='http://tcid.retrotax.co/api/v1/';
-	var isLoggedIn=false;
-	var isDeviceAuth=false;
-  
-
-	var mergeCCL=function(indata) {
-		var tmpindata=[];
-		tmpindata.clients=[{"id":indata.companies[0].maindata.clientid, "legal_name":"temp name"}];
-
-		var ret={};
-		ret.clients=[];
-
-		$.each(tmpindata.clients, function( key, value ) {
-			var tmpclient=value;
-			tmpclient.companies=[];
-
-			$.each(indata.companies, function( key, value ) {
-				if (tmpclient.id==value.maindata.clientid) {
-					var tmpcompany=value.maindata;
-					tmpcompany.locations=[];
-
-					$.each(indata.locations, function( key, value ) {
-						if (tmpcompany.id==value.maindata.companyid) {
-							tmpcompany.locations.push(value.maindata);
-						}
-					});
-
-					tmpclient.companies.push(tmpcompany);
-				}
-			});	
-
-			ret.clients.push(tmpclient);
-		});
-
-		// console.log('mergeccl ret: ',ret);
-
-		return ret;
-	}
-
-	var cnt=0;
-	return {
-	login: function(tcid) {
-		return $http.get(tcid.url2fa)
-			.then(function(response) {
-			    if (typeof response.data === 'object') {
-					if (angular.isDefined(response.data.message)) {
-						if (response.data.SUCCESS==false) {
-							localStorage.setItem("hasAccess", 0);
-							localStorage.setItem('u','');
-							return $q.reject(response.data); // 
-						}
-
-						if (response.data.message=='E-mailed 2fa code') {
-							tcid.showAuth=true;
-						}
-					}
-
-					if (angular.isDefined(response.data.APIKEY)) {tcid.api_key=response.data.APIKEY;}
-					if (angular.isDefined(response.data.apikey)) {tcid.api_key=response.data.apikey;}
-
-					if (angular.isDefined(tcid.api_key) && tcid.api_key!='' && tcid.api_key.length==32 && tcid.u!='') {
-						localStorage.setItem("apikey", tcid.api_key);
-						localStorage.setItem("hasAccess", 1);
-
-						isLoggedIn=true; 
-						tcid.didlogin=true;
-						tcid.username=response.data.loggedInAPIUser.user.username;
-						tcid.privilegeid=response.data.loggedInAPIUser.user.privilegeid;
-						tcid.email=response.data.loggedInAPIUser.user.email;
-						tcid.name=response.data.loggedInAPIUser.user.firstname + ' ' +response.data.loggedInAPIUser.user.lastname;
-
-						tcid.client={};
-						tcid.client.name=response.data.loggedInAPIUser.user.client_name;
-						tcid.client.clientid=response.data.loggedInAPIUser.user.clientid;
-						
-						tcid.company={};
-						tcid.company.name='company name to be looked up';
-						tcid.company.companyid=response.data.loggedInAPIUser.user.companyid;
-						tcid.location={};
-						tcid.location.name='location name to be looked up';
-						tcid.location.locationid=response.data.loggedInAPIUser.user.locationid;
-
-						tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
-
-						lcurrentuser=tcid;
-
-						localStorage.setItem('cu', JSON.stringify(lcurrentuser));
-						localStorage.setItem('u',lcurrentuser.username);
-
-						console.log('(app.js) LOGGED IN USER: ',lcurrentuser);
-
-
-					} else {
-						localStorage.setItem("hasAccess", 0);
-						localStorage.setItem('u','');
-						console.log('LOGGED **NOT*** in USER: ',lcurrentuser);
-					}
-			        return lcurrentuser;
-			    } else {
-			        return $q.reject(response.data); // invalid response
-			    }
-
-			}, function(response) {
-			    return $q.reject(response.data);
-			});
-	},
-	plugin_auth: function(tcid) {
-		console.log(tcid);
-		//return $http.get('http://tcid.retrotax.co/api/v1/api_employees/view?apikey='+$scope.currentuser().api_key+'&u='+$scope.currentuser().username+'&employeeid=0')
-		return $http.get(this.getRetroURL()+'/api/v1/documents/list?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&employeeid=0')
-
-			.then(function(response) {
-					console.log("PLUGIN AUTH");
-					console.log(response);
-					if (angular.isDefined(response.data.APIKEY)) {tcid.api_key=response.data.APIKEY;}
-					if (angular.isDefined(response.data.apikey)) {tcid.api_key=response.data.apikey;}
-					tcid.api_key='F5171AE353A64CD396A45F54EC10F373';
-					if (angular.isDefined(tcid.api_key) && tcid.api_key!='' && tcid.api_key.length==32 && tcid.u!='') {
-						localStorage.setItem("apikey", tcid.api_key);
-						localStorage.setItem("hasAccess", 1);
-
-						isLoggedIn=true; 
-						tcid.didlogin=true;
-						tcid.username=response.data.loggedInAPIUser.user.username;
-						tcid.privilegeid=response.data.loggedInAPIUser.user.privilegeid;
-						tcid.email=response.data.loggedInAPIUser.user.email;
-						tcid.name=response.data.loggedInAPIUser.user.firstname + ' ' +response.data.loggedInAPIUser.user.lastname;
-
-						tcid.client={};
-						tcid.client.name=response.data.loggedInAPIUser.user.client_name;
-						tcid.client.clientid=response.data.loggedInAPIUser.user.clientid;
-						
-						tcid.company={};
-						tcid.company.name='company name to be looked up';
-						tcid.company.companyid=response.data.loggedInAPIUser.user.companyid;
-						tcid.location={};
-						tcid.location.name='location name to be looked up';
-						tcid.location.locationid=response.data.loggedInAPIUser.user.locationid;
-
-						//tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
-
-						lcurrentuser=tcid;
-
-						localStorage.setItem('cu', JSON.stringify(lcurrentuser));
-						localStorage.setItem('u',lcurrentuser.username);
-
-						console.log('(app.js) LOGGED IN USER: ',lcurrentuser);
-
-
-					} else {
-						localStorage.setItem("hasAccess", 0);
-						localStorage.setItem('u','');
-						console.log('LOGGED **NOT*** in USER: ',lcurrentuser);
-					}
-			        return lcurrentuser;
-			    });
-	},
-	userLoggedIn: 	function() {
-		if (!isLoggedIn) {
-			var retuser = JSON.parse(localStorage.getItem('cu'));
-			if (retuser==null) {return false;}
-
-			if (angular.isObject(retuser)) {
-				if (retuser.api_key != '') {
-					lcurrentuser=retuser;
-					isLoggedIn=true;
-					console.log('>>>>>>>>>>>>>>> lcurrentuser ahs been set!',lcurrentuser);
-				} 	
-		 	}
-		}
-		return isLoggedIn;},  
-
-	isDeviceAuth: 	function() {return isDeviceAuth;},
-
-	logout: function() {
-		isLoggedIn=false; 
-		lcurrentuser=undefined; 
-		cnt=0;
-		localStorage.removeItem('cu');
-		console.log('****** USER LOGGED OUT **********');
-		return true;
-	},
-	currentuser: function() {return lcurrentuser;},
-
-	getRetroURL: function(debug){
-		console.log(window.location.hostname);
-        if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
-    }
-
-	};
-
-}]);
-
-
-
 
 
 
@@ -316,7 +173,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, debug){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -326,7 +183,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.tcid.employee={};
 	$scope.tcid.employees=[];
 	$scope.tmpcomp=null; //$index
-	//$scope.tcid.searchform={"firstname":"","lastname":"","appstatus":"*","ssn4":""};
 	
 	$scope.tcid.counties=[];
 	$scope.tcid.gettingcounties=[];
@@ -375,9 +231,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 */
 
 
-	$scope.initView = function() {
-		//console.log('geting counties: ',$scope.getCounties(17));
-	};
 	$scope.initEdit = function() {
         //$scope.html_metadata = html_metadata;
         //console.log($scope.html_metadata);
@@ -412,6 +265,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
  		if($scope.isATS){
  			return 364;
  		}else{
+ 			//if not we assume obs and make req depending upon what's provided
 			//return getIndexOf($scope.currentuser().ccl.clients, $scope.tcid.employee.maindata.client.id, 'id');
  		}
 	};
@@ -420,6 +274,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
  		if($scope.isATS){
  			return 1054;
  		}else{
+ 			//if not we assume obs and make req depending upon what's provided
 			//return getIndexOf($scope.currentuser().ccl.clients[$scope.getSelectedClientIndex()].companies, $scope.tcid.employee.maindata.company.id, 'id');
 		}
 	};
@@ -446,6 +301,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		console.log(isValid);
 
 
+ $scope.$broadcast('show-errors-check-validity');
+   
 		if (!isValid) {
 			$scope.alerts=[];
 			var error = $scope.frmEmployee.$error;
@@ -482,12 +339,26 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
-				$location.path("/new");
-				//dataFromServer.SAVEDID
+				$scope.currentemployeeid=1;
+				//Attempt to send response to clients callback url.  
+				if($scope.args.callback_url !== false){ //&& isValidURL() && protocol==https
+					//If we can set clientSideLogging var then we could use this: $.log(dataFromServer);
+					try{
+						var responsePromise = $http.post($scope.args.callback_url, dataFromServer, {});
+						responsePromise.success(function(dataFromServer, status, headers, config) {
+							//kill iframe
+						});
+					}catch(e){
+						$.error(e);
+						//kill iframe
+					}
+				}
 			}
 		});
 		responsePromise.error(function(data, status, headers, config) {
-		alert("Submitting form failed!");
+			$.error({'data':data,'status':status,'headers':headers,'config':config});
+			alert("Submitting form failed!");
+
 		});
 	}
 
@@ -517,7 +388,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.middleinitial= typeof user_provided_data.populated_fields.middleinitial!='undefined' ? user_provided_data.populated_fields.middleinitial : '';
 		emp.maindata.city= typeof user_provided_data.populated_fields.city!='undefined' ? user_provided_data.populated_fields.city : '';
 		//emp.maindata.state='IL';
-		emp.maindata.stateid=0;
+		emp.maindata.stateid=getStateMatch(user_provided_data.populated_fields.state);
 		emp.maindata.zip=typeof user_provided_data.populated_fields.zip!='undefined' ? user_provided_data.populated_fields.zip : '';
 		emp.maindata.address=typeof user_provided_data.populated_fields.address!='undefined' ? user_provided_data.populated_fields.address : '';
 		emp.maindata.address2=typeof user_provided_data.populated_fields.address2!='undefined' ? user_provided_data.populated_fields.address2 : '';
@@ -606,7 +477,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.startingwage=null;
 		emp.maindata.occupationid=null;
 		emp.maindata.hashiringmanager=0;
-		//emp.maindata.userentered=$scope.currentuser().id;
+		emp.maindata.userentered=typeof user_provided_data.id!='undefined' ? user_provided_data.id : null;
 
 		emp.maindata.hiring_manager_completed=0;
 		
@@ -650,26 +521,434 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	    return;
 	}
 
+	    $scope.setDefaults = function() {
+        if($scope.debug)console.log('setting data');
+
+        $scope.tcid.employee.showhminfo = true;
+        $scope.tcid.employee.maindata = {};
+
+        $scope.tcid.employee.maindata.id = 0;
+
+        $scope.tcid.employee.maindata.applicationstatusid = '';
+        $scope.tcid.employee.maindata.ssn = '111-11-1111';
+        $scope.tcid.employee.maindata.ssnconfirmation = '111-11-1111';
+        $scope.tcid.employee.maindata.ssn4 = '';
+        $scope.tcid.employee.maindata.firstname = 'plugin';
+        $scope.tcid.employee.maindata.lastname = 'test';
+        $scope.tcid.employee.maindata.middleinitial = '';
+        $scope.tcid.employee.maindata.city = 'chicago';
+        //$scope.tcid.employee.maindata.state='IL';
+        $scope.tcid.employee.maindata.stateid = 13;
+        $scope.tcid.employee.maindata.zip = '60606';
+        $scope.tcid.employee.maindata.address = '123 main street';
+        $scope.tcid.employee.maindata.address2 = '';
+        //$scope.tcid.employee.maindata.countyid=null;
+        $scope.tcid.employee.maindata.dob = '11/11/1973';
+
+        $scope.tcid.employee.maindata.client = {};
+        $scope.tcid.employee.maindata.company = {};
+        $scope.tcid.employee.maindata.location = {};
+        $scope.tcid.employee.maindata.client.id = 364; //$scope.currentuser().client.clientid;
+        $scope.tcid.employee.maindata.client.name = ''; ///$scope.currentuser().client.name;
+        $scope.tcid.employee.maindata.company.id = null;
+        $scope.tcid.employee.maindata.company.name = '';
+        $scope.tcid.employee.maindata.location.id = null;
+        $scope.tcid.employee.maindata.location.name = '';
+
+        $scope.tcid.employee.maindata.clientid = function() {
+            return $scope.tcid.employee.maindata.client.id
+        };
+        $scope.tcid.employee.maindata.companyid = function() {
+            return $scope.tcid.employee.maindata.company.id;
+        };
+        $scope.tcid.employee.maindata.locationid = $scope.tcid.employee.maindata.location.id;
+
+
+        $scope.tcid.employee.maindata.rehire = 0;
+        $scope.tcid.employee.maindata.afdc = 0;
+        $scope.tcid.employee.maindata.foodstamps = 0;
+        $scope.tcid.employee.maindata.ssi = 0;
+        $scope.tcid.employee.maindata.ttw = 0;
+        $scope.tcid.employee.maindata.vocrehab = 0;
+        $scope.tcid.employee.maindata.deptva = 0;
+        $scope.tcid.employee.maindata.vocrehabagency = 0;
+        $scope.tcid.employee.maindata.veteran = 0;
+        $scope.tcid.employee.maindata.felon = 0;
+        $scope.tcid.employee.maindata.unemployed = 0;
+        $scope.tcid.employee.maindata.cdib = 0;
+        $scope.tcid.employee.maindata.cafoster = 0;
+        $scope.tcid.employee.maindata.cawia = 0;
+        $scope.tcid.employee.maindata.cacalworks = 0;
+        $scope.tcid.employee.maindata.cafarmer = 0;
+        $scope.tcid.employee.maindata.camisdemeanor = 0;
+
+        $scope.tcid.employee.maindata.feloninfo = {};
+        $scope.tcid.employee.maindata.feloninfo.stateid = null;
+        $scope.tcid.employee.maindata.feloninfo.countyid = null;
+        $scope.tcid.employee.maindata.feloninfo.isstateconviction = 0;
+        $scope.tcid.employee.maindata.feloninfo.isfederalconviction = 0;
+        $scope.tcid.employee.maindata.feloninfo.dateconviction = null;
+        $scope.tcid.employee.maindata.feloninfo.daterelease = null;
+        $scope.tcid.employee.maindata.feloninfo.paroleofficer = null;
+        $scope.tcid.employee.maindata.feloninfo.paroleofficerphone = null;
+
+        $scope.tcid.employee.maindata.veteraninfo = {};
+        $scope.tcid.employee.maindata.veteraninfo.branchid = null;
+        $scope.tcid.employee.maindata.veteraninfo.disabled = null;
+        $scope.tcid.employee.maindata.veteraninfo.servicestart = '';
+        $scope.tcid.employee.maindata.veteraninfo.servicestop = '';
+
+        $scope.tcid.employee.maindata.vocrehabinfo = {};
+        $scope.tcid.employee.maindata.vocrehabinfo.address = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.city = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.address2 = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.agency = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.countyid = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.phone = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.stateid = '';
+        $scope.tcid.employee.maindata.vocrehabinfo.zip = '';
+
+        $scope.tcid.employee.maindata.unemploymentinfo = {};
+        $scope.tcid.employee.maindata.unemploymentinfo.unemployedstart = '';
+        $scope.tcid.employee.maindata.unemploymentinfo.unemployedstop = '';
+        $scope.tcid.employee.maindata.unemploymentinfo.compensated = null;
+        $scope.tcid.employee.maindata.unemploymentinfo.compensatedstart = '';
+        $scope.tcid.employee.maindata.unemploymentinfo.compensatedstop = '';
+
+
+        $scope.tcid.employee.maindata.doh = '2/11/2015';
+        $scope.tcid.employee.maindata.dgi = '2/11/2015';
+        $scope.tcid.employee.maindata.dsw = '2/11/2015';
+        $scope.tcid.employee.maindata.dojo = '2/11/2015';
+        $scope.tcid.employee.maindata.startingwage = null;
+        $scope.tcid.employee.maindata.occupationid = null;
+        $scope.tcid.employee.maindata.hashiringmanager = 0;
+        $scope.tcid.employee.maindata.userentered = 942;
+
+        $scope.tcid.employee.maindata.hiring_manager_completed = 0;
+
+
+        $scope.tcid.employee.maindata.esign = 0;
+        $scope.tcid.employee.maindata.authorization = 0;
+
+        $scope.tcid.employee.maindata.formQualify = 0;
+        $scope.tcid.employee.maindata.autoQualify = 0;
+        $scope.tcid.employee.maindata.qualifications = [];
+        $scope.tcid.employee.maindata.tractid = '';
+        $scope.tcid.employee.maindata.geoqualify = null;
+        $scope.tcid.employee.maindata.ruralrenewalcity = '';
+
+        return emp;
+    }
+    
+	var mergeCCL=function(indata) {
+		var tmpindata=[];
+		tmpindata.clients=[{"id":indata.companies[0].maindata.clientid, "legal_name":"temp name"}];
+		var ret={};
+		ret.clients=[];
+		angular.forEach(tmpindata.clients, function( key, value ) {
+			var tmpclient=key;
+			tmpclient.companies=[];
+			angular.forEach(indata.companies, function( key, value ) {
+                console.log(key); console.log(value);
+				
+				if (tmpclient.id==key.maindata.clientid) {
+					var tmpcompany=key.maindata;
+					tmpcompany.locations=[];
+					angular.forEach(indata.locations, function( key, value ) {
+						if (tmpcompany.id==key.maindata.companyid) {
+							tmpcompany.locations.push(key.maindata);
+						}
+					});
+					tmpclient.companies.push(tmpcompany);
+				}
+			});	
+			ret.clients.push(tmpclient);
+		});
+	};
+
+    getCurrentUser=function(){
+    		//TODO create method in api which returns the same data as device2fa but accepts a client-side apikey which we check against (this apikey should only be able to work with this method and the save method)
+    		return $http.get($scope.apiURL+'/api/v1/api_employees/list?&apikey='+$scope.tcid.api_key+'&u='+$scope.tcid.username+ '&employeeid=0')
+    		//$scope.tcid.checkapi2fa='';
+    		//$scope.tcid.device='temp_device22f';
+			//$scope.tcid.url2fa = $scope.apiURL+'/api/v1/users/device2fa?cclhash=123123&pw=' + $scope.tcid.pw + '&u=' + $scope.tcid.u +'&device='+$scope.tcid.device+'&api2fa='+$scope.tcid.checkapi2fa;
+	
+			.then(function(response) {
+					console.log("PLUGIN AUTH");
+					console.log(response);
+					if (angular.isDefined($scope.tcid.api_key) && $scope.tcid.api_key!='' && $scope.tcid.api_key.length==32 && $scope.tcid.u!='') {
+						$scope.tcid.didlogin=true;
+						$scope.tcid.username=response.data.loggedInAPIUser.user.username;
+						$scope.tcid.privilegeid=response.data.loggedInAPIUser.user.privilegeid;
+						$scope.tcid.email=response.data.loggedInAPIUser.user.email;
+						$scope.tcid.name=response.data.loggedInAPIUser.user.firstname + ' ' +response.data.loggedInAPIUser.user.lastname;
+						$scope.tcid.client={};
+						$scope.tcid.client.name=response.data.loggedInAPIUser.user.client_name;
+						$scope.tcid.client.clientid=response.data.loggedInAPIUser.user.clientid;	
+						$scope.tcid.company={};
+						$scope.tcid.company.name='company name to be looked up';
+						$scope.tcid.company.companyid=response.data.loggedInAPIUser.user.companyid;
+						$scope.tcid.location={};
+						$scope.tcid.location.name='location name to be looked up';
+						$scope.tcid.location.locationid=response.data.loggedInAPIUser.user.locationid;
+						//tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
+					} 
+			        //return tcid;
+			    });
+	};
+
+	getStateMatch=function(st){	
+		if(typeof st !== 'undefined' || st !== ''){
+			for(var i=1;i<$scope.tcid.state.length;i++){
+				var s=st.toUpperCase();
+				if(s==$scope.tcid.state[i].name || s==$scope.tcid.state[i].code){
+					console.log("true"+i);
+					return i;
+				}
+				
+			}
+		}
+		return 0;
+	};
+
+    $scope.tcid.state = [];
+    $scope.tcid.state[1] = {
+        "name": "ALASKA",
+        "code": "AK"
+    };
+    $scope.tcid.state[2] = {
+        "name": "ALABAMA",
+        "code": "AL"
+    };
+    $scope.tcid.state[3] = {
+        "name": "ARKANSAS",
+        "code": "AR"
+    };
+    $scope.tcid.state[4] = {
+        "name": "ARIZONA",
+        "code": "AZ"
+    };
+    $scope.tcid.state[5] = {
+        "name": "CALIFORNIA",
+        "code": "CA"
+    };
+    $scope.tcid.state[6] = {
+        "name": "COLORADO",
+        "code": "CO"
+    };
+    $scope.tcid.state[7] = {
+        "name": "CONNECTICUT",
+        "code": "CT"
+    };
+    $scope.tcid.state[8] = {
+        "name": "DISTRICT OF COLUMBIA",
+        "code": "DC"
+    };
+    $scope.tcid.state[9] = {
+        "name": "DELAWARE",
+        "code": "DE"
+    };
+    $scope.tcid.state[10] = {
+        "name": "FLORIDA",
+        "code": "FL"
+    };
+    $scope.tcid.state[11] = {
+        "name": "GEORGIA",
+        "code": "GA"
+    };
+    $scope.tcid.state[12] = {
+        "name": "GUAM",
+        "code": "GU"
+    };
+    $scope.tcid.state[13] = {
+        "name": "HAWAII",
+        "code": "HI"
+    };
+    $scope.tcid.state[14] = {
+        "name": "IOWA",
+        "code": "IA"
+    };
+    $scope.tcid.state[15] = {
+        "name": "IDAHO",
+        "code": "ID"
+    };
+    $scope.tcid.state[16] = {
+        "name": "ILLINOIS",
+        "code": "IL"
+    };
+    $scope.tcid.state[17] = {
+        "name": "INDIANA",
+        "code": "IN"
+    };
+    $scope.tcid.state[18] = {
+        "name": "KANSAS",
+        "code": "KS"
+    };
+    $scope.tcid.state[19] = {
+        "name": "KENTUCKY",
+        "code": "KY"
+    };
+    $scope.tcid.state[20] = {
+        "name": "LOUISIANA",
+        "code": "LA"
+    };
+    $scope.tcid.state[21] = {
+        "name": "MASSACHUSETTS",
+        "code": "MA"
+    };
+    $scope.tcid.state[22] = {
+        "name": "MARYLAND",
+        "code": "MD"
+    };
+    $scope.tcid.state[23] = {
+        "name": "MAINE",
+        "code": "MA"
+    };
+    $scope.tcid.state[24] = {
+        "name": "MICHIGAN",
+        "code": "MI"
+    };
+    $scope.tcid.state[25] = {
+        "name": "MINNESOTA",
+        "code": "MN"
+    };
+    $scope.tcid.state[26] = {
+        "name": "MISSOURI",
+        "code": "MS"
+    };
+    $scope.tcid.state[27] = {
+        "name": "MISSISSIPPI",
+        "code": "MP"
+    };
+    $scope.tcid.state[28] = {
+        "name": "MONTANA",
+        "code": "MT"
+    };
+    $scope.tcid.state[29] = {
+        "name": "NORTH CAROLINA",
+        "code": "NC"
+    };
+    $scope.tcid.state[30] = {
+        "name": "NORTH DAKOTA",
+        "code": "ND"
+    };
+    $scope.tcid.state[31] = {
+        "name": "NEBRASKA",
+        "code": "NE"
+    };
+    $scope.tcid.state[32] = {
+        "name": "NEW HAMPSHIRE",
+        "code": "NH"
+    };
+    $scope.tcid.state[33] = {
+        "name": "NEW JERSEY",
+        "code": "NJ"
+    };
+    $scope.tcid.state[34] = {
+        "name": "NEW MEXICO",
+        "code": "NM"
+    };
+    $scope.tcid.state[35] = {
+        "name": "NEVADA",
+        "code": "NV"
+    };
+    $scope.tcid.state[36] = {
+        "name": "NEW YORK",
+        "code": "NY"
+    };
+    $scope.tcid.state[37] = {
+        "name": "OHIO",
+        "code": "OH"
+    };
+    $scope.tcid.state[38] = {
+        "name": "OKLAHOMA",
+        "code": "OK"
+    };
+    $scope.tcid.state[39] = {
+        "name": "OREGON",
+        "code": "OR"
+    };
+    $scope.tcid.state[40] = {
+        "name": "PENNSYLVANIA",
+        "code": "PA"
+    };
+    $scope.tcid.state[41] = {
+        "name": "PUERTO RICO",
+        "code": "PR"
+    };
+    $scope.tcid.state[42] = {
+        "name": "PALAU",
+        "code": "PL"
+    };
+    $scope.tcid.state[43] = {
+        "name": "RHODE ISLAND",
+        "code": "RI"
+    };
+    $scope.tcid.state[44] = {
+        "name": "SOUTH CAROLINA",
+        "code": "SC"
+    };
+    $scope.tcid.state[45] = {
+        "name": "SOUTH DAKOTA",
+        "code": "SD"
+    };
+    $scope.tcid.state[46] = {
+        "name": "TENNESSEE",
+        "code": "TN"
+    };
+    $scope.tcid.state[47] = {
+        "name": "TEXAS",
+        "code": "TX"
+    };
+    $scope.tcid.state[48] = {
+        "name": "UTAH",
+        "code": "UT"
+    };
+    $scope.tcid.state[49] = {
+        "name": "VIRGINIA",
+        "code": "VI"
+    };
+    $scope.tcid.state[50] = {
+        "name": "VERMONT",
+        "code": "VT"
+    };
+    $scope.tcid.state[51] = {
+        "name": "WASHINGTON",
+        "code": "WA"
+    };
+    $scope.tcid.state[52] = {
+        "name": "WISCONSIN",
+        "code": "WI"
+    };
+    $scope.tcid.state[53] = {
+        "name": "WEST VIRGINIA",
+        "code": "WV"
+    };
+    $scope.tcid.state[54] = {
+        "name": "WYOMING",
+        "code": "WY"
+    };
+    $scope.tcid.state[55] = {
+        "name": "VIRGIN ISLANDS",
+        "code": "VI"
+    };
+/*
+
+Possible reasons for breakage: 
+	accidentally commented out document.ready in common.js
+	args is being passed to defEmployee and it should be args.data?
+
+
+*/	
 	$scope.$on('$messageIncoming', function(event, args) {
-		console.log(args);
-		console.log(args.populated_fields.firstname);
-				console.log(args.clientid);
-						console.log(args.companyid);
-								console.log(args.locationid);
-
-
-		$scope.tcid.api_key=args.apikey;
-		$scope.tcid.username=args.username;
-		console.log($scope.tcid);
-		$scope.tcid.employee=defEmployee(args,$scope.tcid);
-		console.log($scope.tcid);
-
-        switch(args.plugin_type) {
+        switch(args.plugin_type.toLowerCase()) {
                 case 'demo':
                       $scope.isATS=false;
                       $scope.isDisabled=true;     
                       break;
                 case 'ats':
+                		//TODO add to documentation that if its an ats then we hide CCL input fields, authorization, esign, etc and we assume CCL IDs are provided
                       $scope.isATS=true;       
                       break;
                 case 'obs':
@@ -678,12 +957,121 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
                 default:
                     sendMessage('stop');
           }
+
+			$scope.tcid.api_key=args.apikey;
+			$scope.tcid.username=args.username;
+
+			
+			if(args.logo === false){
+				$scope.showLogo=false;
+			}else if(args.logo===true){
+				$scope.logo='/plugin/widget/iframe/images/retrotax_plugin_logo.png';
+				$scope.showLogo=true;
+			}else{
+				console.log("else"+args.logo);
+				$scope.logo=args.logo;
+				$scope.showLogo=true;
+			}
+			
+			getCurrentUser();
+			$scope.tcid.employee=defEmployee(args,$scope.tcid);
+			console.log(args);
+			$scope.args=args;
+			
+			$scope.hasProvided={};
+			$scope.hasProvided.clientid=typeof args.clientid!='undefined' ? true : false;
+			$scope.hasProvided.companyid= (typeof args.companyid !== 'undefined' && args.companyid !== false) ? true : false;
+			$scope.hasProvided.locationid=(typeof args.locationid!='undefined' && args.locationid !== false) ? true : false;
+			//$scope.hasProvided.firstname=typeof args.populated_fields.firstname!='undefined' ? true : false;
+			console.log($scope.hasProvided);
+
+//TODO if companyid or locationid are supplied then we hide those fields; otherwise we make a request to get locations dropdown...if it's a single company, we hide it but if there are additional we dodropdown
+		console.log($scope);	
 	});
 	// TODO: Make this work
 	$scope.stopIFRAME=function(){
 		var m = JSON.stringify({status: 200, message: 'stop'});
 		scope.sender.postMessage(m, '*');
 	}
+
+
+
+
 });
+/*
 
+app.directive('showErrors', function ($timeout, showErrorsConfig) {
+      var getShowSuccess, linkFn;
+      getShowSuccess = function (options) {
+        var showSuccess;
+        showSuccess = showErrorsConfig.showSuccess;
+        if (options && options.showSuccess != null) {
+          showSuccess = options.showSuccess;
+        }
+        return showSuccess;
+      };
+      linkFn = function (scope, el, attrs, formCtrl) {
+        var blurred, inputEl, inputName, inputNgEl, options, showSuccess, toggleClasses;
+        blurred = false;
+        options = scope.$eval(attrs.showErrors);
+        showSuccess = getShowSuccess(options);
+        inputEl = el[0].querySelector('[name]');
+        inputNgEl = angular.element(inputEl);
+        inputName = inputNgEl.attr('name');
+        if (!inputName) {
+          throw 'show-errors element has no child input elements with a \'name\' attribute';
+        }
+        inputNgEl.bind('blur', function () {
+          blurred = true;
+          return toggleClasses(formCtrl[inputName].$invalid);
+        });
+        scope.$watch(function () {
+          return formCtrl[inputName] && formCtrl[inputName].$invalid;
+        }, function (invalid) {
+          if (!blurred) {
+            return;
+          }
+          return toggleClasses(invalid);
+        });
+        scope.$on('show-errors-check-validity', function () {
+          return toggleClasses(formCtrl[inputName].$invalid);
+        });
+        scope.$on('show-errors-reset', function () {
+          return $timeout(function () {
+            el.removeClass('has-error');
+            el.removeClass('has-success');
+            return blurred = false;
+          }, 0, false);
+        });
+        return toggleClasses = function (invalid) {
+          el.toggleClass('has-error', invalid);
+          if (showSuccess) {
+            return el.toggleClass('has-success', !invalid);
+          }
+        };
+      };
+      return {
+        restrict: 'A',
+        require: '^form',
+        compile: function (elem, attrs) {
+          if (!elem.hasClass('form-group')) {
+            throw 'show-errors element does not have the \'form-group\' class';
+          }
+          return linkFn;
+        }
+      };
+    }
+  );
+  
+  app.provider('showErrorsConfig', function () {
+    var _showSuccess;
+    _showSuccess = false;
+    this.showSuccess = function (showSuccess) {
+      return _showSuccess = showSuccess;
+    };
+    this.$get = function () {
+      return { showSuccess: _showSuccess };
+    };
+  });
 
+  */

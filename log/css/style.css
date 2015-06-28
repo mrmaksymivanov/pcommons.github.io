@@ -1,0 +1,52 @@
+body { padding:10px; }
+
+.navbar .brand { padding-top:14px; }
+.nav li.error:hover, .nav li.log:hover, .nav li.info:hover,
+.nav li.error.active, .nav li.log.active, .nav li.info.active {
+	margin-bottom:0;
+}
+.nav li.error:hover,
+.nav li.error.active {
+	border-bottom:5px solid #B94A48;
+}
+.nav li.log:hover,
+.nav li.log.active {
+	border-bottom:5px solid #B9D5E2;
+}
+.nav li.info:hover,
+.nav li.info.active {
+	border-bottom:5px solid #BED5BE;
+}
+
+ul { list-style:none; margin-left:5px; }
+li { margin:5px 0; }
+.checkbox label { display:inline-block; }
+
+.log_info { height:150px; overflow:auto; }
+
+.table td.type {
+	overflow:hidden;
+	position:relative;
+	text-align:center;
+	width:30px;
+}
+.type:before {
+	content:'';
+	display:block;
+	height:100%;
+	left:0;
+	position:absolute;
+	top:0;
+	width:5px;
+}
+.type.error:before {
+	background:#B94A48;
+}
+.type.log:before {
+	background:#B9D5E2;
+}
+.type.info:before {
+	background:#BED5BE;
+}
+
+.table th.span1 { text-align:center; }

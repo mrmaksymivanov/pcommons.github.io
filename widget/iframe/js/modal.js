@@ -43,7 +43,7 @@ var animations = {
             console.log("IN Modal.js - start");
             //console.log(window);
             //console.log(this);
-
+/*
             $('a.close').click(function(e) {
                 e.preventDefault();
                 $('body').addClass('closed');
@@ -51,8 +51,7 @@ var animations = {
                     sendMessage('stop');
                 }, 750);
             });
-            
-            
+           */          
             // ------------------------------ Optimizely test vvv
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {
@@ -142,9 +141,9 @@ var ie10Styles = [
 
 var ie11Styles = ['msTextCombineHorizontal']; 
 
-/*
-* Test all IE only CSS properties
-*/
+
+//Test all IE only CSS properties
+
 var b = document.body;
 var s = b.style;
 var ieVersion = null;

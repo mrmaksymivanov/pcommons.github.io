@@ -128,12 +128,14 @@ body {
 
 #scene {
     position: absolute;
+    max-height:100%;
     width: 700px;
     left: 50%;
     top: 50%;
     margin-top: @scene_margin_top;
     margin-left: -350px;
     padding-top: @scene_top_padding;
+    overflow-y:scroll;
 }
 
 .loading-region {

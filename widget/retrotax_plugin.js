@@ -38,7 +38,7 @@ if (typeof window._retrotax_options != "undefined"){
 
 
 // Default URL for animation iframe. This gets overlay'ed over your page.
-var rt_iframeContentWindow=null;
+var rt_iframeContentWindow;
 var iframeCopy={};
 
 /**
@@ -55,12 +55,34 @@ properties as desired.
 if (typeof _retrotax_options == "undefined")
 	_retrotax_options = {};
 
+
 // The path to the iframe that gets injected over your page
 if (typeof _retrotax_options.iframe_base_path == "undefined")
 	_retrotax_options.iframe_base_path = 'https://pcommons.github.io/widget/iframe';
 
+if (typeof _retrotax_options.username == "undefined")
+	_retrotax_options.username = false;
+
+if (typeof _retrotax_options.apikey == "undefined")
+	_retrotax_options.apikey = false;
+
+
+if (typeof _retrotax_options.clientid == "undefined")
+	_retrotax_options.clientid = false;
+
+
+if (typeof _retrotax_options.companyid == "undefined")
+	_retrotax_options.companyid = false;
+
+
+if (typeof _retrotax_options.locationid == "undefined")
+	_retrotax_options.locationid = false;
+
 if (typeof _retrotax_options.animation == "undefined")
 	_retrotax_options.animation = 'modal';
+
+if (typeof _retrotax_options.framework == "undefined")
+	_retrotax_options.framework = 'bootstrap';
 
 // How long to delay before showing the widget
 if (typeof _retrotax_options.delay == "undefined")
@@ -86,11 +108,21 @@ if (typeof _retrotax_options.ajax_logging_email == "undefined")
 if (typeof _retrotax_options.always_show_widget == "undefined")
 	_retrotax_options.always_show_widget = false;
 
-if (typeof _retrotax_options.prepopulate_basic_info_by_id == "undefined")
-	_retrotax_options.prepopulate_basic_info_by_id = false;
+if (typeof _retrotax_options.prepopulate_by == "undefined")
+	_retrotax_options.prepopulate_by = false; //id,name,string
 
-if (typeof _retrotax_options.prepopulate_basic_info_by_name == "undefined")
-	_retrotax_options.prepopulate_basic_info_by_name = false;
+if (typeof _retrotax_options.populated_fields == "undefined" || !_retrotax_options.prepopulate_by)
+	_retrotax_options.populated_fields ={
+		firstname:'',
+		lastname:'',
+		middleinitial:'',
+		city:'',
+		state:'',
+		zip:'',
+		address:'',
+		address2:'',
+		dob:'' //mm/dd/yyyy					
+	};
 
 if (typeof _retrotax_options.plugin_type == "undefined")
 	_retrotax_options.plugin_type = 'demo';
@@ -98,38 +130,20 @@ if (typeof _retrotax_options.plugin_type == "undefined")
 if (typeof _retrotax_options.button_text == "undefined")
 	_retrotax_options.button_text = 'Open RetroTax Screening Plugin';
 
+if (typeof _retrotax_options.button_text_error == "undefined")
+	_retrotax_options.button_text_error = 'Error - Something went wrong.';
+
 if (typeof _retrotax_options.button_class == "undefined")
 	_retrotax_options.button_class = '';
 
+if (typeof _retrotax_options.button_class_error == "undefined")
+	_retrotax_options.button_class_error = '';
+
 if (typeof _retrotax_options.logo == "undefined")
-	_retrotax_options.logo = 'iframe/images/retrotax_plugin_logo.png';
+	_retrotax_options.logo = true;
 
-if (typeof _retrotax_options.env_url == "undefined")
-	_retrotax_options.env_url = 'https://webscreen.retrotax-aci.com';
-
-if (typeof _retrotax_options.compatibility_iframe == "undefined")
-	_retrotax_options.compatibility_iframe = {width: 500,height: 400};
-
-if (typeof _retrotax_options.username == "undefined")
-	_retrotax_options.username = false;
-
-if (typeof _retrotax_options.apikey == "undefined")
-	_retrotax_options.apikey = false;
-
-
-if (typeof _retrotax_options.clientid == "undefined")
-	_retrotax_options.clientid = false;
-
-
-if (typeof _retrotax_options.companyid == "undefined")
-	_retrotax_options.companyid = false;
-
-
-if (typeof _retrotax_options.locationid == "undefined")
-	_retrotax_options.locationid = false;
-
-
-
+if (typeof _retrotax_options.callback_url == "undefined")
+	_retrotax_options.callback_url = false;
 
 
 
@@ -137,8 +151,8 @@ if (typeof _retrotax_options.locationid == "undefined")
 //var elements=window.document.body.getElementsByClassName('retrotax');
 //console.log(elements);
 
-
-
+var iframeIndex=0;
+var iframeCount=0;
 var _bftn_animations = {
 
 	// MODAL ANIMATION
@@ -155,7 +169,13 @@ var _bftn_animations = {
 			for (var k in options) this.options[k] = options[k];
 			return this;
 		},
-
+		reload: function() {
+			var iframe=getElementById('_bftn_iframe');
+			console.log(iframe);
+			iframe.style.display = 'none';
+			console.log(iframe);
+			return this;
+		},
 		// what to do when the animation starts
 		start: function() {
 			var css = '#_bftn_iframe { position: fixed; left: 0px; top: 0px; \
@@ -164,53 +184,32 @@ var _bftn_animations = {
 			_retrotax_util.injectCSS('_bftn_iframe_css', css);
 
 			var iframe = _retrotax_util.createIframe(this.options.modalAnimation);
-			iframeCopy=iframe;
-            console.log("IFRAME CREATED");
-            console.log(iframe);
-            console.log(iframeCopy);
-			//console.log(this.options.prepopulate_basic_info_by_id.firstname);
-			console.log(this); 
-			var populated_fields={};
 
-			console.log(this.options.plugin_type);
+			if(this.options.prepopulate_by !==false){
+			switch(this.options.prepopulate_by){
+                case 'id':
+	                for(var index in _retrotax_options.populated_fields) { 
+	   					if (_retrotax_options.populated_fields.hasOwnProperty(index)) {
+	       					var field = _retrotax_options.populated_fields[index];
+	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementById(field) != null ) ? document.getElementById(field).value : '';
+	   					}
+					}
+	                break;
+                case 'name':
+                	//TODO add to documentation that if its an ats then we hide CCL input fields, authorization, esign, etc and we assume CCL IDs are provided
+	                for(var index in _retrotax_options.populated_fields) { 
+	   					if (_retrotax_options.populated_fields.hasOwnProperty(index)) {
+	       					var field = _retrotax_options.populated_fields[index];
+	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementsByName(field)[0] != 'undefined' ) ? document.getElementsByName(field)[0].value : '';
+	   					}
+					}                      
+                    break;
+                default:
+                    //Default to string / user-supplied e.g. server side
+          	}
+      	}
+      	if(this.options.debug)console.log("_retrotax_options being passed to IFRAME: "+this.options);
 
-			if(this.options.plugin_type){
-				if(this.options.plugin_type=='demo'){
-					this.options.test=true;
-					console.log(this.options.test);
-				}else if(this.options.plugin_type=='ats'){
-
-				}else{
-					//obs
-				}
-			}
-			if(this.options.prepopulate_basic_info_by_id){
-				console.log("prepopulate_basic_info_by_id");
-				//var firstname=document.getElementById(this.options.prepopulate_basic_info.firstname).value;
-				populated_fields={
-	                firstname:document.getElementById(this.options.prepopulate_basic_info_by_id.firstname).value,
-	                lastname:document.getElementById(this.options.prepopulate_basic_info_by_id.lastname).value,
-	                //middleinitial:document.getElementById(this.options.prepopulate_basic_info_by_id.middleinitial).value
-	                /*
-	                city:city.value,
-	                state:state.value,
-	                stateid:stateid.value,
-	                zip:zip.value,
-	                address:address.value,
-	                address2:address2.value,
-	                countyid:countyid.value,
-	                dob:dob.value				
-	                */
-				};
-			}
-			if(this.options.prepopulate_basic_info_by_name && !this.options.prepopulate_basic_info_by_id){
-				console.log("prepopulate_basic_info_by_name");
-				populated_fields={
-	             
-				};
-			}
-			this.options.populated_fields=populated_fields;
-			console.log("BINDING COMMUNICATION");
 			//setTimeout(function() {bftn_util.bindIframeCommunicator(iframe, this);}, 50);
 			_retrotax_util.bindIframeCommunicator(iframe, this);
 		},
@@ -248,22 +247,24 @@ var _retrotax_util = {
 		//console.log(animation);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
-		iframe.src = _retrotax_options.iframe_base_path + '/modal.html';
+		iframe.src = _retrotax_options.iframe_base_path + '/'+_retrotax_options.framework+'.html';
 		iframe.frameBorder = 0;
 		iframe.allowTransparency = true; 
 		iframe.style.display = 'none';
 		document.body.appendChild(iframe);
 		console.log("IFRAME CONTENT WINDOW");
+		iframeCount++;
 		return iframe;
 	},
 
 	// Destroy the iframe used to display the animation
 	destroyIframe: function() {
 		var iframe = document.getElementById('_bftn_iframe');
-		iframe.setAttribute('class', 'hidden');
-		alert("Hidden...about to remove");
-		iframe.remove();//original code is to rm it. Going to try and hide it
-
+		console.log(iframe);
+		//iframe.setAttribute('class', 'hidden');
+		iframe.remove();
+		iframeIndex++;
+		console.log(iframe);
 		//iframe.style.display='hidden';
 		//iframe.parentNode.removeChild(iframe);
 		//console.log(iframe);
@@ -285,24 +286,31 @@ var _retrotax_util = {
 			data.HOST_NAME = hostname;
 			console.log("SEND MESSAGE");
 			console.log(iframe);
+/*
 			if(typeof iframe != 'undefined' && !iframe.contentWindow){
 				console.log("IFRAME CONTENT WINDOW IS NULL");
 				
-				var iframe = document.createElement('iframe');
+				var iframe = document.body.createElement('iframe');
 				iframe.id = '_bftn_iframe';
 
-				/*
-				*	Here we can routeParams
-				*/
-
-				iframe.src = _retrotax_options.iframe_base_path + '/modal.html';
+				iframe.src = _retrotax_options.iframe_base_path + '/'+_retrotax_options.framework+'.html';
 				iframe.frameBorder = 0;
 				iframe.allowTransparency = true; 
-				iframe.style.display = 'none';
+				iframe.style.display = 'block';
 				document.body.appendChild(iframe);			
-			
+	*/		
+			//}
+			console.log("*****************************************");
+			console.log(iframe.contentWindow);
+			//console.log(iframe.contentWindow.frameElement);
+			//console.log(iframe.contentWindow.frameElement.contentWindow);
+			if(typeof rt_iframeContentWindow === 'undefined'){
+				rt_iframeContentWindow=iframe.contentWindow.frameElement.contentWindow;
+				console.log(rt_iframeContentWindow);
+				iframe.contentWindow.postMessage(data, '*');
+			}else{
+				rt_iframeContentWindow.postMessage(data, '*');
 			}
-			iframe.contentWindow.postMessage(data, '*');
 		}
 		var method = window.addEventListener ? "addEventListener":"attachEvent";
 		var eventer = window[method];
@@ -343,47 +351,26 @@ var _retrotax_util = {
 MAIN FUNCTIONALITY (called once the page is ready)
 --------------------------------------------------------------------------------
 */
-var ready = function() {
-
+var readyRetrotax = function() {
+	//Throw user-friendly error if uname or apikey were not supplied
+	if(!_retrotax_options.apikey || !_retrotax_options.username || _retrotax_options.apikey.length!=32 || _retrotax_options.username==''){
+		if(_retrotax_options.debug){console.log("Username or API Key Provided are empty, not provided, or not equal to 32 chars (apikey)");};
+		var errorElement = document.getElementById('retrotax_plugin_trigger');
+		errorElement.setAttribute('class', _retrotax_options.button_class_error);
+		errorElement.innerHTML = _retrotax_options.button_text_error;
+		return false;
+	}
 	console.log(_retrotax_options);
 	console.log("in ready");
-	// Should we show the widget, regardless?
-	//var url_override = window.location.href.indexOf('SHOW_BFTN_WIDGET') > -1;
-	var url_override=true;
-console.log(url_override);
-console.log("Test0");
-	if (!_retrotax_options.always_show_widget && url_override == false) {
-		// Only show once.
-console.log("Test1");
-
-/*
-		if (_retrotax_util.getCookie('_BFTN_WIDGET_SHOWN')) {
-			console.log("Cookies");
-			return;
-		}
-*/
-		// Only show on September 10th 2014.
-		// JL HACK ~ remove before the end of September >_>
-		if (new Date().getDate() < 10) {
-			console.log("Date");
-			return;
-		}
-	}
-
 	var animation = _bftn_animations[_retrotax_options.animation];
-	var images = new Array()
-	var preloaded = 0;
-
 	setTimeout(function() {
-		animation.init(_retrotax_options).start();
+			animation.init(_retrotax_options).start();
 	}, _retrotax_options.delay);
 }
 
 var bindRetroTaxBtn = function() {
 	var myEl = document.getElementById('retrotax_plugin');
 	if (typeof(myEl) != 'undefined' && myEl != null){
-		console.log(myEl);
-
 		//assume compatible but test user agent for shitty browsers
 		var compatible=true;
 		//Note: userAgent in FF2.0.0.13 WinXP returns: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13
@@ -391,18 +378,19 @@ var bindRetroTaxBtn = function() {
 
 		if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)){ //test for Firefox/x.x or Firefox x.x (ignoring remaining digits);
 		 var ffversion=new Number(RegExp.$1) // capture x.x portion and store as a number
-		 if (ffversion>=35)
-		console.log("You're using FF 35 or above")
-		 else if (ffversion>=5)
-		console.log("You're using FF 5.x or above")
-		 else if (ffversion>=4)
-		console.log("You're using FF 4.x or above")
-		 else if (ffversion>=3)
-		console.log("You're using FF 3.x or above")
-		 else if (ffversion>=2)
-		console.log("You're using FF 2.x")
-		 else if (ffversion>=1)
-		console.log("You're using FF 1.x")
+		 if (ffversion>=35){
+			if(_retrotax_options.debug){console.log("You're using FF 35 or above");};
+		 }else if (ffversion>=5){
+			if(_retrotax_options.debug){console.log("You're using FF 5.x or above");};
+		 }else if (ffversion>=4){
+			if(_retrotax_options.debug){console.log("You're using FF 4.x or above");};
+		 }else if (ffversion>=3){
+			if(_retrotax_options.debug){console.log("You're using FF 3.x or above");};
+		 }else if (ffversion>=2){
+			if(_retrotax_options.debug){console.log("You're using FF 2.x");};
+		 }else if (ffversion>=1){
+			if(_retrotax_options.debug){console.log("You're using FF 1.x");};
+		 }
 		}
 
 
@@ -416,102 +404,42 @@ var bindRetroTaxBtn = function() {
 
 		if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
 		 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
-		 if (ieversion>=12)
-		  console.log("You're using IE12 or above")
-		 else if (ieversion>=11)
-		  console.log("You're using IE11 or above")
-		 else if (ieversion>=10)
-		  console.log("You're using IE10 or above")
-		 else{
-		 	//need to make 9 compatible
+		 if (ieversion>=12){
+		  if(_retrotax_options.debug){console.log("You're using IE12 or above");};
+		 }else if (ieversion>=11){
+		  if(_retrotax_options.debug){console.log("You're using IE11 or above");};
+		 }else if (ieversion>=10){
+		  if(_retrotax_options.debug){console.log("You're using IE10 or above");};
+		 }else{
+		 	//TODO  make IE9 compatible
 		 	compatible=false;	
 		 }
 		}
-		console.log(_retrotax_options);
-		console.log("Compatible?");
-		console.log(compatible);
+		
+		if(_retrotax_options.debug){console.log("Compatible Browser: "+compatible);};
+
 		var div = document.getElementById('retrotax_plugin');
 		if(compatible){
 			var newButton = document.createElement('button');
+			newButton.id="retrotax_plugin_trigger";
 			newButton.setAttribute('class', _retrotax_options.button_class);
 			newButton.innerHTML = _retrotax_options.button_text;
 			newButton.addEventListener('click', function(e) {
 				e.preventDefault();
-				ready();				
+				readyRetrotax();				
 			}, false);
 			div.appendChild(newButton);
 		}else{
 			var newlink = document.createElement('a');
-			newlink.setAttribute('class', _retrotax_options.button_class);
+			newLink.id="retrotax_plugin_trigger";
 			newlink.setAttribute('target', '_blank');
+			newlink.setAttribute('class', _retrotax_options.button_class);
 			newlink.innerHTML = _retrotax_options.button_text;
 			newlink.setAttribute('href', 'http://tcid.retrotax.co/users/authenticateh?u='+_retrotax_options.username+'&h='+_retrotax_options.apikey);
 			div.appendChild(newlink);
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-//Its a good idea to use this technique on any widget that is intended to be injected into arbitrary webpages (even if there is no existing angular.js app there). For the safety of our own app, and the  
-//protection of the host page’s scripts, we should always avoid polluting the global namespace with data specific to our module.
-
-/*
-if(typeof angular != 'undefined') {
-  // Save a copy of the existing angular for later restoration
-  var existingWindowDotAngular = window.angular;
-}
-
-
-// create a new window.angular and a closure variable for 
-// angular.js to load itself into
-var angular = (window.angular = {});
-
-  
-   //Copy-paste angular.js and modules here. They will load themselves into
-   //the window.angular object we just created (which is also aliased as "angular")
-   
-
-
-
-// notice this refers to the local angular variable declared above, not
-// window.angular
-angular.module('RetroTax', ['ngSanitize']);
-
- 
-
-var app = angular.module("app", ['ngRoute','ui.bootstrap','ngMask']);
-
-app.config(function($routeProvider, $locationProvider){
-	$routeProvider.
-		when("/employee",
-			{	templateUrl: "/assets/js/tcid/views/employee_screen.html",
-				controller: "ctlEmployee"});
-	$locationProvider.html5Mode(true);
-});
-
-
-
-
-
-//Manually bootstrap so the old angular version doesn't encounter ng-app='MyWidget' and blow up
-angular.element(document).ready(function() {
-    angular.bootstrap(document.getElementById('retrotax-widget', ['RetroTax']);
-
-    // restore the old angular version
-    window.angular = existingWindowDotAngular;
-});
-
-*/
-
 
 document.addEventListener("DOMContentLoaded", function(event) { 
   bindRetroTaxBtn();

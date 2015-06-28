@@ -26,11 +26,12 @@ gulp.task('lint', function() {
 
 // Concatenate JS Files
 gulp.task('scripts', function() {
-    return gulp.src([
-      'widget/iframe/js/ie8.js',
+    return gulp.src('widget/iframe/js/*')
+/*      'widget/iframe/js/ie8.js',
       'widget/iframe/js/retrotax.js',
-      'widget/iframe/js/modal.js',
-      'widget/iframe/js/common.js'])
+      'widget/iframe/js/clientSideLogging.js',
+      'widget/iframe/js/modal.js',*/
+      
       .pipe($.concat('retrotax.js'))
       .pipe($.rename({suffix: '.min'}))
       .pipe($.ngAnnotate())
