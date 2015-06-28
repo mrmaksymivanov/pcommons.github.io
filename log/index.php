@@ -92,7 +92,7 @@ if ($client->getAccessToken()) {
   }
 }
 
-*/
+
 
 if(isset($_ENV['OPENSHIFT_DATA_DIR'])){
 	$log = $_ENV['OPENSHIFT_DATA_DIR'].'log.txt';
