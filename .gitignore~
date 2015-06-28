@@ -1,2 +1,4 @@
 archives/*
 node_modules/*
+.git
+.openshift
