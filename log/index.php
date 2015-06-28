@@ -10,7 +10,7 @@ $client = new Google_Client();
 $client->setApplicationName("RetroTax - Plugin Log Console");
 $client->setClientId('435797912067-dom6cvhckuvjb7j0sddvi27u41r6solp.apps.googleusercontent.com'); 
 $client->setClientSecret('uWUvMkjLlln0zkUKoHWSkNYb'); 
-$client->setRedirectUri(' http://plugin-paulcommons.rhcloud.com/log');
+$client->setRedirectUri('http://plugin-paulcommons.rhcloud.com/log/index.php');
 $client->setDeveloperKey('AIzaSyCiwkQG0KhUmhCbZBFrbi0GygrkaPauJ-g');  
 $client->setScopes(array('https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'));
 $oauth2 = new Google_Oauth2Service($client);
@@ -95,7 +95,9 @@ if ($client->getAccessToken()) {
 
 
 if(isset($_ENV['OPENSHIFT_DATA_DIR'])){
-	$log = $_ENV['OPENSHIFT_DATA_DIR'].'log.txt';
+	//$log = $_ENV['OPENSHIFT_DATA_DIR'].'log.txt';
+	$log = '../../data/log.txt';
+
 }else{
 	$log=dirname(__FILE__) . '/log.txt';
 }

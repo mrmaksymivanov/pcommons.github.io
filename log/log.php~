@@ -23,10 +23,8 @@ if ( get_magic_quotes_gpc() ) {
 	$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 }
 if(isset($_ENV['OPENSHIFT_DATA_DIR'])){
-	//$log = $_ENV['OPENSHIFT_DATA_DIR'].'log.txt';
-	//$access = $_ENV['OPENSHIFT_DATA_DIR'].'access.txt';
-	$log='../../data/log.txt';
-	$access='../../data/access.txt';
+	$log = $_ENV['OPENSHIFT_DATA_DIR'].'log.txt';
+	$access = $_ENV['OPENSHIFT_DATA_DIR'].'access.txt';
 }else{
 	$log=dirname(__FILE__) . '/log.txt';
 	$access=dirname(__FILE__) . '/access.txt';
