@@ -23,9 +23,9 @@
 	/*===== End polyfill for console. =====*/
 	if(window.location.host=='localhost'){var hname='/plugin/log/';}else{var hname='/log/';}
 	var defaults = {
-			error_url: hname+'index.php?type=error',	// The url to which errors logs are sent
-			info_url: hname+'index.php?type=info',	// The url to which info logs are sent
-			log_url: hname+'index.php?type=log',		// The url to which standard logs are sent
+			error_url: hname+'log.php?type=error',	// The url to which errors logs are sent
+			info_url: hname+'log.php?type=info',	// The url to which info logs are sent
+			log_url: hname+'log.php?type=log',		// The url to which standard logs are sent
 			log_level: 3,					// The level at which to log. This allows you to keep the calls to the logging in your code and just change this variable to log varying degrees. 1 = only error, 2 = error & log, 3 = error, log & info
 			native_error:true,				// Whether or not to send native js errors as well (using window.onerror).
 			hijack_console:false,			// Hijacks the default console functionality (ie: all your console.error/info/log are belong to us).
