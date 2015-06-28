@@ -24,18 +24,18 @@ Installation
 Configuration
 ============
 
-Parameter | Required | Default Value | Optional Values | Data Type | Description 
+Parameter | Req | Default | Options | Type | Description 
 --- | --- | --- | --- | --- | ---
-_retrotax_options.iframe_base_path | Yes | https://pcommons.github.io/widget/iframe | widget/iframe | String | The path to the iframe that gets injected over your page. This should not be changed unless you are testing locally. In that case, set it to 'widget/iframe'.
-_retrotax_options.username | Yes | false | None | String | Your webscreen.retrotax-aci.com username
-_retrotax_options.apikey | Yes | false | None | String - 32 Chars | Your webscreen.retrotax-aci.com client-side api-key, which can be found within TCID under 'Accounts'.
-_retrotax_options.companyid | No | false | None | Int | If provided, the record created will be associated to that company ID. Furthermore, it will filter possible locations by the company ID (assuming multiple locations). If not provided, the user will be presented with a drop-down with a list of company entities. These companies and the drop-down were defined during your RetroTax OnBoarding process.
-_retrotax_options.locationid  | No | false | None | Int | Similar to CompanyID, providing this will associate the record to this specific location and the location's parent company. If not provided, the user will be presented with a drop-down with a list of locations based upon their company selection.
-_retrotax_options.callback_url | No | false | None | Valid URL String | Provide a callback URL and we will return a JSON response of each ATS or OBS submission
-_retrotax_options.framework | No | bootstrap | None | String | Currently we only have one available front-end option. We aim to add Material Design and are open to designs that fit your company requirements
-_retrotax_options.delay | No | 0 | None | Int | How long to delay before showing the plugin appears
-_retrotax_options.debug | No | false | None | Boolean | If set to true, we will log to the console
-_retrotax_options.prepopulate_by | No | false | 'id','name','string' | String | If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.  
+iframe_base_path | Yes | https://pcommons.github.io/widget/iframe | widget/iframe | String | The path to the iframe that gets injected over your page. This should not be changed unless you are testing locally. In that case, set it to 'widget/iframe'.
+username | Yes | false | None | String | Your webscreen.retrotax-aci.com username
+apikey | Yes | false | None | String - 32 Chars | Your webscreen.retrotax-aci.com client-side api-key, which can be found within TCID under 'Accounts'.
+companyid | No | false | None | Int | If provided, the record created will be associated to that company ID. Furthermore, it will filter possible locations by the company ID (assuming multiple locations). If not provided, the user will be presented with a drop-down with a list of company entities. These companies and the drop-down were defined during your RetroTax OnBoarding process.
+locationid  | No | false | None | Int | Similar to CompanyID, providing this will associate the record to this specific location and the location's parent company. If not provided, the user will be presented with a drop-down with a list of locations based upon their company selection.
+callback_url | No | false | None | Valid URL String | Provide a callback URL and we will return a JSON response of each ATS or OBS submission
+framework | No | bootstrap | None | String | Currently we only have one available front-end option. We aim to add Material Design and are open to designs that fit your company requirements
+delay | No | 0 | None | Int | How long to delay before showing the plugin appears
+debug | No | false | None | Boolean | If set to true, we will log to the console
+prepopulate_by | No | false | 'id','name','string' | String | If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.  
 
 
 ----------------------------------------------------------------------------------------
