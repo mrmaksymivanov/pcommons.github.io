@@ -87,21 +87,7 @@
                 dob:'dateOfBirth'
             }
         };
-        /*
-(function (d, t) {
-  var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-  bh.type = 'text/javascript';
-  bh.src = 'widget/retrotax_plugin.js';
-  console.log(d);
-  console.log(s);
-  console.log(bh);
-  s.parentNode.insertBefore(bh, s);
-  })(document, 'script');
-*/
     </script>
-	<!--
-	END RTN WIDGET EMBED CODE
-	-->
 </head>
 <body>
 <h2>Demo: This demo's iframe is generated from OpenShit: http://plugin-paulcommons.rhcloud.com/widget/iframe</h2>
@@ -131,7 +117,9 @@
 
         </div><!-- close .wrap -->
     </div><!-- close .main -->
+
 <script src="widget/retrotax_plugin.js"></script>
+
 </body>
 
 </html>
