@@ -57,15 +57,15 @@
             delay: 1000, 
             debug: true, // This shows debug stuff in the console. For testing
             username:'demoapi.hiring.manager',
-            apikey:'3AED82E2006D43BDA850D790BFF937AE',
+           // apikey:'3AED82E2006D43BDA850D790BFF937AE',
+            apikey:'B47400F36FB8BA0C247798C94D153703',
             always_show_widget: true,
             compatibility_iframe: {
                 width: 500,
                 height: 400
 
             },
-            clientid:364,
-            companyid:1054,
+            //companyid:1054,
             //logo:'/plugin/widget/iframe/images/test.png',
             //locationid:8557,
             button_class:"btn btn-huge btn-info",

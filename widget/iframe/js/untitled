@@ -107,7 +107,7 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
     
     
     
-    /* catch exceptions in angular
+    // catch exceptions in angular
     $provide.decorator('$exceptionHandler', ['$delegate', function($delegate){
       return function(exception, cause){
         $delegate(exception, cause);
@@ -155,10 +155,9 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
       }
       return stopPropagation;
     };
-*/
+
 
 });
-
 
 
 app.factory('AuthService', ['$http', '$q', function ($http, $q) {
@@ -170,11 +169,6 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	var isLoggedIn=false;
 	var isDeviceAuth=false;
   
-	var getRetroURL=function(debug){
-		console.log(window.location.hostname);
-        if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
-    }
 
 	var mergeCCL=function(indata) {
 		var tmpindata=[];
@@ -205,7 +199,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 			ret.clients.push(tmpclient);
 		});
 
-		//console.log('mergeccl ret: ',ret);
+		// console.log('mergeccl ret: ',ret);
 
 		return ret;
 	}
@@ -216,7 +210,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
         plugin_auth: function(tcid){
     		var checkapi2fa='';
     		//TODO create method in api which returns the same data as device2fa but accepts a client-side apikey which we check against (this apikey should only be able to work with this method and the save method)
-    		return $http.get(getRetroURL()+'/api/v1/users/authenticate_plugin?cclhash=123123&plugin=true&apikey='+$scope.tcid.api_key+'&u='+$scope.tcid.username+'&api2fa='+checkapi2fa+'&device='+window.location.hostname)
+    		return $http.get($scope.apiURL+'/api/v1/users/authenticate_plugin?cclhash=123123&plugin=true&apikey='+$scope.tcid.api_key+'&u='+$scope.tcid.username+'&api2fa='+checkapi2fa+'&device='+window.location.hostname)
     		//$scope.tcid.checkapi2fa='';
     		//$scope.tcid.device='temp_device22f';
 			//$scope.tcid.url2fa = $scope.apiURL+'/api/v1/users/device2fa?cclhash=123123&pw=' + $scope.tcid.pw + '&u=' + $scope.tcid.u +'&device='+$scope.tcid.device+'&api2fa='+$scope.tcid.checkapi2fa;
@@ -382,7 +376,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, debug, AuthService){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, $exceptionHandler, debug, AuthService){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -400,46 +394,22 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$routeParams.employeeid='new';
 	$scope.cals=[dgi=false,dsw=false,dojo=false,dsw=false,doh=false,dob=false,felondc=false,felondr=false];
 
-	$scope.currentUser={};
-
+	$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
+	$scope.currentuser=function(){return AuthService.currentuser();};
 	var getRetroURL=function(debug){
 		console.log(window.location.hostname);
         if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
  		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
     }
-
 	$scope.apiURL=getRetroURL(false);
 	console.log($scope.apiURL);
     //console.log($scope.currentuser);
-	//$scope.isLoggedIn=function(tcid){return AuthService.plugin_auth(tcid);}; 
-	//$scope.currentuser=function(){return AuthService.currentuser();};
-    //$scope.isLoggedIn($scope.tcid);
+
+    $scope.isLoggedIn($scope.tcid);
 
 	$scope.thisPath='';
 	$scope.isATS=false; //asssume it's not ATS
 	$scope.isDisabled=false; //for submit button
-
-/*
-	$scope.$on('$routeChangeSuccess', function() {
-			$scope.thisPath=$location.path();
-			
-			// console.log('.... clemployee $ROUTECHANGESUCCESS function hit..... '+$scope.thisPath,($scope.thisPath.length<3));
-			
-			if (!$scope.isLoggedIn()) {
-				$location.path("/login");
-			}
-
-			if ($routeParams.employeeid=='new') {
-				$scope.alerts.push({type:'success',msg: 'ENTERING NEW EMPLOYEE...'});
-				$scope.currentemployeeid=0;
-				$scope.tcid.employee=defEmployee();
-				// console.log('called defEmployee to get default employee info:',$scope.tcid.employee);
-
-			} 
-
-	});
-*/
-
 
 	$scope.initEdit = function() {
         //$scope.html_metadata = html_metadata;
@@ -471,19 +441,13 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	}
 
 	$scope.getSelectedClientIndex = function() {
-		console.log($scope.tcid);
- 		if ($scope.tcid.employee.maindata == undefined) { console.log("No getIndexOf -Client"); return false; }
- 		console.log("getIndexOf-Client");
- 		console.log($scope.currentUser);
-	    return getIndexOf($scope.currentUser.ccl.clients, $scope.currentUser.client.clientid, 'id');
+ 		if ($scope.tcid.employee.maindata == undefined) { console.log("returning flase get selected client index");  return false; }
+	    return getIndexOf($scope.currentUser.ccl.clients, $scope.tcid.employee.maindata.client.id, 'id');
 	};
+
 	$scope.getSelectedCompanyIndex = function() {
-		if ($scope.tcid.employee.maindata == undefined) { console.log("No getIndexOf -Comp"); return false; }
-		console.log("getIndexOf-Comp");
- 		console.log($scope.currentUser);
-
-		return getIndexOf($scope.currentUser.ccl.clients[$scope.getSelectedClientIndex()].companies, $scope.tcid.employee.maindata.company.id, 'id');
-
+		if ($scope.tcid.employee.maindata == undefined) { console.log("returning flase get selected company index"); return false; }
+	    return getIndexOf($scope.currentUser.ccl.clients[$scope.getSelectedClientIndex()].companies, $scope.tcid.employee.maindata.company.id, 'id');
 	};
 
 	function getIndexOf(arr, val, prop) {
@@ -507,7 +471,20 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		console.log("--> Submitting form.. isValid?? ");
 		console.log(isValid);
 
-
+function ValidURL(str) {
+  var pattern = new RegExp('^(https?:\/\/)?'+ // protocol
+    '((([a-z\d]([a-z\d-]*[a-z\d])*)\.)+[a-z]{2,}|'+ // domain name
+    '((\d{1,3}\.){3}\d{1,3}))'+ // OR ip (v4) address
+    '(\:\d+)?(\/[-a-z\d%_.~+]*)*'+ // port and path
+    '(\?[;&a-z\d%_.~+=-]*)?'+ // query string
+    '(\#[-a-z\d_]*)?$','i'); // fragment locater
+  if(!pattern.test(str)) {
+    alert("Please enter a valid URL.");
+    return false;
+  } else {
+    return true;
+  }
+}
  $scope.$broadcast('show-errors-check-validity');
    
 		if (!isValid) {
@@ -536,36 +513,33 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
 		console.log($scope);
-
-		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
-
-		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-
+		//api2fa here is hostname of the plugin
+		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid+'&api2fa='+window.location.hostname, $scope.tcid.employee.maindata, {});
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
+				sendMessage('stop');
 				$scope.currentemployeeid=1;
 				//Attempt to send response to clients callback url.  
-				if($scope.args.callback_url !== false){ //&& isValidURL() && protocol==https
-					//If we can set clientSideLogging var then we could use this: $.log(dataFromServer);
+				//TODO: Require SSL
+				if($scope.args.callback_url !== false && ValidURL($scope.args.callback_url)){ //&& && protocol==https
 					try{
 						var responsePromise = $http.post($scope.args.callback_url, dataFromServer, {});
 						responsePromise.success(function(dataFromServer, status, headers, config) {
 							//kill iframe
+							sendMessage('stop');
 						});
 					}catch(e){
-						$.error(e);
+						$exceptionHandler(e);
 						//kill iframe
+						sendMessage('stop');
 					}
 				}
 			}
 		});
 		responsePromise.error(function(data, status, headers, config) {
-			$.error({'data':data,'status':status,'headers':headers,'config':config});
-			alert("Submitting form failed!");
-
+			$exceptionHandler({'data':data,'status':status,'headers':headers,'config':config});
+			alert("Failed Submission. We have notified our administrators.");
 		});
 	}
 
@@ -576,8 +550,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	};
 
 
-	defEmployee = function(user_provided_data) {
-		//console.log(currentuser);
+	setEmployee = function(user_provided_data, currentuser) {
+		console.log(currentuser);
 		emp={};
 		emp.isNew=true;
 		emp.isDirty=true;
@@ -590,11 +564,12 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.ssn='';
 		emp.maindata.ssnconfirmation='';
 		emp.maindata.ssn4='';
+
 		emp.maindata.firstname= typeof user_provided_data.populated_fields.firstname!='undefined' ? user_provided_data.populated_fields.firstname : '';
 		emp.maindata.lastname= typeof user_provided_data.populated_fields.lastname!='undefined' ? user_provided_data.populated_fields.lastname : '';
 		emp.maindata.middleinitial= typeof user_provided_data.populated_fields.middleinitial!='undefined' ? user_provided_data.populated_fields.middleinitial : '';
 		emp.maindata.city= typeof user_provided_data.populated_fields.city!='undefined' ? user_provided_data.populated_fields.city : '';
-		//emp.maindata.state='IL';
+		emp.maindata.state='';
 		emp.maindata.stateid=getStateMatch(user_provided_data.populated_fields.state);
 		emp.maindata.zip=typeof user_provided_data.populated_fields.zip!='undefined' ? user_provided_data.populated_fields.zip : '';
 		emp.maindata.address=typeof user_provided_data.populated_fields.address!='undefined' ? user_provided_data.populated_fields.address : '';
@@ -605,25 +580,42 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.client={};
 		emp.maindata.company={};
 		emp.maindata.location={};
-		emp.maindata.client.id= null; //currentuser.client.clientid;
-		emp.maindata.client.name=''//currentuser.client.name;//typeof $scope.tcid.client.name!='undefined' ? $scope.tcid.client.name : null;
-		emp.maindata.company.id=null
+		console.log(currentuser.client.clientid);
+		console.log(currentuser.client.name);
+		emp.maindata.client.id=currentuser.client.clientid;//typeof user_provided_data.clientid!='undefined' ? user_provided_data.clientid : null;
+		emp.maindata.client.name=typeof currentuser.client.name!='undefined' ?  currentuser.client.name : '';
+		
+		emp.maindata.company.id=typeof user_provided_data.companyid!='undefined' ? user_provided_data.companyid : currentuser.company.companyid;
 		emp.maindata.company.name='';
-		emp.maindata.location.id=null;
-		emp.maindata.location.name='';
-
-/*
-		emp.maindata.client.id= typeof user_provided_data.clientid!='undefined' ? user_provided_data.clientid : null;
-		emp.maindata.client.name='';//typeof $scope.tcid.client.name!='undefined' ? $scope.tcid.client.name : null;
-		emp.maindata.company.id=typeof user_provided_data.companyid!='undefined' ? user_provided_data.companyid : null;
-		emp.maindata.company.name='';
-		emp.maindata.location.id=typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : null;
-		emp.maindata.location.name='';
-*/
+		//emp.maindata.location.id=typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : null;
+		//emp.maindata.location.name='';
+        emp.maindata.location.id = typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : currentuser.company.companyid;
+        emp.maindata.location.name = '';
+		
 		emp.maindata.clientid=emp.maindata.client.id;
 		emp.maindata.companyid=emp.maindata.company.id;
 		emp.maindata.locationid=emp.maindata.location.id;
 
+/*
+        emp.maindata.client = {};
+        emp.maindata.client.id = src.maindata.clientid;
+        emp.maindata.client.name = src.maindata.client_name;
+        emp.maindata.company.id = src.maindata.companyid;
+        emp.maindata.company.name = typeof src.maindata.legal_name == 'undefined' ? '': src.maindata.legal_name[0];  //LocalStorage wont have this data so conditionally set them
+        emp.maindata.location.id = src.maindata.locationid;
+        emp.maindata.location.name = typeof src.maindata.location_name == 'undefined' ? '': src.maindata.location_name[0]; //LocalStorage wont have this data so conditionally set them
+
+        emp.maindata.clientid = function() {
+            return emp.maindata.client.id
+        };
+        emp.maindata.companyid = function() {
+            return emp.maindata.company.id;
+        };
+        emp.maindata.locationid = emp.maindata.location.id;
+
+
+
+*/
 
 		emp.maindata.rehire=0;
 		emp.maindata.afdc=0;
@@ -734,6 +726,133 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 	    return;
 	}
+/*
+   defEmployee = function() {
+        emp = {};
+        emp.isNew = true;
+        emp.isDirty = true;
+
+        emp.showhminfo = true;
+        emp.maindata = {};
+
+        emp.maindata.id = 0;
+
+        emp.maindata.applicationstatusid = '';
+        emp.maindata.ssn = '';
+        emp.maindata.ssnconfirmation = '';
+        emp.maindata.ssn4 = '';
+        emp.maindata.firstname = '';
+        emp.maindata.lastname = '';
+        emp.maindata.middleinitial = '';
+        emp.maindata.city = '';
+        //emp.maindata.state='IL';
+        emp.maindata.stateid = null;
+        emp.maindata.zip = '';
+        emp.maindata.address = '';
+        emp.maindata.address2 = '';
+        //emp.maindata.countyid=null;
+        emp.maindata.dob = null;
+
+        emp.maindata.client = {};
+        emp.maindata.company = {};
+        emp.maindata.location = {};
+        emp.maindata.client.id = 0;
+        emp.maindata.client.name = '';
+        emp.maindata.company.id = null;
+        emp.maindata.company.name = '';
+        emp.maindata.location.id = null;
+        emp.maindata.location.name = '';
+
+        emp.maindata.clientid = function() {
+            return emp.maindata.client.id
+        };
+        emp.maindata.companyid = function() {
+            return emp.maindata.company.id;
+        };
+        emp.maindata.locationid = emp.maindata.location.id;
+
+
+        emp.maindata.rehire = 0;
+        emp.maindata.afdc = 0;
+        emp.maindata.foodstamps = 0;
+        emp.maindata.ssi = 0;
+        emp.maindata.ttw = 0;
+        emp.maindata.vocrehab = 0;
+        emp.maindata.deptva = 0;
+        emp.maindata.vocrehabagency = 0;
+        emp.maindata.veteran = 0;
+        emp.maindata.felon = 0;
+        emp.maindata.unemployed = 0;
+        emp.maindata.cdib = 0;
+        emp.maindata.cafoster = 0;
+        emp.maindata.cawia = 0;
+        emp.maindata.cacalworks = 0;
+        emp.maindata.cafarmer = 0;
+        emp.maindata.camisdemeanor = 0;
+
+        emp.maindata.feloninfo = {};
+        emp.maindata.feloninfo.stateid = null;
+        emp.maindata.feloninfo.countyid = null;
+        emp.maindata.feloninfo.isstateconviction = 0;
+        emp.maindata.feloninfo.isfederalconviction = 0;
+        emp.maindata.feloninfo.dateconviction = null;
+        emp.maindata.feloninfo.daterelease = null;
+        emp.maindata.feloninfo.paroleofficer = null;
+        emp.maindata.feloninfo.paroleofficerphone = null;
+
+        emp.maindata.veteraninfo = {};
+        emp.maindata.veteraninfo.branchid = null;
+        emp.maindata.veteraninfo.disabled = null;
+        emp.maindata.veteraninfo.servicestart = '';
+        emp.maindata.veteraninfo.servicestop = '';
+
+        emp.maindata.vocrehabinfo = {};
+        emp.maindata.vocrehabinfo.address = '';
+        emp.maindata.vocrehabinfo.city = '';
+        emp.maindata.vocrehabinfo.address2 = '';
+        emp.maindata.vocrehabinfo.agency = '';
+        emp.maindata.vocrehabinfo.countyid = '';
+        emp.maindata.vocrehabinfo.phone = '';
+        emp.maindata.vocrehabinfo.stateid = '';
+        emp.maindata.vocrehabinfo.zip = '';
+
+        emp.maindata.unemploymentinfo = {};
+        emp.maindata.unemploymentinfo.unemployedstart = '';
+        emp.maindata.unemploymentinfo.unemployedstop = '';
+        emp.maindata.unemploymentinfo.compensated = null;
+        emp.maindata.unemploymentinfo.compensatedstart = '';
+        emp.maindata.unemploymentinfo.compensatedstop = '';
+
+        emp.maindata.doh = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.dgi = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.dsw = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.dojo = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.startingwage = null;
+        emp.maindata.occupationid = null;
+        emp.maindata.hashiringmanager = 0;
+        emp.maindata.userentered = 0;
+
+        emp.maindata.hiring_manager_completed = 0;
+
+        emp.maindata.esign = 0;
+        emp.maindata.authorization = 0;
+
+        emp.maindata.formQualify = 0;
+        emp.maindata.autoQualify = 0;
+        emp.maindata.qualifications = [];
+        emp.maindata.tractid = '';
+        emp.maindata.geoqualify = null;
+        emp.maindata.ruralrenewalcity = '';
+
+        return emp;
+    }
+    $scope.tcid.employee=defEmployee();
+
+
+*/
+
+
+
 
 	    $scope.setDefaults = function() {
         if($scope.debug)console.log('setting data');
@@ -855,67 +974,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
         return emp;
     }
     
-	var mergeCCL=function(indata) {
-		var tmpindata=[];
-		tmpindata.clients=[{"id":indata.companies[0].maindata.clientid, "legal_name":"temp name"}];
-		var ret={};
-		ret.clients=[];
-		angular.forEach(tmpindata.clients, function( key, value ) {
-			var tmpclient=key;
-			tmpclient.companies=[];
-			angular.forEach(indata.companies, function( key, value ) {
-                console.log(key); console.log(value);
-				
-				if (tmpclient.id==key.maindata.clientid) {
-					var tmpcompany=key.maindata;
-					tmpcompany.locations=[];
-					angular.forEach(indata.locations, function( key, value ) {
-						if (tmpcompany.id==key.maindata.companyid) {
-							tmpcompany.locations.push(key.maindata);
-						}
-					});
-					tmpclient.companies.push(tmpcompany);
-				}
-			});	
-			ret.clients.push(tmpclient);
-		});
-		console.log(ret);
-		return ret;
-	};
-
-    $scope.getCurrentUser=function(tcid){
-    		//TODO create method in api which returns the same data as device2fa but accepts a client-side apikey which we check against (this apikey should only be able to work with this method and the save method)
-    		var checkapi2fa='';
-    		return $http.get($scope.apiURL+'/api/v1/users/authenticate_plugin?cclhash=123123&plugin=true&apikey='+$scope.tcid.api_key+'&u='+$scope.tcid.username+'&api2fa='+checkapi2fa+'&device='+window.location.hostname)
-    		//$scope.tcid.checkapi2fa='';
-    		//$scope.tcid.device='temp_device22f';
-			//$scope.tcid.url2fa = $scope.apiURL+'/api/v1/users/device2fa?cclhash=123123&pw=' + $scope.tcid.pw + '&u=' + $scope.tcid.u +'&device='+$scope.tcid.device+'&api2fa='+$scope.tcid.checkapi2fa;
-	
-			.then(function(response) {
-					console.log("PLUGIN AUTH");
-					console.log(response);
-					if (angular.isDefined($scope.tcid.api_key) && $scope.tcid.api_key!='' && $scope.tcid.api_key.length==32 && $scope.tcid.u!='') {
-						tcid.didlogin=true;
-						tcid.username=response.data.loggedInAPIUser.user.username;
-						tcid.privilegeid=response.data.loggedInAPIUser.user.privilegeid;
-						tcid.email=response.data.loggedInAPIUser.user.email;
-						tcid.name=response.data.loggedInAPIUser.user.firstname + ' ' +response.data.loggedInAPIUser.user.lastname;
-						tcid.client={};
-						tcid.client.name=response.data.loggedInAPIUser.user.client_name;
-						tcid.client.clientid=response.data.loggedInAPIUser.user.clientid;	
-						tcid.company={};
-						tcid.company.name='company name to be looked up';
-						tcid.company.companyid=response.data.loggedInAPIUser.user.companyid;
-						tcid.location={};
-						tcid.location.name='location name to be looked up';
-						tcid.location.locationid=response.data.loggedInAPIUser.user.locationid;
-						tcid.ccl=mergeCCL(response.data.loggedInAPIUser.ccl.data);
-						$scope.currentUser=tcid;
-						
-					} 
-			        return tcid;
-			    });
-	};
 
 	getStateMatch=function(st){	
 		if(typeof st !== 'undefined' || st !== ''){
@@ -1160,7 +1218,10 @@ Possible reasons for breakage:
 
 
 */	
+
 	$scope.$on('$messageIncoming', function(event, args) {
+		console.log(args);
+		$scope.args=args;
         switch(args.plugin_type.toLowerCase()) {
                 case 'demo':
                       $scope.isATS=false;
@@ -1179,11 +1240,11 @@ Possible reasons for breakage:
 
 			$scope.tcid.api_key=args.apikey;
 			$scope.tcid.username=args.username;
+			//$scope.tcid=getCurrentUser(); //must go after uname and apikey
 			
-			console.log(args);
-			$scope.args=args;
-			
-			
+			$scope.tcid.employee=setEmployee(args,$scope.currentuser);
+			console.log("RUN CCL");
+			console.log($scope.tcid.employee);
 			if(args.logo === false){
 				$scope.showLogo=false;
 			}else if(args.logo===true){
@@ -1195,19 +1256,16 @@ Possible reasons for breakage:
 				$scope.showLogo=true;
 			}
 			
-
+			
+			
+			
+			
 			$scope.hasProvided={};
 			$scope.hasProvided.clientid=typeof args.clientid!='undefined' ? true : false;
 			$scope.hasProvided.companyid= (typeof args.companyid !== 'undefined' && args.companyid !== false) ? true : false;
 			$scope.hasProvided.locationid=(typeof args.locationid!='undefined' && args.locationid !== false) ? true : false;
 			//$scope.hasProvided.firstname=typeof args.populated_fields.firstname!='undefined' ? true : false;
 			console.log($scope.hasProvided);
-	
-			$scope.tcid.employee=defEmployee(args);
-console.log($scope.tcid.employee);
-			$scope.getCurrentUser($scope.tcid);
-
-
 
 //TODO if companyid or locationid are supplied then we hide those fields; otherwise we make a request to get locations dropdown...if it's a single company, we hide it but if there are additional we dodropdown
 		console.log($scope);	

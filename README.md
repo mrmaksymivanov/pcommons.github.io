@@ -148,6 +148,7 @@ Currently, the plugin supports IE9+ and all modern browsers; however the plugin 
 ----------------------------------------------------------------------------------------
 Security
 ============
+* Callback URL must be made over SSL
 
 
 

@@ -74,17 +74,17 @@
         <tbody>
         <input type="hidden"  name="username" id="username" ng-model="tcid.username" value={{tcid.username}}>
 
-        <tr ng-if="!isATS" class="req">
+        <tr ng-hide="!isATS" class="req">
         <th class="frmlbl">Client</th>
         <td class="" name="client" id="client">{{tcid.employee.maindata.client.name}}</td>
         <input type="hidden"  name="clientid" id="clientid" ng-model="tcid.employee.maindata.client.id">
         </tr>
 
-        <tr class="req" ng-if="!hasProvided.companyid">
+        <tr class="req" ng-show="!hasProvided.companyid">
         <th class="frmlbl">Company</th>
         <td class="frminput" >
             <select class="input-sm" ng-model="tcid.employee.maindata.company.id" ng-required="!isATS" data-displayname="Company" name="companyid">
-                <option ng-repeat="cmpny in tcid.ccl.clients[getSelectedClientIndex()].companies" 
+                <option ng-repeat="cmpny in currentUser.ccl.clients[getSelectedClientIndex()].companies" 
                         ng-selected="{{cmpny.id == tcid.employee.maindata.company.id}}" 
                         value="{{cmpny.id}}">{{cmpny.legal_name}}
                 </option>
@@ -92,11 +92,11 @@
         </td>
         </tr>
 
-        <tr class="req" ng-if="!hasProvided.locationid">
+        <tr class="req" ng-show="!hasProvided.locationid">
         <th class="frmlbl">Location</th>
         <td class="frminput"  >
             <select class="input-sm" ng-model="tcid.employee.maindata.location.id" ng-required="!isATS" data-displayname="Location" name="locationid">
-                <option ng-repeat="loc in tcid.ccl.clients[0].companies[getSelectedCompanyIndex()].locations"
+                <option ng-repeat="loc in currentUser.ccl.clients[0].companies[getSelectedCompanyIndex()].locations"
                         ng-selected="{{loc.id == tcid.employee.maindata.location.locationid}}" 
                         value="{{loc.id}}">{{loc.location_name}}
                 </option>
