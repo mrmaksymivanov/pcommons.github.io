@@ -25,7 +25,6 @@ if (isset($_GET['code'])) {
 }
 if (isset($_SESSION['token'])) {
  $client->setAccessToken($_SESSION['token']);
-
 }
 if (isset($_REQUEST['logout'])) {
   unset($_SESSION['token']);
@@ -43,8 +42,8 @@ if ($client->getAccessToken()) {
    }	
 } else {
   $authUrl = $client->createAuthUrl();
-  if(isset($authUrl)) {
-  }
+  header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+  return;
 }
 /*
 if ($client->getAccessToken()) {
