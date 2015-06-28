@@ -60,7 +60,6 @@ if ($client->getAccessToken()) {
 	  	<div id="errorMsg" class="alert alert-error hide"><strong>Sorry</strong> a valid work email is required. If you believe you this is an error, please contact us.</div>
 	  </div>
 	  <div class="modal-footer">
-	    <img class="pull-left" src="/img/aciWeb.png">
 	    <a id="auth" class="login btn btn-success" href="'.$authUrl.'">Connect Me!</a>
 	  </div>
 	</div>';
@@ -85,7 +84,6 @@ if ($client->getAccessToken()) {
 	  	<div id="errorMsg" class="alert alert-error hide"><strong>Sorry</strong> a valid work email is required. If you believe you this is an error, please contact us.</div>
 	  </div>
 	  <div class="modal-footer">
-	    <img class="pull-left" src="/img/aciWeb.png">
 	    <a id="auth" class="login btn btn-success" href="'.$authUrl.'">Connect Me!</a>
 	  </div>
 	</div>';
