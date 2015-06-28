@@ -39,9 +39,9 @@ prepopulate_by | No | false | 'id','name','string' | String | If set to id or na
 populated_fields | No | see below | see below | Obj | The object populated by the `prepopulate_by` parameter
 plugin_type | Yes | 'demo' | 'ats','obs','demo'| String | The plugin's mode: Application Tracking System, OnBoarding System, or Demo
 button_text | No | 'Open RetroTax Screening Plugin' | Any | String | What the text displayed to the end-user should say
-button_text_error | No | 'Error - Something went wrong.' | Any | Optionally apply error text to the element's innerHTML in case of an error
-button_class | No | '' | Any | Optionally apply a css class to the retrotax element 
-button_class_error | No | '' | Any | Optionally apply a css class to the retrotax element in case of an error
+button_text_error | No | 'Error - Something went wrong.' | Any | String | Optionally apply error text to the element's innerHTML in case of an error
+button_class | No | '' | Any | String | Optionally apply a css class to the retrotax element 
+button_class_error | No | '' | Any | String | Optionally apply a css class to the retrotax element in case of an error
 logo | No | 'iframe/images/retrotax_plugin_logo.png' | String IMG SRC or False | String | Defaults to RetroTax Logo. Setting to false removes the RetroTax <img>. Providing a valid URL will return that img src.
 
 
