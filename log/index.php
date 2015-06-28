@@ -11,7 +11,6 @@ $client->setApplicationName("RetroTax - Plugin Log Console");
 $client->setClientId('435797912067-dom6cvhckuvjb7j0sddvi27u41r6solp.apps.googleusercontent.com'); 
 $client->setClientSecret('uWUvMkjLlln0zkUKoHWSkNYb'); 
 $client->setRedirectUri('http://plugin-paulcommons.rhcloud.com/log/index.php');
-//$client->setDeveloperKey('AIzaSyCiwkQG0KhUmhCbZBFrbi0GygrkaPauJ-g');  
 $client->setDeveloperKey('AIzaSyCgZSrej4KjH5xZON93ZvT6AiOwyWTshSQ');
 $client->setScopes(array('https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'));
 $oauth2 = new Google_Oauth2Service($client);
@@ -39,75 +38,14 @@ if ($client->getAccessToken()) {
     unset($_SESSION['token']);
     $client->revokeToken();	  
 	$authUrl = $client->createAuthUrl();
+	header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
+	return;
    }	
 } else {
   $authUrl = $client->createAuthUrl();
   header('Location: ' . filter_var($authUrl, FILTER_SANITIZE_URL));
   return;
 }
-/*
-if ($client->getAccessToken()) {
-	
-  $user = $oauth2->userinfo->get();
-  $gmail = filter_var($user['email'], FILTER_SANITIZE_EMAIL);
-  $img = filter_var($user['picture'], FILTER_VALIDATE_URL);
-  $personMarkup = "$email<div><img src='$img?sz=50'></div>";
-  // The access token may have been updated lazily.
-  $_SESSION['token'] = $client->getAccessToken();
-  $gmailArray = explode("@",$gmail);
-  if($gmailArray[1] != "retrotax-aci.com") {
-    unset($_SESSION['token']);
-    $client->revokeToken();	  
-	$authUrl = $client->createAuthUrl();
-    print '<div id="authModal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-	  <div class="modal-header">
-	    <h3 id="myModalLabel">Authentication (valid Gmail acct)</h3>
-	  </div>
-	  <div id="modalBody" class="modal-body"><br />
-			  <div class="row">
-                            <div class="span5">
-                              <label><strong>Email</strong></label>
-                              <div class="control-group">
-								<input id="validEmail" class="input-block-level" type="text" placeholder="Your RetroTax Email Account">
-                              </div>
-                            </div>
-			   </div>
-	  	<br />
-	  	<div id="errorMsg" class="alert alert-error hide"><strong>Sorry</strong> a valid work email is required. If you believe you this is an error, please contact us.</div>
-	  </div>
-	  <div class="modal-footer">
-	    <a id="auth" class="login btn btn-success" href="'.$authUrl.'">Connect Me!</a>
-	  </div>
-	</div>';
-   }	
-} else {
-  $authUrl = $client->createAuthUrl();
-  if(isset($authUrl)) {
-    print '<div id="authModal" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-	  <div class="modal-header">
-	    <h3 id="myModalLabel">Authentication</h3>
-	  </div>
-	  <div id="modalBody" class="modal-body"><br />
-			  <div class="row">
-                            <div class="span5">
-                              <label><strong>Email</strong></label>
-                              <div class="control-group">
-								<input id="validEmail" class="input-block-level" type="text" placeholder="Your RetroTax Email Account">
-                              </div>
-                            </div>
-			   </div>
-	  	<br />
-	  	<div id="errorMsg" class="alert alert-error hide"><strong>Sorry</strong> a valid work email is required. If you believe you this is an error, please contact us.</div>
-	  </div>
-	  <div class="modal-footer">
-	    <a id="auth" class="login btn btn-success" href="'.$authUrl.'">Connect Me!</a>
-	  </div>
-	</div>';
-  }
-}
-*/
-
-
 if(isset($_ENV['OPENSHIFT_DATA_DIR'])){
 	//$log = $_ENV['OPENSHIFT_DATA_DIR'].'log.txt';
 	$log = '../../data/log.txt';
@@ -194,7 +132,7 @@ if ( !$logs ) {
   <title></title>
   <meta name="description" content="">
   <meta name="author" content="">
-  <meta name="robots" content="noindex">
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 

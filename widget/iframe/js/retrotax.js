@@ -168,6 +168,7 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
 // TODO: remove jQuery
 // TODO: create MaterialDesign option, like demo.html is but should be bootstrap
 // TODO: use strict mode
+// TODO: check if angular or jquery versions can conflict w/ iframe
 */
 
 
