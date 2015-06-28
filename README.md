@@ -5,7 +5,7 @@ Created by RetroTax
 Introduction
 ============
 
-[Plugin Screenshot]: https://drive.google.com/file/d/0B0LfxC9fk-YpLXU4S3Z5TXhfamc/view?usp=sharing "Plugin Screenshot"
+![image](https://drive.google.com/file/d/0B0LfxC9fk-YpLXU4S3Z5TXhfamc/view?usp=sharing)
 
 ----------------------------------------------------------------------------------------
 Demo
