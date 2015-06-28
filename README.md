@@ -1,10 +1,11 @@
-# pcommons.github.io
-Plugin Demo
-
+#Tax Credit Screening Plugin
+Created by RetroTax
 
 
 Introduction
 ============
+
+[Plugin Screenshot]: https://drive.google.com/file/d/0B0LfxC9fk-YpLXU4S3Z5TXhfamc/view?usp=sharing "Plugin Screenshot"
 
 ----------------------------------------------------------------------------------------
 Demo
@@ -18,7 +19,7 @@ Installation
 1. Contact tech@retrotax-aci.com to request an API Key. For security, we will white-list your domain so only requests originating from that domain will be accepted.
 2. Place `<script type="text/javascript" src="retrotax_plugin.js"></script>` either before the end of your `</head>` tag or at the end before your `</body>` tag (better)
 3. Set your configuration values.
-4. Begin Screening :)
+4. Start Screening
 
 ----------------------------------------------------------------------------------------
 Configuration
@@ -52,7 +53,7 @@ populated_fields={
         lastname:'',
         middleinitial:'',
         city:'',
-        state:'',
+        state:'', //2 letter abbreviation or full state name; if match not found, rwe reject it and the user will be asked to provide it
         zip:'',
         address:'',
         address2:'',
@@ -76,7 +77,15 @@ var _retrotax_options = {
 ----------------------------------------------------------------------------------------
 Sample Config (Complex)
 ============
-
+//TODO
+```javascript
+var _retrotax_options = {
+    iframe_base_path: 'widget/iframe',
+    username:'demoapi.hiring.manager',
+    apikey:'3AED82E2006D43BDGHHGD790BFF937FR',
+    plugin_type:'ats'
+}
+```
 
 ----------------------------------------------------------------------------------------
 Additional Features
