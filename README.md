@@ -22,47 +22,6 @@ Installation
 3. Set your configuration values.
 4. Start Screening
 
-----------------------------------------------------------------------------------------
-Configuration
-============
-
-Parameter | Req | Default | Options | Type | Description 
---- | --- | --- | --- | --- | ---
-iframe_base_path | Yes | https://pcommons.github.io/widget/iframe | widget/iframe | String | The path to the iframe that gets injected over your page. This should not be changed unless you are testing locally. In that case, set it to 'widget/iframe'.
-username | Yes | false | None | String | Your webscreen.retrotax-aci.com username
-apikey | Yes | false | None | String - 32 Chars | Your webscreen.retrotax-aci.com client-side api-key, which can be found within TCID under 'Accounts'.
-companyid | No | false | None | Int | If provided, the record created will be associated to that company ID. Furthermore, it will filter possible locations by the company ID (assuming multiple locations). If not provided, the user will be presented with a drop-down with a list of company entities. These companies and the drop-down were defined during your RetroTax OnBoarding process.
-locationid  | No | false | None | Int | Similar to CompanyID, providing this will associate the record to this specific location and the location's parent company. If not provided, the user will be presented with a drop-down with a list of locations based upon their company selection.
-callback_url | No | false | None | Valid URL String | Provide a callback URL and we will return a JSON response of each ATS or OBS submission
-framework | No | bootstrap | None | String | Currently we only have one available front-end option. We aim to add Material Design and are open to designs that fit your company requirements
-delay | No | 0 | None | Int | How long to delay before showing the plugin appears
-debug | No | false | None | Boolean | If set to true, we will log to the console
-prepopulate_by | No | false | 'id','name','string' | String | If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.  
-populated_fields | No | see below | see below | Obj | The object populated by the `prepopulate_by` parameter
-plugin_type | Yes | 'demo' | 'ats','obs','demo'| String | The plugin's mode: Application Tracking System, OnBoarding System, or Demo
-button_text | No | 'Open RetroTax Screening Plugin' | Any | String | What the text displayed to the end-user should say
-button_text_error | No | 'Error - Something went wrong.' | Any | String | Optionally apply error text to the element's innerHTML in case of an error
-button_class | No | '' | Any | String | Optionally apply a css class to the retrotax element 
-button_class_error | No | '' | Any | String | Optionally apply a css class to the retrotax element in case of an error
-logo | No | 'iframe/images/retrotax_plugin_logo.png' | String IMG SRC or False | String | Defaults to RetroTax Logo. Setting to false removes the RetroTax <img>. Providing a valid URL will return that img src.
-
-
-```javascript
-
-populated_fields={
-        firstname:'', 
-        lastname:'',
-        middleinitial:'',
-        city:'',
-        state:'', //2 letter abbreviation or full state name; if match not found, rwe reject it and the user will be asked to provide it
-        zip:'',
-        address:'',
-        address2:'',
-        dob:'' // format must be mm/dd/yyyy; otherwise, we reject it and the user will be asked to provide it                   
-    };
-```
-
-----------------------------------------------------------------------------------------
 Sample Config (Minimum Requirements)
 ============
 
@@ -76,16 +35,37 @@ var _retrotax_options = {
 ```
 
 ----------------------------------------------------------------------------------------
-Sample Config (Complex)
+Sample Config (Customized)
 ============
-//TODO
+
 ```javascript
 var _retrotax_options = {
-    iframe_base_path: 'widget/iframe',
-    username:'demoapi.hiring.manager',
-    apikey:'3AED82E2006D43BDGHHGD790BFF937FR',
-    plugin_type:'ats'
-}
+            iframe_base_path: 'widget/iframe',
+            delay: 1000, 
+            debug: true, 
+            username:'demoapi.hiring.manager',
+            apikey:'B47400F36FG8BA0C247698C94D153703',
+            logo:'http://yoursite.com/path/to/your/logo/pic.png',
+            companyid:1054
+            locationid:8557,
+            button_class:"btn btn-huge btn-info",
+            button_text:"Open RetroTax Screening Plugin",
+            button_class_error:"btn btn-huge btn-danger",
+            button_text_error:"Aw, snap! Something broke",
+            plugin_type: 'obs',  
+            prepopulate_by:'id',
+            populated_fields: {
+                firstname:'first_name',
+                lastname:'last_name',
+                middleinitial:'middle_init',
+                city:'city',
+                state:'state',
+                zip:'zipcode',
+                address:'address',
+                address2:'address2',
+                dob:'dateOfBirth'
+            }
+};
 ```
 
 ----------------------------------------------------------------------------------------
@@ -153,6 +133,47 @@ Security
 
 
 
+----------------------------------------------------------------------------------------
+Configuration
+============
+
+Parameter | Req | Default | Options | Type | Description 
+--- | --- | --- | --- | --- | ---
+iframe_base_path | Yes | https://pcommons.github.io/widget/iframe | widget/iframe | String | The path to the iframe that gets injected over your page. This should not be changed unless you are testing locally. In that case, set it to 'widget/iframe'.
+username | Yes | false | None | String | Your webscreen.retrotax-aci.com username
+apikey | Yes | false | None | String - 32 Chars | Your webscreen.retrotax-aci.com client-side api-key, which can be found within TCID under 'Accounts'.
+companyid | No | false | None | Int | If provided, the record created will be associated to that company ID. Furthermore, it will filter possible locations by the company ID (assuming multiple locations). If not provided, the user will be presented with a drop-down with a list of company entities. These companies and the drop-down were defined during your RetroTax OnBoarding process.
+locationid  | No | false | None | Int | Similar to CompanyID, providing this will associate the record to this specific location and the location's parent company. If not provided, the user will be presented with a drop-down with a list of locations based upon their company selection.
+callback_url | No | false | None | Valid URL String | Provide a callback URL and we will return a JSON response of each ATS or OBS submission
+framework | No | bootstrap | None | String | Currently we only have one available front-end option. We aim to add Material Design and are open to designs that fit your company requirements
+delay | No | 0 | None | Int | How long to delay before showing the plugin appears
+debug | No | false | None | Boolean | If set to true, we will log to the console
+prepopulate_by | No | false | 'id','name','string' | String | If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.  
+populated_fields | No | see below | see below | Obj | The object populated by the `prepopulate_by` parameter
+plugin_type | Yes | 'demo' | 'ats','obs','demo'| String | The plugin's mode: Application Tracking System, OnBoarding System, or Demo
+button_text | No | 'Open RetroTax Screening Plugin' | Any | String | What the text displayed to the end-user should say
+button_text_error | No | 'Error - Something went wrong.' | Any | String | Optionally apply error text to the element's innerHTML in case of an error
+button_class | No | '' | Any | String | Optionally apply a css class to the retrotax element 
+button_class_error | No | '' | Any | String | Optionally apply a css class to the retrotax element in case of an error
+logo | No | 'iframe/images/retrotax_plugin_logo.png' | String IMG SRC or False | String | Defaults to RetroTax Logo. Setting to false removes the RetroTax <img>. Providing a valid URL will return that img src.
+
+
+```javascript
+
+populated_fields={
+        firstname:'', 
+        lastname:'',
+        middleinitial:'',
+        city:'',
+        state:'', //2 letter abbreviation or full state name; if match not found, rwe reject it and the user will be asked to provide it
+        zip:'',
+        address:'',
+        address2:'',
+        dob:'' // format must be mm/dd/yyyy; otherwise, we reject it and the user will be asked to provide it                   
+    };
+```
+
+----------------------------------------------------------------------------------------
 
 
 
