@@ -5,7 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
   <title>Welcome to RetroTax Plugin (localhost)</title>
+  
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
 
+  <!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+      -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> 
 	<!--
 	BEGIN RTN WIDGET EMBED CODE
 	-->
@@ -65,21 +73,20 @@
                 height: 400
 
             },
-            //companyid:1054,
+            companyid:1054,
             //logo:'/plugin/widget/iframe/images/test.png',
-            //locationid:8557,
+            locationid:8557,
             button_class:"btn btn-huge btn-info",
             button_text:"Open RetroTax Screening Plugin",
             button_class_error:"btn btn-huge btn-danger",
             button_text_error:"Aw, snap! Something broke",
-            plugin_type: 'ats',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
+            plugin_type: 'obs',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
             prepopulate_by:'id',
             populated_fields: {
                 firstname:'first_name',
                 lastname:'last_name',
                 middleinitial:'middle_init',
                 city:'',
-                state:'state',
                 state:'state',
                 zip:'',
                 address:'address',
@@ -102,7 +109,10 @@
         <input id="address2" class="retrotax" value="blah">
         <input id="dateOfBirth" class="retrotax" value="03/02/1987">
 
-
+<br/>
+<br/>
+<br/>
+<br/>
         <input name="first_name" class="retrotax" value="Pablo">
         <input name="middle_init" class="retrotax" value="C">
         <input name="last_name" value="Com">

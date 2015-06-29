@@ -476,6 +476,14 @@ form.ng-invalid {outline:none;}
 .btn{
 	border-radius:0px !important;
 }
+
+#btnSave{
+	border-top-left-radius: 0px !important;
+border-top-right-radius: 0px !important;
+border-bottom-right-radius: 4px !important;
+border-bottom-left-radius: 4px !important;
+}
+
 i.iconAcc{
 	margin-right:15px !important;
 }
@@ -498,4 +506,17 @@ border-radius: 0px;
 
 .logo{
 	border:0px;
+}
+
+div#errorAcc > .panel-heading{
+    /*
+	border-color:transparent;
+    background-color: transparent;
+	border-radius: 0px; */
+	color: rgb(234, 14, 14);
+
+}
+
+ul.dropdown-menu{
+	position:fixed;left:27% !important;
 }

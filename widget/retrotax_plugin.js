@@ -184,15 +184,19 @@ var _bftn_animations = {
 
 			_retrotax_util.injectCSS('_bftn_iframe_css', css);
 
+			//if(document.getElementById('_bftn_iframe') !== undefined){
 			var iframe = _retrotax_util.createIframe(this.options.modalAnimation);
-
+			console.log(_retrotax_options.populated_fields);
 			if(this.options.prepopulate_by !==false){
+				console.log("going into switch");
 			switch(this.options.prepopulate_by){
                 case 'id':
 	                for(var index in _retrotax_options.populated_fields) { 
 	   					if (_retrotax_options.populated_fields.hasOwnProperty(index)) {
 	       					var field = _retrotax_options.populated_fields[index];
-	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementById(field) != null ) ? document.getElementById(field).value : '';
+	       					console.log(field);
+	       					console.log((document.getElementById(field) != null ));
+	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementById(field) != null || document.getElementById(field) != '') ? document.getElementById(field).value : '';
 	   					}
 					}
 	                break;
@@ -213,6 +217,7 @@ var _bftn_animations = {
 
 			//setTimeout(function() {bftn_util.bindIframeCommunicator(iframe, this);}, 50);
 			_retrotax_util.bindIframeCommunicator(iframe, this);
+		//}
 		},
 
 		// what to do when the animation stops
@@ -229,6 +234,7 @@ var _bftn_animations = {
 UTILITY FUNCTIONS
 --------------------------------------------------------------------------------
 */
+var urlIndex=0;
 var _retrotax_util = {
 
 	// Inject CSS styles into the page
@@ -246,30 +252,32 @@ var _retrotax_util = {
 	createIframe: function(animation) {
 		console.log("create Iframe");
 		//console.log(animation);
+		//console.log(window.frames[0]);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
-		iframe.src = _retrotax_options.iframe_base_path + '/'+_retrotax_options.framework+'.html';
+		iframe.src = _retrotax_options.iframe_base_path + '/'+_retrotax_options.framework+'.html'; //+urlIndex;
 		iframe.frameBorder = 0;
 		iframe.allowTransparency = true; 
 		iframe.style.display = 'none';
 		document.body.appendChild(iframe);
-		console.log("IFRAME CONTENT WINDOW");
-		iframeCount++;
+		//console.log(window.frames[0]);
 		return iframe;
+
 	},
 
 	// Destroy the iframe used to display the animation
 	destroyIframe: function() {
+		//var wframe=window.frames[0].frameElement;
+		//console.log(wframe);
 		var iframe = document.getElementById('_bftn_iframe');
 		console.log(iframe);
-		//iframe.setAttribute('class', 'hidden');
-		iframe.remove();
-		iframeIndex++;
-		console.log(iframe);
-		//iframe.style.display='hidden';
-		//iframe.parentNode.removeChild(iframe);
-		//console.log(iframe);
-		//iframe=null;
+		//iframe.remove();
+		iframe.style.display = 'none';
+		document.body.appendChild(iframe);
+		var css = '#_bftn_iframe { position: fixed; left: -5000px; top: -5000px; \
+				width: 100%; height: 100%; z-index: 10001; }'
+
+		_retrotax_util.injectCSS('_bftn_iframe_css', css);
 	},
 
 	// Sends / receives event messages to the iframe (IE9+)
@@ -287,31 +295,7 @@ var _retrotax_util = {
 			data.HOST_NAME = hostname;
 			console.log("SEND MESSAGE");
 			console.log(iframe);
-/*
-			if(typeof iframe != 'undefined' && !iframe.contentWindow){
-				console.log("IFRAME CONTENT WINDOW IS NULL");
-				
-				var iframe = document.body.createElement('iframe');
-				iframe.id = '_bftn_iframe';
-
-				iframe.src = _retrotax_options.iframe_base_path + '/'+_retrotax_options.framework+'.html';
-				iframe.frameBorder = 0;
-				iframe.allowTransparency = true; 
-				iframe.style.display = 'block';
-				document.body.appendChild(iframe);			
-	*/		
-			//}
-			console.log("*****************************************");
-			console.log(iframe.contentWindow);
-			//console.log(iframe.contentWindow.frameElement);
-			//console.log(iframe.contentWindow.frameElement.contentWindow);
-			if(typeof rt_iframeContentWindow === 'undefined'){
-				rt_iframeContentWindow=iframe.contentWindow.frameElement.contentWindow;
-				console.log(rt_iframeContentWindow);
-				iframe.contentWindow.postMessage(data, '*');
-			}else{
-				rt_iframeContentWindow.postMessage(data, '*');
-			}
+			iframe.contentWindow.postMessage(data, '*');
 		}
 		var method = window.addEventListener ? "addEventListener":"attachEvent";
 		var eventer = window[method];

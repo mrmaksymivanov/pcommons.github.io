@@ -78,7 +78,7 @@
 }).call(this);
 
 
-var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngMask','ngPostMessage']);
+var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngPostMessage']);
 
 
 //Constants & Values
@@ -102,7 +102,19 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
   		requireBase: false
 	});
 
+    
+    $provide.decorator('datepickerPopupDirective', function ($delegate) {
+        var directive = $delegate[0];
+        var link = directive.link;
 
+        directive.compile = function () {
+          return function (scope, element, attrs) {
+            link.apply(this, arguments);
+            element.mask("99/99/9999");
+          };
+        };
+        return $delegate;
+    });
 
     
     
@@ -382,7 +394,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, debug, AuthService){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, debug, AuthService,$filter){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -471,21 +483,32 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	}
 
 	$scope.getSelectedClientIndex = function() {
-		console.log($scope.tcid);
- 		if ($scope.tcid.employee.maindata == undefined) { console.log("No getIndexOf -Client"); return false; }
- 		console.log("getIndexOf-Client");
- 		console.log($scope.currentUser);
+ 		if ($scope.tcid.employee.maindata == undefined) {return false; }
 	    return getIndexOf($scope.currentUser.ccl.clients, $scope.currentUser.client.clientid, 'id');
 	};
+	//TODO: Test if CCL Fields still work with a user with multiple companies and locations
 	$scope.getSelectedCompanyIndex = function() {
-		if ($scope.tcid.employee.maindata == undefined) { console.log("No getIndexOf -Comp"); return false; }
-		console.log("getIndexOf-Comp");
- 		console.log($scope.currentUser);
-
-		return getIndexOf($scope.currentUser.ccl.clients[$scope.getSelectedClientIndex()].companies, $scope.tcid.employee.maindata.company.id, 'id');
+		if ($scope.tcid.employee.maindata == undefined && $scope.args.companyid != false) {return false; }
+		console.log($scope.args.companyid);
+		var companyid= ($scope.tcid.employee.maindata.company.id==null) ? $scope.args.companyid : $scope.tcid.employee.maindata.company.id;	
+		console.log(companyid);
+		//if scope.args.companyid is not provided then its false so check if currentUser.ccl.clients[0].companies.length > 1. If it's one then we can auto-popualte it and not make the user fill in an extra field
+		if($scope.args.companyid===false && $scope.currentUser.ccl.clients[0].companies.length === 1){companyid=0;}
+		console.log(companyid);
+		return getIndexOf($scope.currentUser.ccl.clients[$scope.getSelectedClientIndex()].companies, companyid, 'id');
+	};
+	/*
+	$scope.getSelectedLocationIndex = function() {
+		if ($scope.tcid.employee.maindata == undefined) {return false; }
+		console.log($scope.getSelectedCompanyIndex());
+		console.log($scope.tcid.employee.maindata.company.id);
+		var companyIndex=$scope.getSelectedCompanyIndex();
+		console.log("CompanyIndex:  "+companyIndex);
+		var locationid= ($scope.tcid.employee.maindata.location.id==null) ? $scope.args.locationid : $scope.tcid.employee.maindata.location.id;		
+		return getIndexOf($scope.currentUser.ccl.clients[0].companies[companyIndex].locations, locationid, 'id');
 
 	};
-
+	*/
 	function getIndexOf(arr, val, prop) {
 	  var l = arr.length,
 	    k = 0;
@@ -506,8 +529,12 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.save = function(isValid) {
 		console.log("--> Submitting form.. isValid?? ");
 		console.log(isValid);
-
-
+/*
+var alertsBasic = new Array('firstname','lastname','city','stateid','dob','city','ssn','ssnconfirmation');
+var alertsMilitary = new Array();
+var alertsFelon = new Array();
+var alertsUnemployed = new Array();
+*/
  $scope.$broadcast('show-errors-check-validity');
    
 		if (!isValid) {
@@ -530,7 +557,10 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 				console.log('minlength - field.....',field);
 				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is too short'});
 			});
+			var errorAccordian=window.document.getElementById('errorAcc');
 
+			console.log(errorAccordian);
+			console.log(angular.element('errorAcc'));
 			return false;
 		}
 
@@ -576,6 +606,34 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	};
 
 
+
+	$scope.isValidDate=function(dateString)
+	{
+	    // First check for the pattern
+	    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+	        return false;
+
+	    // Parse the date parts to integers
+	    var parts = dateString.split("/");
+	    var day = parseInt(parts[1], 10);
+	    var month = parseInt(parts[0], 10);
+	    var year = parseInt(parts[2], 10);
+
+	    // Check the ranges of month and year
+	    if(year < 1000 || year > 3000 || month == 0 || month > 12)
+	        return false;
+
+	    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+	    // Adjust for leap years
+	    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+	        monthLength[1] = 29;
+
+	    // Check the range of the day
+	    return day > 0 && day <= monthLength[month - 1];
+	};
+
+
 	defEmployee = function(user_provided_data) {
 		//console.log(currentuser);
 		emp={};
@@ -600,26 +658,28 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.address=typeof user_provided_data.populated_fields.address!='undefined' ? user_provided_data.populated_fields.address : '';
 		emp.maindata.address2=typeof user_provided_data.populated_fields.address2!='undefined' ? user_provided_data.populated_fields.address2 : '';
 		//emp.maindata.countyid=null;
-		emp.maindata.dob=typeof user_provided_data.populated_fields.dob!='undefined' ? user_provided_data.populated_fields.dob : null;
+		emp.maindata.dob= (typeof user_provided_data.populated_fields.dob!='undefined' && $scope.isValidDate(user_provided_data.populated_fields.dob))? user_provided_data.populated_fields.dob : null;
 
 		emp.maindata.client={};
 		emp.maindata.company={};
 		emp.maindata.location={};
+		/*
 		emp.maindata.client.id= null; //currentuser.client.clientid;
 		emp.maindata.client.name=''//currentuser.client.name;//typeof $scope.tcid.client.name!='undefined' ? $scope.tcid.client.name : null;
 		emp.maindata.company.id=null
 		emp.maindata.company.name='';
 		emp.maindata.location.id=null;
 		emp.maindata.location.name='';
+		*/
 
-/*
+
 		emp.maindata.client.id= typeof user_provided_data.clientid!='undefined' ? user_provided_data.clientid : null;
 		emp.maindata.client.name='';//typeof $scope.tcid.client.name!='undefined' ? $scope.tcid.client.name : null;
 		emp.maindata.company.id=typeof user_provided_data.companyid!='undefined' ? user_provided_data.companyid : null;
 		emp.maindata.company.name='';
 		emp.maindata.location.id=typeof user_provided_data.locationid!='undefined' ? user_provided_data.locationid : null;
 		emp.maindata.location.name='';
-*/
+
 		emp.maindata.clientid=emp.maindata.client.id;
 		emp.maindata.companyid=emp.maindata.company.id;
 		emp.maindata.locationid=emp.maindata.location.id;
@@ -676,18 +736,28 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.unemploymentinfo.compensatedstart='';
 		emp.maindata.unemploymentinfo.compensatedstop='';
 
-		var today = new Date();
+
+        emp.maindata.doh = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.dgi = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.dsw = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.dojo = $filter('date')(new Date(), 'MM/dd/yyyy');
+        emp.maindata.startingwage = null;
+	
+	/*	var today = new Date();
     	var dd = today.getDate();
     	var mm = today.getMonth()+1; //January is 0!
     	var yyyy = today.getFullYear();
     	if(dd<10){dd='0'+dd} 
     	if(mm<10){mm='0'+mm} 
         var today = dd+'/'+mm+'/'+yyyy;
+    console.log(today);
+    alert(today);
 
 		emp.maindata.doh=today;
 		emp.maindata.dgi=today;
 		emp.maindata.dsw=today;
 		emp.maindata.dojo=today;
+		*/
 		emp.maindata.startingwage=null;
 		emp.maindata.occupationid=null;
 		emp.maindata.hashiringmanager=0;
@@ -892,7 +962,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			//$scope.tcid.url2fa = $scope.apiURL+'/api/v1/users/device2fa?cclhash=123123&pw=' + $scope.tcid.pw + '&u=' + $scope.tcid.u +'&device='+$scope.tcid.device+'&api2fa='+$scope.tcid.checkapi2fa;
 	
 			.then(function(response) {
-					console.log("PLUGIN AUTH");
 					console.log(response);
 					if (angular.isDefined($scope.tcid.api_key) && $scope.tcid.api_key!='' && $scope.tcid.api_key.length==32 && $scope.tcid.u!='') {
 						tcid.didlogin=true;
@@ -1160,6 +1229,9 @@ Possible reasons for breakage:
 
 
 */	
+
+
+
 	$scope.$on('$messageIncoming', function(event, args) {
         switch(args.plugin_type.toLowerCase()) {
                 case 'demo':
@@ -1195,7 +1267,6 @@ Possible reasons for breakage:
 				$scope.showLogo=true;
 			}
 			
-
 			$scope.hasProvided={};
 			$scope.hasProvided.clientid=typeof args.clientid!='undefined' ? true : false;
 			$scope.hasProvided.companyid= (typeof args.companyid !== 'undefined' && args.companyid !== false) ? true : false;
@@ -1217,10 +1288,6 @@ console.log($scope.tcid.employee);
 		var m = JSON.stringify({status: 200, message: 'stop'});
 		scope.sender.postMessage(m, '*');
 	}
-
-
-
-
 });
 /*
 
