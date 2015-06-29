@@ -1259,7 +1259,7 @@ Possible reasons for breakage:
 			if(args.logo === false){
 				$scope.showLogo=false;
 			}else if(args.logo===true){
-				$scope.logo='/plugin/widget/iframe/images/retrotax_plugin_logo.png';
+				if(window.location.host=='localhost'){$scope.logo='/plugin/widget/iframe/images/retrotax_plugin_logo.png';}else{$scope.logo='/widget/iframe/images/retrotax_plugin_logo.png';}
 				$scope.showLogo=true;
 			}else{
 				console.log("else"+args.logo);
