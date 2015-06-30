@@ -59,18 +59,13 @@ if (typeof _retrotax_options == "undefined")
 
 // The path to the iframe that gets injected over your page
 if (typeof _retrotax_options.iframe_base_path == "undefined")
-	_retrotax_options.iframe_base_path = 'https://pcommons.github.io/widget/iframe';
+	_retrotax_options.iframe_base_path = 'http://plugin-paulcommons.rhcloud.com/widget/iframe';
 
 if (typeof _retrotax_options.username == "undefined")
 	_retrotax_options.username = false;
 
 if (typeof _retrotax_options.apikey == "undefined")
 	_retrotax_options.apikey = false;
-
-
-if (typeof _retrotax_options.clientid == "undefined")
-	_retrotax_options.clientid = false;
-
 
 if (typeof _retrotax_options.companyid == "undefined")
 	_retrotax_options.companyid = false;
@@ -94,20 +89,16 @@ if (typeof _retrotax_options.debug == "undefined")
 	_retrotax_options.debug = false;
 
 // If set to true, we will log errors externally
-if (typeof _retrotax_options.ajax_logging == "undefined")
-	_retrotax_options.ajax_logging = false;
+//if (typeof _retrotax_options.ajax_logging == "undefined")
+//	_retrotax_options.ajax_logging = false;
 
 // If set to true, we will log errors externally
-if (typeof _retrotax_options.ajax_logging_url == "undefined")
-	_retrotax_options.ajax_logging_url = 'http://plugin_logs.retrotax.co';
+//if (typeof _retrotax_options.ajax_logging_url == "undefined")
+//	_retrotax_options.ajax_logging_url = 'http://plugin_logs.retrotax.co';
 
 // who to email logs to - always emails tech@retro so this is in addition to
-if (typeof _retrotax_options.ajax_logging_email == "undefined")
-	_retrotax_options.ajax_logging_email = false;
-
-// Usually a cookie is used to only show the widget once. You can override here.
-if (typeof _retrotax_options.always_show_widget == "undefined")
-	_retrotax_options.always_show_widget = false;
+//if (typeof _retrotax_options.ajax_logging_email == "undefined")
+//	_retrotax_options.ajax_logging_email = false;
 
 if (typeof _retrotax_options.prepopulate_by == "undefined")
 	_retrotax_options.prepopulate_by = false; //id,name,string
@@ -195,8 +186,8 @@ var _bftn_animations = {
 	   					if (_retrotax_options.populated_fields.hasOwnProperty(index)) {
 	       					var field = _retrotax_options.populated_fields[index];
 	       					console.log(field);
-	       					console.log((document.getElementById(field) != null ));
-	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementById(field) != null || document.getElementById(field) != '') ? document.getElementById(field).value : '';
+	       					console.log((document.getElementById(field) != null )); // || document.getElementById(field) != ''
+	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementById(field) != null) ? document.getElementById(field).value : '';
 	   					}
 					}
 	                break;
@@ -405,15 +396,24 @@ var bindRetroTaxBtn = function() {
 
 		var div = document.getElementById('retrotax_plugin');
 		if(compatible){
-			var newButton = document.createElement('button');
-			newButton.id="retrotax_plugin_trigger";
-			newButton.setAttribute('class', _retrotax_options.button_class);
-			newButton.innerHTML = _retrotax_options.button_text;
-			newButton.addEventListener('click', function(e) {
-				e.preventDefault();
-				readyRetrotax();				
-			}, false);
-			div.appendChild(newButton);
+			console.log(document.getElementById('retrotax_plugin_trigger'));
+			if(document.getElementById('retrotax_plugin_trigger') != null){
+				var existing_retro_trigger = document.getElementById('retrotax_plugin_trigger');
+				existing_retro_trigger.addEventListener('click', function(e) {
+					e.preventDefault();
+					readyRetrotax();				
+				}, false);
+			}else{
+				var newButton = document.createElement('button');
+				newButton.id="retrotax_plugin_trigger";
+				newButton.setAttribute('class', _retrotax_options.button_class);
+				newButton.innerHTML = _retrotax_options.button_text;
+				newButton.addEventListener('click', function(e) {
+					e.preventDefault();
+					readyRetrotax();				
+				}, false);
+				div.appendChild(newButton);
+			}
 		}else{
 			var newlink = document.createElement('a');
 			newLink.id="retrotax_plugin_trigger";
@@ -427,7 +427,8 @@ var bindRetroTaxBtn = function() {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-  bindRetroTaxBtn();
+	console.log("DOM CONTENT LOADED");
+  	bindRetroTaxBtn();
 });
 
 

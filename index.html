@@ -1,134 +1,388 @@
 <!doctype html>
-<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-  <title>Welcome to RetroTax Plugin (localhost)</title>
-  
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+    <title>Welcome to RetroTax Plugin (Demo & Configuration)</title>
+    <!-- Twitter Bootstrap -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design for Bootstrap -->
+    <link href="demo/css/material.min.css" rel="stylesheet"> 
+    <link href="demo/css/roboto.min.css" rel="stylesheet">
+    <link href="demo/css/material-fullpalette.min.css" rel="stylesheet">
+    <link href="demo/css/ripples.min.css" rel="stylesheet">
+    <link href="demo/bower_components/json-formatter/dist/json-formatter.min.css" rel="stylesheet">
 
-  <!--
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
-      -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> 
-	<!--
-	BEGIN RTN WIDGET EMBED CODE
-	-->
-    <script type="text/javascript">
-/*
-        var _bftn_options = {
-            // This is used to override the widget iframe URL with something else
-            // Normally it would be on CDN somewhere, but we want it local for testing.
-            iframe_base_path: 'widget/iframe',
-            delay: 0,
-            debug: true,
-            always_show_widget: true,
-            compatibility_iframe: {
-                width: 500,
-                height: 400
-
-            },
-            button_class:"btn btn-huge btn-info",
-            button_text:"Open RetroTax Screening Plugin",
-            //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
-            plugin_type: 'ats',  
-            prepopulate_basic_info_by_id: {
-                firstname:'first_name',
-                lastname:'last_name',
-                middleinitial:'middle_init',
-                city:'',
-                state:'',
-                stateid:'',
-                zip:'',
-                address:'',
-                address2:'',
-                countyid:'',
-                dob:''
-            }
-        }
-*/
+                <style>
+                  #input h2 {
+                    padding: 14px;
+                    font-size: 16px;
+                    font-weight: 400;
+                  }
+                  #input .inputs {
+                    width: 80%;
+                  }
+                  #input .form-control-wrapper {
+                    margin: 30px 0;
+                  }
+                  .form-control-wrapper{
+                    padding-top:15px;
+                    padding-bottom:15px;
+                    margin-top:15px;
+                    margin-bottom:15px;
+                  }
+                           .clear-30{
+         clear: both;
+         height:30px;
+         }
+                </style>
 
 
-
-	var _retrotax_options = {
-
-            iframe_base_path: 'widget/iframe',
-	/*
-           https://pcommons.github.io/widget/iframe',             <-- Set this for SSL Testing and ACI Demo Website (https://www.retrotax-aci.com/plugin-demo/) 
-           http://plugin-paulcommons.rhcloud.com/widget/iframe',  <-- Set this for http cross-domain testing
-           widget/iframe  					  <-- set this for localhost testing
-	*/
-
-            delay: 1000, 
-            debug: true, // This shows debug stuff in the console. For testing
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-route.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="demo/js/material.min.js"></script>
+    <script src="demo/js/ripples.min.js"></script>
+    <script src="demo/bower_components/json-formatter/dist/json-formatter.min.js"></script>
+    <script>
+        $.material.init();
+        var _retrotax_options={
+            iframe_base_path: '/plugin/widget/iframe',
+            plugin_type: 'obs', 
             username:'demoapi.hiring.manager',
-           // apikey:'3AED82E2006D43BDA850D790BFF937AE',
             apikey:'B47400F36FB8BA0C247798C94D153703',
-            always_show_widget: true,
-            compatibility_iframe: {
-                width: 500,
-                height: 400
-
-            },
             companyid:1054,
-            //logo:'/plugin/widget/iframe/images/test.png',
             locationid:8557,
-            button_class:"btn btn-huge btn-info",
-            button_text:"Open RetroTax Screening Plugin",
-            button_class_error:"btn btn-huge btn-danger",
-            button_text_error:"Aw, snap! Something broke",
-            plugin_type: 'obs',  //ats,obs,demo  demo makes fields uneditable and ats/obs toggles required fields (e.g. hides SSN, etc)
+            delay: 0, 
+            debug: true, 
+            logo:'',
+            callback_url:'',
+            button_class:'btn btn-primary',
+            button_text:'Open RetroTax Screening',
+            button_class_error:'btn btn-danger',
+            button_text_error:'Oh snap, an error!',
             prepopulate_by:'id',
             populated_fields: {
                 firstname:'first_name',
                 lastname:'last_name',
                 middleinitial:'middle_init',
-                city:'',
+                city:'city',
                 state:'state',
-                zip:'',
+                zip:'zipcode',
                 address:'address',
-                address2:'',
+                address2:'address2',
                 dob:'dateOfBirth'
             }
         };
     </script>
+
+    <script src="demo/js/app.js"></script>
+    <script src="widget/retrotax_plugin.js"></script>
+
 </head>
-<body>
-<h2>Demo: This demo's iframe is generated from OpenShit: http://plugin-paulcommons.rhcloud.com/widget/iframe</h2>
-    <div role="main">
-        <div class="wrap">
-        <div id="retrotax_plugin">Trigger Screening</div>
-        <input id="first_name" class="retrotax" value="Paul">
-        <input id="middle_init" class="retrotax" value="">
-        <input id="last_name" value="">
-        <input id="address" value="3130 2nd St W">
-        <input id="state" class="retrotax" value="FL">
-        <input id="address2" class="retrotax" value="blah">
-        <input id="dateOfBirth" class="retrotax" value="03/02/1987">
+ 
+<base href="/">
+<body ng-app="retrotax">
+<div ng-controller="ctlDemo" class="container-fluid" ng-init="initDemo()">
+ <div class="row">
+ <div class="col-sm-6 well page active">
+    <h3>Customize Configuration</h3>
+    <hr>
+    <form name="demoForm">
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input disabled="" class="form-control" type="text" ng-model="_retrotax_options.iframe_base_path" value="{{_retrotax_options.iframe_base_path}}">
+                    <div class="floating-label">iframe_base_path</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Your webscreen.retrotax-aci.com client-side api-key, which can be found within TCID under 'Accounts'." ng-model="_retrotax_options.plugin_type" value="{{_retrotax_options.plugin_type}}" required>
+                    <div class="floating-label">plugin_type</div>
+                    <div class="hint">ATS, DEMO, OBS</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="TCID username" ng-model="_retrotax_options.username" value="{{_retrotax_options.username}}" required>
+                    <div class="floating-label">username</div>
+                    <div class="hint">TCID username</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="TCID Client-side api-key" ng-model="_retrotax_options.apikey" value="{{_retrotax_options.apikey}}" required>
+                    <div class="floating-label">apikey</div>
+                    <div class="hint">TCID Client-side api-key</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="number" data-hint="TCID Company ID" ng-model="_retrotax_options.companyid" value="{{_retrotax_options.companyid}}">
+                    <div class="floating-label">companyid</div>
+                    <div class="hint">TCID Company ID</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="number" data-hint="TCID Location ID" value="{{_retrotax_options.locationid}}">
+                    <div class="floating-label">locationid</div>
+                    <div class="hint">TCID Location ID</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="number" data-hint="How long to delay the modal" ng-model="_retrotax_options.delay" value="{{_retrotax_options.delay}}">
+                    <div class="floating-label">delay</div>
+                    <div class="hint">How long to delay the modal. Integer.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="If set to true, we will log to the console" ng-model="_retrotax_options.debug" value="{{_retrotax_options.debug}}">
+                    <div class="floating-label">debug</div>
+                    <div class="hint">If set to true, we will log to the console. Boolean.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
 
-<br/>
-<br/>
-<br/>
-<br/>
-        <input name="first_name" class="retrotax" value="Pablo">
-        <input name="middle_init" class="retrotax" value="C">
-        <input name="last_name" value="Com">
-        <input name="address" value="3130 1nd St W">
-        <input name="city" class="retrotax" value="St. Pete">
-        <input name="state" class="retrotax" value="IN">
-        <input name="zip-code" class="retrotax" value="11111">
-        <input name="address2" class="retrotax" value="blah">
-        <input name="dateOfBirth" class="retrotax" value="03-02-1987">
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="What the text displayed to the end-user should say" 
+                    ng-model="_retrotax_options.button_text" value="{{_retrotax_options.button_text}}">
+                    <div class="floating-label">button_text</div>
+                    <div class="hint">What the text displayed to the end-user should say.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
 
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Optionally apply a css class to the retrotax element" ng-model="_retrotax_options.button_class" value="{{_retrotax_options.button_class}}">
+                    <div class="floating-label">button_class</div>
+                    <div class="hint">This depends on your CSS - Demo is using Bootstrap so only those classes will be applied.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
 
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Optionally apply error text to the element's innerHTML in case of an error" 
+                    ng-model="_retrotax_options.button_text_error" value="{{_retrotax_options.button_text_error}}">
+                    <div class="floating-label">button_text_error</div>
+                    <div class="hint">Optionally apply error text to the element's innerHTML in case of an error</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
 
-        </div><!-- close .wrap -->
-    </div><!-- close .main -->
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Optionally apply a css class to the retrotax element in case of an error." ng-model="_retrotax_options.button_class_error" value="{{_retrotax_options.button_class_error}}">
+                    <div class="floating-label">button_class_error</div>
+                    <div class="hint">This depends on your CSS - Demo is using Bootstrap so only those classes will be applied.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
 
-<script src="widget/retrotax_plugin.js"></script>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="url" data-hint="Provide a valid URL to replace the default RetroTax Logo" 
+                    ng-model="_retrotax_options.logo" value="{{_retrotax_options.logo}}">
+                    <div class="floating-label">logo</div>
+                    <div class="hint">Provide a valid URL to replace the default RetroTax Logo</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="url" data-hint="Provide a callback URL and we will return a JSON response of each ATS or OBS submission" 
+                    ng-model="_retrotax_options.callback_url" value="{{_retrotax_options.callback_url}}">
+                    <div class="floating-label">callback_url</div>
+                    <div class="hint">Provide a callback URL and we will return a JSON response of each ATS or OBS submission</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="If set to id or name the plugin will auto-populate the values in those fields to match those to our field names." ng-model="_retrotax_options.prepopulate_by" value="{{_retrotax_options.prepopulate_by}}">
+                    <div class="floating-label">prepopulate_by</div>
+                    <div class="hint">If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <hr>
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.firstname" value="{{_retrotax_options.populated_fields.firstname}}">
+                    <div class="floating-label">populated_fields.firstname</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div>   
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.lastname" value="{{_retrotax_options.populated_fields.lastname}}">
+                    <div class="floating-label">populated_fields.lastname</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.middleinitial" value="{{_retrotax_options.populated_fields.middleinitial}}">
+                    <div class="floating-label">populated_fields.middleinitial</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div>    
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.address" value="{{_retrotax_options.populated_fields.address}}">
+                    <div class="floating-label">populated_fields.address</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.address2" value="{{_retrotax_options.populated_fields.address2}}">
+                    <div class="floating-label">populated_fields.address2</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.city" value="{{_retrotax_options.populated_fields.city}}">
+                    <div class="floating-label">populated_fields.city</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.state" value="{{_retrotax_options.populated_fields.state}}">
+                    <div class="floating-label">populated_fields.state</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Date of Birth" ng-model="_retrotax_options.populated_fields.dob" value="{{_retrotax_options.populated_fields.dob}}">
+                    <div class="floating-label">populated_fields.dob</div>
+                    <div class="hint">Date of Birth</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+</form>
+         <div class="col-sm-12">
+
+    <h5>The plugin configuration as a JSON Object:</h3>
+
+    <json-formatter json="_retrotax_options" open="5"></json-formatter>
+</div>
+</div> <!-- col 6 well -->
+
+ <div class="col-sm-6">
+    <h3>Your Website, App, or HRIS System</h3>
+<hr>
+
+<h5>An example of an existing form.  The configuration form on the left will automatically update the ID and Name attributes in the fields below.  Complete the configuration form with the ID or Name attributes in your website or application and insert fake values in the fields below. This will give you an exact picture of what the RetroTax Plugin will look like in your site.</h5>
+<div class="clear-30"></div>
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.firstname}}" name="{{_retrotax_options.populated_fields.firstname}}" class="form-control" type="text" data-hint="Insert any first name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.firstname}}</div>
+                    <div class="hint">Insert any first name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>   
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.lastname}}" name="{{_retrotax_options.populated_fields.lastname}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.lastname}}</div>
+                    <div class="hint">Insert any first name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.middleinitial}}" name="{{_retrotax_options.populated_fields.middleinitial}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.middleinitial}}</div>
+                    <div class="hint">Insert any middle initial and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>   
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.address}}" name="{{_retrotax_options.populated_fields.address}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.address}}</div>
+                    <div class="hint">Insert any address and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.address2}}" name="{{_retrotax_options.populated_fields.address2}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.address2}}</div>
+                    <div class="hint">Insert any address2 and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.city}}" name="{{_retrotax_options.populated_fields.city}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.city}}</div>
+                    <div class="hint">Insert any city and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.state}}" name="{{_retrotax_options.populated_fields.state}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.state}}</div>
+                    <div class="hint">Insert any state and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input id="{{_retrotax_options.populated_fields.dob}}" name="{{_retrotax_options.populated_fields.dob}}" class="form-control" type="text" data-hint="Insert any last name and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.">
+                    <div class="floating-label">Your Form ID or Name Attribute: {{_retrotax_options.populated_fields.dob}}</div>
+                    <div class="hint">Insert any Date of Birth and the value will be transferred to the RetroTax Plugin and the user will not be required to answer this question.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+        <div class="clear-30"></div>
+<hr>
+    <!-- Add this to your site -->
+    <div id="retrotax_plugin"></div> 
+    <!-- Disregard this little guy - for demo purposes only, si vous plait -->
+    <h3>Button Displayed On Your Site:</h3>
+<div class="clear-30"></div>
+
+    <center>
+    <button ng-disabled="demoForm.$invalid" id="retrotax_plugin_trigger" class="{{_retrotax_options.button_class}}">{{_retrotax_options.button_text}}</button>
+    </center>
+    <center>
+    <p ng-if="demoForm.$invalid"><i>The configuration form is invalid. Please correct any invalid fields in order to open the plugin</i></p>
+    </center>
+
+ </div>
+</div>
+
+</div>
 
 </body>
 
