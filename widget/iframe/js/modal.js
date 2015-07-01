@@ -18,6 +18,20 @@
  @licend  The above is the entire license notice
     for the JavaScript code in this page.
 */
+if (navigator.userAgent.indexOf('MSIE') != -1)
+         var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
+else // if no "MSIE" string in userAgent
+         var detectIEregexp = /Trident.*rv[ :]*(\d+\.\d+)/ //test for rv:x.x or rv x.x where Trident string exists
+
+if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
+         var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+    if (ieversion>=10){
+                document.getElementById('modal').className = 'IE';
+                document.getElementById('header').className = 'IE';
+    }
+}
+
+
 var animations = {
     modal: {
         options: {
@@ -51,17 +65,19 @@ var animations = {
                     sendMessage('stop');
                 }, 750);
             });
-           */          
+           */ 
+                   
             // ------------------------------ Optimizely test vvv
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {
                 $('body').addClass('fast-animation');
-                setTimeout(stupidIEZoomFix, 10);
+                if(ieversion>=10) setTimeout(stupidIEZoomFix, 10);
             }
             else
             {
-                setTimeout(stupidIEZoomFix, 2250);
+                if(ieversion>=10) setTimeout(stupidIEZoomFix, 2250);
             }
+
 
         },
         log: function() {
@@ -92,19 +108,7 @@ $(document).ready(function() {
 
 
 
-        if (navigator.userAgent.indexOf('MSIE') != -1)
-         var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
-        else // if no "MSIE" string in userAgent
-         var detectIEregexp = /Trident.*rv[ :]*(\d+\.\d+)/ //test for rv:x.x or rv x.x where Trident string exists
 
-        if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
-         var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
-         if (ieversion>=7){
-                document.getElementById('modal').className = 'IE';
-                document.getElementById('header').className = 'IE';
-         }
-        }
-        
 function stupidIEZoomFix() {
     if (ieversion) {
         $('.loading-region').addClass('zoomedOut').addClass('IE');
