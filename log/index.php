@@ -10,7 +10,7 @@ $client = new Google_Client();
 $client->setApplicationName("RetroTax - Plugin Log Console");
 $client->setClientId('435797912067-dom6cvhckuvjb7j0sddvi27u41r6solp.apps.googleusercontent.com'); 
 $client->setClientSecret('uWUvMkjLlln0zkUKoHWSkNYb'); 
-$client->setRedirectUri('http://plugin-paulcommons.rhcloud.com/log/index.php');
+$client->setRedirectUri('http://plugin.retrotax-aci.com/log/index.php');
 $client->setDeveloperKey('AIzaSyCgZSrej4KjH5xZON93ZvT6AiOwyWTshSQ');
 $client->setScopes(array('https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'));
 $oauth2 = new Google_Oauth2Service($client);
@@ -155,7 +155,7 @@ if ( !$logs ) {
 
 						<?php foreach ( array('error', 'info', 'log') as $type ) : ?>
 						<?php $active = ( !empty($_REQUEST['type']) && $type == $_REQUEST['type'] ) ? ' active' : ''; ?>
-						<li class="<?php if($type=='info'){ echo 'incompletes';}else{ echo $type; } ?><?php echo $active ?>"><a href="?type=<?php echo $type ?>"><?php echo ucwords($type) ?></a></li>
+						<li class="<?php echo $type ?><?php echo $active ?>"><a href="?type=<?php echo $type ?>"><?php if($type=='info'){ echo 'incompletes';}else{ echo ucwords($type); } ?> </a></li>
 						<?php endforeach ?>
                   		<li>
 						 <?php if(!isset($authUrl)){ print '<a class="logout" href="?logout">Logout</a>'; }?>

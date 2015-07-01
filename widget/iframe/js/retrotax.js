@@ -577,8 +577,14 @@ var alertsUnemployed = new Array();
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
 				$scope.currentemployeeid=1;
-				//Attempt to send response to clients callback url.  
-				if($scope.args.callback_url !== false){ //&& isValidURL() && protocol==https
+				//Attempt to send response to clients callback url.
+				var re = /^(http|https|ftp)/
+				var pattern = /^((https):\/\/)/;
+
+				if(!pattern.test($scope.args.callback_url)) {
+					   alert("THROUGH");
+				}  
+				if($scope.args.callback_url !== false && !pattern.test($scope.args.callback_url)){ //&& isValidURL() && protocol==https
 					//If we can set clientSideLogging var then we could use this: $.log(dataFromServer);
 					try{
 						var responsePromise = $http.post($scope.args.callback_url, dataFromServer, {});
