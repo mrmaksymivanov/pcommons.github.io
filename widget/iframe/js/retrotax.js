@@ -171,7 +171,7 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
 
 });
 
-
+/*
 
 app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	var lcurrentuser={};
@@ -380,7 +380,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	};
 
 }]);
-
+*/
 
 /*
 // TODO: create gulp file
@@ -394,7 +394,7 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 
 
-app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, debug, AuthService,$filter){
+app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $location, $window, $postMessage, $rootScope, debug, $filter){
 	console.log("Employees Controller");
 	var param1 = $routeParams.param1;
 	console.log(param1);
@@ -415,9 +415,16 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.currentUser={};
 
 	var getRetroURL=function(debug){
-		console.log(window.location.hostname);
-        if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost" || window.location.hostname=='plugin.retrotax-aci.com') ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+		switch(window.location.hostname){
+  				case 'plugin-paulcommons.rhcloud.com':
+                      return 'http://tcid.retrotax.co';
+                case 'plugin.retrotax-aci.com':
+                	  return 'http://tcid.retrotax.co';       
+                case 'localhost':
+                	  return 'http://tcid.retrotax.co';
+                default:
+                    return 'https://webscreen.retrotax-aci.com';
+          }
     }
 
 	$scope.apiURL=getRetroURL(false);
@@ -560,41 +567,34 @@ var alertsUnemployed = new Array();
 			var errorAccordian=window.document.getElementById('errorAcc');
 
 			console.log(errorAccordian);
-			console.log(angular.element('errorAcc'));
 			return false;
 		}
 
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
-		console.log($scope);
-
 		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
 
-		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?u='+$scope.currentuser().username+'&apikey='+$scope.currentuser().api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
-		//var responsePromise = $http.post('https://webscreen.retrotax-aci.com/api/v1/api_employees/save?apikey=111BC0B55FEF6737944B37B1CA2DBED3&u=demoapi.new.employee&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
-				$scope.currentemployeeid=1;
+				$scope.currentemployeeid=1;//hides accordians
 				//Attempt to send response to clients callback url. 
 				var pattern = /^((http|https|ftp):\/\/)/;
-console.log($scope.args.callback_url);
-if(pattern.test($scope.args.callback_url)) {
-    alert("through");
-} 
-				if($scope.args.callback_url !== false && pattern.test($scope.args.callback_url)){ //&& isValidURL() && protocol==https
-					//If we can set clientSideLogging var then we could use this: $.log(dataFromServer);
-					alert("HTTPS");
-					try{
-						var responsePromise = $http.post($scope.args.callback_url, dataFromServer, {});
-						responsePromise.success(function(dataFromServer, status, headers, config) {
-							//kill iframe
-						});
-					}catch(e){
-						$.error(e);
-						//kill iframe
-					}
+				if($scope.args.callback_url !== false && pattern.test($scope.args.callback_url)){ 
+					console.log("SENDING TO CALLBACK", dataFromServer.EMPLOYEE);
+					//'Access-Control-Allow-Origin' will need to post to ajax.php and send request server-side
+					//try{
+					var responsePromise = $http.post($scope.args.callback_url, dataFromServer.EMPLOYEE, {});
+					responsePromise.success(function(dataFromServer, status, headers, config) {
+							sendMessage('stop');
+					});
+					responsePromise.error(function(data, status, headers, config) {
+						$.error({'data':data,'status':status,'headers':headers,'config':config});
+					});					
+					setTimeout(function() {
+                    	sendMessage('stop');
+                	}, 1000);
 				}
 			}
 		});
