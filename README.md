@@ -11,7 +11,10 @@ Introduction
 ----------------------------------------------------------------------------------------
 Demo
 ============
+Website Demo:
 [https://www.retrotax-aci.com/plugin-demo/](https://www.retrotax-aci.com/plugin-demo/)
+Configuration Demo:
+[http://plugin.retrotax-aci.com/](http://plugin.retrotax-aci.com/)
 
 
 ----------------------------------------------------------------------------------------
