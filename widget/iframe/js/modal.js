@@ -92,8 +92,21 @@ $(document).ready(function() {
 
 
 
+        if (navigator.userAgent.indexOf('MSIE') != -1)
+         var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
+        else // if no "MSIE" string in userAgent
+         var detectIEregexp = /Trident.*rv[ :]*(\d+\.\d+)/ //test for rv:x.x or rv x.x where Trident string exists
+
+        if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
+         var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+         if (ieversion>=7){
+                document.getElementById('modal').className = 'IE';
+                document.getElementById('header').className = 'IE';
+         }
+        }
+        
 function stupidIEZoomFix() {
-    if (ieVersion) {
+    if (ieversion) {
         $('.loading-region').addClass('zoomedOut').addClass('IE');
         $('#modal').addClass('fullyVisible').addClass('IE');
         setTimeout(function() {
@@ -108,11 +121,16 @@ function stupidIEZoomFix() {
     }
 }
 
+        //userAgent in IE7 WinXP returns: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727)
+        //userAgent in IE11 Win7 returns: Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko
+
+        
+
 /**
 Target IE 10 with JavaScript and CSS property detection.
 # 2013 by Tim Pietrusky
 # timpietrusky.com
-**/
+**
 
 // IE 10 only CSS properties
 var ie10Styles = [
@@ -172,3 +190,4 @@ if (ieVersion)
     document.getElementById('modal').className = 'IE';
     document.getElementById('header').className = 'IE';
 }
+*/

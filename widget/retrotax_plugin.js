@@ -390,7 +390,7 @@ var bindRetroTaxBtn = function() {
 		 }else if (ieversion>=10){
 		  if(_retrotax_options.debug){console.log("You're using IE10 or above");};
 		 }else if (ieversion>=9){
-		  if(_retrotax_options.debug){console.log("You're using IE10 or above");};
+		  if(_retrotax_options.debug){console.log("You're using IE9 or above");};
 		 }else{
 		 	//TODO  make IE9 compatible
 		 	compatible=false;	
