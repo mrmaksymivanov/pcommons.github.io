@@ -653,7 +653,7 @@ var alertsUnemployed = new Array();
 		emp.maindata.middleinitial= typeof user_provided_data.populated_fields.middleinitial!='undefined' ? user_provided_data.populated_fields.middleinitial : '';
 		emp.maindata.city= typeof user_provided_data.populated_fields.city!='undefined' ? user_provided_data.populated_fields.city : '';
 		//emp.maindata.state='IL';
-		emp.maindata.stateid=getStateMatch(user_provided_data.populated_fields.state);
+		emp.maindata.stateid=$scope.getStateMatch(user_provided_data.populated_fields.state);
 		emp.maindata.zip=typeof user_provided_data.populated_fields.zip!='undefined' ? user_provided_data.populated_fields.zip : '';
 		emp.maindata.address=typeof user_provided_data.populated_fields.address!='undefined' ? user_provided_data.populated_fields.address : '';
 		emp.maindata.address2=typeof user_provided_data.populated_fields.address2!='undefined' ? user_provided_data.populated_fields.address2 : '';
@@ -986,7 +986,7 @@ var alertsUnemployed = new Array();
 			    });
 	};
 
-	getStateMatch=function(st){	
+	$scope.getStateMatch=function(st){	
 		if(typeof st !== 'undefined' || st !== ''){
 			for(var i=1;i<$scope.tcid.state.length;i++){
 				var s=st.toUpperCase();
@@ -1289,6 +1289,42 @@ console.log($scope.tcid.employee);
 		scope.sender.postMessage(m, '*');
 	}
 });
+
+(function () {
+'use strict';
+var directiveId = 'ngMatch';
+app.directive(directiveId, ['$parse', function ($parse) {
+ 
+var directive = {
+link: link,
+restrict: 'A',
+require: '?ngModel'
+};
+return directive;
+ 
+function link(scope, elem, attrs, ctrl) {
+// if ngModel is not defined, we don't need to do anything
+if (!ctrl) return;
+if (!attrs[directiveId]) return;
+ 
+var firstPassword = $parse(attrs[directiveId]);
+ 
+var validator = function (value) {
+var temp = firstPassword(scope),
+v = value === temp;
+ctrl.$setValidity('match', v);
+return value;
+}
+ 
+ctrl.$parsers.unshift(validator);
+ctrl.$formatters.push(validator);
+attrs.$observe(directiveId, function () {
+validator(ctrl.$viewValue);
+});
+ 
+}
+}]);
+})();
 /*
 
 app.directive('showErrors', function ($timeout, showErrorsConfig) {

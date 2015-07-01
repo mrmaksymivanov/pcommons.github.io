@@ -51,7 +51,7 @@
 
   <accordion close-others="1">
 
-    <accordion-group heading="Tax Credit Screening: {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1" ng-show="currentemployeeid==0">
+    <accordion-group heading="Basic Info: {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1" ng-show="currentemployeeid==0">
 <!--
         <div class="form-group" show-errors>
       <input type="text" class="form-control" name="firstname" ng-model="tcid.employee.maindata.firstname" required />
@@ -70,8 +70,8 @@
         <input type="hidden"  name="username" id="username" ng-model="tcid.username" value={{tcid.username}}>
         <input type="hidden"  name="clientid" id="clientid" ng-model="tcid.employee.maindata.client.id">
 
-        <tr class="req" ng-if="!hasProvided.companyid && currentUser.ccl.clients[0].companies.length>1">
-        <th class="frmlbl">Company {{currentUser.ccl.clients[0].companies.length}}</th>
+        <tr class="req" ng-if="!args.hide_fields && !hasProvided.companyid && currentUser.ccl.clients[0].companies.length>1">
+        <th class="frmlbl">Company</th>
         <td class="frminput" >
             <select class="input-sm" ng-model="tcid.employee.maindata.company.id" ng-required="true" data-displayname="Company" name="companyid">
                 <option ng-repeat="cmpny in currentUser.ccl.clients[getSelectedClientIndex()].companies" 
@@ -85,8 +85,8 @@
         <input ng-if="hasProvided.companyid || currentUser.ccl.clients[0].companies.length==1" type="hidden"  name="companyid" id="companyid" ng-model="currentUser.company.companyid" value="{{currentUser.company.companyid}}">
 
 
-        <tr class="req" ng-if="!hasProvided.locationid && currentUser.ccl.clients[0].companies[getSelectedCompanyIndex()].length>1">
-        <th class="frmlbl">Location {{currentUser.ccl.clients[0].companies[0].locations.length}}</th>
+        <tr class="req" ng-if="!args.hide_fields && !hasProvided.locationid && currentUser.ccl.clients[0].companies[getSelectedCompanyIndex()].length>1">
+        <th class="frmlbl">Location</th>
         <td class="frminput"  >
             <select class="input-sm" ng-model="tcid.employee.maindata.location.id" ng-required="true" data-displayname="Location" name="locationid">
                 <option ng-repeat="loc in currentUser.ccl.clients[0].companies[getSelectedCompanyIndex()].locations"
@@ -96,39 +96,39 @@
             </select>
         </td>
         </tr>
-        <input ng-if="hasProvided.locationid || currentUser.ccl.clients[0].companies.length==1" type="hidden"  name="locationid" id="locationid" ng-model="currentUser.location.locationid" value="{{currentUser.location.locationid}}">
+        <input ng-if="!args.hide_fields && hasProvided.locationid || currentUser.ccl.clients[0].companies.length==1" type="hidden"  name="locationid" id="locationid" ng-model="currentUser.location.locationid" value="{{currentUser.location.locationid}}">
 
-        <tr class="req" ng-hide="args.populated_fields.firstname!=''">
+        <tr class="req" ng-hide="args.populated_fields.firstname!='' && args.hide_fields">
         <th class="frmlbl">First Name</th>
         <td class="frminput">
         <input class="input-sm" type="text" placeholder="enter first name" ng-model="tcid.employee.maindata.firstname" name="firstname" id="firstname" ng-required="true" data-displayname="First Name" xxng-minlength="2" ng-maxlength="50">
         </td>
         </tr>
-        <tr class="req" ng-hide="args.populated_fields.lastname!=''">
+        <tr class="req" ng-hide="args.populated_fields.lastname!='' && args.hide_fields">
         <th class="frmlbl">Last Name</th>
         <td class="frminput">
         <input class="input-sm" type="text" placeholder="enter last name" ng-model="tcid.employee.maindata.lastname" name="lastname" id="lastname" ng-required="true" data-displayname="Last Name"  ng-minlength="2" ng-maxlength="50"></td>
         </tr>
 
-        <tr class="req" ng-hide="args.populated_fields.address!=''">
+        <tr class="req" ng-hide="args.populated_fields.address!='' && args.hide_fields">
         <th class="frmlbl">Address</th>
         <td  class="frminput">
         <input class="input-sm" type="text" placeholder="enter employee home address" ng-model="tcid.employee.maindata.address" name="address" ng-required="true" ng-minlength="5" ng-maxlength="100" data-displayname="Address" ></td>
         </tr>
-        <tr ng-hide="args.address!='' || args.address2!=''">
+        <tr ng-hide="args.populated_fields.address!='' || args.populated_fields.address2!='' && args.hide_fields">
         <th class="frmlbl"></th>
         <td  class="frminput">
         <input class="input-sm" type="text" placeholder="optional address line" ng-model="tcid.employee.maindata.address2" name="address2"></td>
         </tr>
-        <tr class="req" ng-hide="args.populated_fields.zip != ''">
+        <tr class="req" ng-hide="args.populated_fields.zip != '' && args.hide_fields">
         <th class="frmlbl">Zip</th>
         <td class="frminput"><input class="input-sm" type="text" placeholder="zip code" ng-model="tcid.employee.maindata.zip" name="zip" id="zip" ng-required="true" data-displayname="Zip" ></td>
         </tr>   
-        <tr class="req" ng-hide="args.populated_fields.city != ''">
+        <tr class="req" ng-hide="args.populated_fields.city != '' && args.hide_fields">
         <th class="frmlbl">City</th>
         <td class="frminput"><input class="input-sm" type="text" placeholder="City" ng-model="tcid.employee.maindata.city" name="city" ng-required="true" ng-minlength="2" ng-maxlength="50" data-displayname="City" ></td>
         </tr>
-        <tr class="req" ng-hide="tcid.employee.maindata.stateid > 0">
+        <tr class="req" ng-hide="tcid.employee.maindata.stateid > 0 && args.hide_fields">
         <th class="frmlbl">State</th>
         <td class="frminput">
           <select class="input-sm" ng-model="tcid.employee.maindata.stateid" id="stateid" name="stateid" ng-required="true"  data-displayname="State">
@@ -149,7 +149,7 @@
         <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999"  ng-required="!isATS"  data-displayname="Confirmed Social Security Number">
         </td>
         </tr>        
-        <tr class="req contdob" ng-hide="isValidDate(args.populated_fields.dob)">
+        <tr class="req contdob" ng-hide="isValidDate(args.populated_fields.dob) && args.hide_fields">
         <th class="frmlbl">DOB</th>
         <td class="input-group frminput">
           <p class="input-group">
@@ -810,9 +810,9 @@
             </th>
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.authorization" btn-radio="0">NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.authorization" btn-radio="1" 
                     ng-required="!isATS && tcid.employee.maindata.rehire==0"  data-displayname="Question: Authorization?" name="authorization">YES</label>
-                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.authorization" btn-radio="0">NO</label>
               </div>
             </td>
           </tr>
@@ -824,9 +824,9 @@
             </th>
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.esign" btn-radio="0">NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.esign" btn-radio="1" 
                     data-displayname="Question: E-Sign?" name="esign"  ng-required="!isATS && tcid.employee.maindata.rehire==0" >YES</label>
-                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.esign" btn-radio="0">NO</label>
               </div>
             </td>
           </tr>

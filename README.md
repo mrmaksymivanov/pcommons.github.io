@@ -150,6 +150,7 @@ delay | No | 0 | None | Int | How long to delay before showing the plugin appear
 debug | No | false | None | Boolean | If set to true, we will log to the console
 prepopulate_by | No | false | 'id','name','string' | String | If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.  
 populated_fields | No | see below | see below | Obj | The object populated by the `prepopulate_by` parameter
+hide_fields | NO | false | True, False | Boolean | Whether to hide prepopulated fields from the user or display their populated values. Boolean
 plugin_type | Yes | 'demo' | 'ats','obs','demo'| String | The plugin's mode: Application Tracking System, OnBoarding System, or Demo
 button_text | No | 'Open RetroTax Screening Plugin' | Any | String | What the text displayed to the end-user should say
 button_text_error | No | 'Error - Something went wrong.' | Any | String | Optionally apply error text to the element's innerHTML in case of an error

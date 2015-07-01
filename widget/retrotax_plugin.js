@@ -137,6 +137,9 @@ if (typeof _retrotax_options.logo == "undefined")
 if (typeof _retrotax_options.callback_url == "undefined")
 	_retrotax_options.callback_url = false;
 
+if (typeof _retrotax_options.hide_fields == "undefined")
+	_retrotax_options.hide_fields = false;
+
 
 
 
