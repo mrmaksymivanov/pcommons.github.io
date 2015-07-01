@@ -142,12 +142,13 @@ $(document).ready(function() {
 		e.preventDefault();
 		sendMessage('stop');
 	});
-if ( $.isFunction($.fn.mask) ) {
-	$("#ssn").mask("999-99-9999");
-	$("#ssnconfirmation").mask("999-99-9999");
-	$("#startingwage").mask("?9?9.99");
-	//$("#zip").mask("99999");
-}
+	//material design template not using input mask
+	if ( $.isFunction($.fn.mask) ) {
+		$("#ssn").mask("999-99-9999");
+		$("#ssnconfirmation").mask("999-99-9999");
+		$("#startingwage").mask("?9?9.99");
+		//$("#zip").mask("99999");
+	}
 });
 
 var host = null;  // this will get populated with the domain of the widget install

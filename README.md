@@ -72,7 +72,7 @@ var _retrotax_options = {
 ```
 
 ----------------------------------------------------------------------------------------
-Additional Features
+Tracking Incomplete ATS and OBS Applications
 ============
 The plugin offers an optional method for tracking users that start the application but do not complete it.  Prior to closing the RetroTax plugin, if a user has not completed the form, the form's data (what has been filled in) is logged as an object, in addition to some other variables we track for error handling.  This feature requires some additional configuration so it's not available client-side in the plugin's settings; however, please reach out to us if this is a requirement for your set-up. Below, a sample incomplete form:
 ```javascript
@@ -114,8 +114,123 @@ The plugin offers an optional method for tracking users that start the applicati
     [location] => http://localhost/plugin/widget/iframe/modal.html
 )
 ```
-
 ----------------------------------------------------------------------------------------
+
+
+
+Callback URL
+============
+The plugin provides a callback-url in which we will make a POST request with the TCID response after a user has completed and saved an ATS or OBS application.  The callback URL provided must be https; otherwise, the callback url will be ignored.  You can expect to receive a similar JSON structure as this:
+
+```javascript
+{
+ "rows": [
+  {
+   "subdata": [
+    [
+     {
+      "zone_message": "State-Specific Felon Credit",
+      "zoneid": "FEL"
+     },
+     {
+      "zone_message": "Lives in an Empowerment Zone",
+      "zoneid": "FEZ"
+     }
+    ],
+    [
+     {
+      "message": "Convicted of a felony or released from prison in the last 12 months",
+      "max_credit": 2400,
+      "targetgroup": "C"
+     },
+     {
+      "message": "Designated Community Resident",
+      "max_credit": 2400,
+      "targetgroup": "D"
+     }
+    ]
+   ],
+   "maindata": {
+    "veteran": 0,
+    "dob": "January, 01 1991 00:00:00",
+    "startingwage": 99.99,
+    "scfib": 0,
+    "foodstamps": 0,
+    "doh": "August, 04 2014 00:00:00",
+    "afdc": 0,
+    "hashiringmanager": true,
+    "zip": 78201,
+    "ttw": 0,
+    "unusablereasonid": "LT",
+    "id": 485660,
+    "qualifications": [
+     "FEL - State-Specific Felon Credit",
+     "FEZ - Lives in an Empowerment Zone",
+     "[C] Convicted of a felony or released from prison in the last 12 months",
+     "[D] Designated Community Resident"
+    ],
+    "documents": [
+     {
+      "has8850": false
+     },
+     {
+      "has9061": false
+     }
+    ],
+    "position": "",
+    "lock": 1,
+    "hiring_manager_completed": 1,
+    "dgi": "August, 04 2014 00:00:00",
+    "occupationid": 13,
+    "formqualify": 1,
+    "dsw": "August, 04 2014 00:00:00",
+    "dojo": "August, 04 2014 00:00:00",
+    "geoqualify": 1,
+    "fullname": "John Doe",
+    "deptva": 0,
+    "rehire": 0,
+    "legal_name": [
+     "LangDev"
+    ],
+    "city": "San Antonio",
+    "vocrehabagency": 0,
+    "ruralrenewalcity": 0,
+    "lastname": "Doe",
+    "camisdemeanor": 0,
+    "state": [
+     "TX"
+    ],
+    "cawia": 0,
+    "vocrehab": 0,
+    "received_docs": [
+     "IRS 8850 Form",
+     "Signed Form A or Signed ATV"
+    ],
+    "firstname": "John",
+    "tractid": 48029191002,
+    "unemployed": 0,
+    "felon": 1,
+    "ssi": 0,
+    "cafoster": 0,
+    "address": "1654 N Calaveras",
+    "location_name": [
+     "Carmel Office"
+    ],
+    "cacalworks": 0,
+    "ssn4": 6789,
+    "autoqualify": 1,
+    "userentered": 909,
+    "cafarmer": 0,
+    "cdib": 0,
+    "applicationstatusid": "UN"
+   }
+  }
+ ],
+ "SUCCESS": true
+}
+```
+----------------------------------------------------------------------------------------
+
 Styling
 ============
 The configuration settings allow for minor modifications in order to allow styling similar to your existing website/application.  In doing so, we aim to take RetroTax out of the equation for the end-user as much as possible. If you require additional customization, we will gladly accommodate your custom CSS stylesheets, if your provide them. Please contact us if you'd like to discuss this further.

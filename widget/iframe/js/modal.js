@@ -33,6 +33,18 @@ if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
 }
 */
 
+if (navigator.userAgent.indexOf('MSIE') != -1){
+         var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
+}else{ // if no "MSIE" string in userAgent
+         var detectIEregexp = /Trident.*rv[ :]*(\d+\.\d+)/ //test for rv:x.x or rv x.x where Trident string exists
+}
+if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
+         var ieVersion=new Number(RegExp.$1) // capture x.x portion and store as a number
+         document.getElementById('modal').className = 'IE';
+         document.getElementById('header').className = 'IE';
+}
+
+
 var animations = {
     modal: {
         options: {
@@ -72,11 +84,11 @@ var animations = {
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {
                 $('body').addClass('fast-animation');
-                if(ieversion>=10) setTimeout(stupidIEZoomFix, 10);
+                setTimeout(stupidIEZoomFix, 10);
             }
             else
             {
-                if(ieversion>=10) setTimeout(stupidIEZoomFix, 2250);
+                setTimeout(stupidIEZoomFix, 2250);
             }
 
 
@@ -111,7 +123,7 @@ $(document).ready(function() {
 
 
 function stupidIEZoomFix() {
-    if (ieversion) {
+    if (ieVersion>=7) {
         $('.loading-region').addClass('zoomedOut').addClass('IE');
         $('#modal').addClass('fullyVisible').addClass('IE');
         setTimeout(function() {
@@ -138,6 +150,7 @@ Target IE 10 with JavaScript and CSS property detection.
 **
 */
 // IE 10 only CSS properties
+/*
 var ie10Styles = [
     'msTouchAction',
     'msWrapFlow',
@@ -195,3 +208,4 @@ if (ieVersion)
     document.getElementById('modal').className = 'IE';
     document.getElementById('header').className = 'IE';
 }
+*/
