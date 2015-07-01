@@ -389,6 +389,8 @@ var bindRetroTaxBtn = function() {
 		  if(_retrotax_options.debug){console.log("You're using IE11 or above");};
 		 }else if (ieversion>=10){
 		  if(_retrotax_options.debug){console.log("You're using IE10 or above");};
+		 }else if (ieversion>=9){
+		  if(_retrotax_options.debug){console.log("You're using IE10 or above");};
 		 }else{
 		 	//TODO  make IE9 compatible
 		 	compatible=false;	
@@ -418,8 +420,12 @@ var bindRetroTaxBtn = function() {
 				div.appendChild(newButton);
 			}
 		}else{
+			if(document.getElementById('retrotax_plugin_trigger') != null){
+				var oldlink = document.getElementById('retrotax_plugin_trigger');
+				oldlink.delete();
+			}
 			var newlink = document.createElement('a');
-			newLink.id="retrotax_plugin_trigger";
+			newlink.id="retrotax_plugin_trigger";
 			newlink.setAttribute('target', '_blank');
 			newlink.setAttribute('class', _retrotax_options.button_class);
 			newlink.innerHTML = _retrotax_options.button_text;
