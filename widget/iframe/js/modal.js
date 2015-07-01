@@ -18,6 +18,7 @@
  @licend  The above is the entire license notice
     for the JavaScript code in this page.
 */
+/*
 if (navigator.userAgent.indexOf('MSIE') != -1)
          var detectIEregexp = /MSIE (\d+\.\d+);/ //test for MSIE x.x
 else // if no "MSIE" string in userAgent
@@ -30,7 +31,7 @@ if (detectIEregexp.test(navigator.userAgent)){ //if some form of IE
                 document.getElementById('header').className = 'IE';
     }
 }
-
+*/
 
 var animations = {
     modal: {
@@ -135,7 +136,7 @@ Target IE 10 with JavaScript and CSS property detection.
 # 2013 by Tim Pietrusky
 # timpietrusky.com
 **
-
+*/
 // IE 10 only CSS properties
 var ie10Styles = [
     'msTouchAction',
@@ -194,4 +195,3 @@ if (ieVersion)
     document.getElementById('modal').className = 'IE';
     document.getElementById('header').className = 'IE';
 }
-*/

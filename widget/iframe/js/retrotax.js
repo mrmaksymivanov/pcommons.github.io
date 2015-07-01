@@ -417,7 +417,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	var getRetroURL=function(debug){
 		console.log(window.location.hostname);
         if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+ 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost" || window.location.hostname=='plugin.retrotax-aci.com') ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
     }
 
 	$scope.apiURL=getRetroURL(false);
@@ -577,14 +577,8 @@ var alertsUnemployed = new Array();
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
 				$scope.currentemployeeid=1;
-				//Attempt to send response to clients callback url.
-				var re = /^(http|https|ftp)/
-				var pattern = /^((https):\/\/)/;
-
-				if(!pattern.test($scope.args.callback_url)) {
-					   alert("THROUGH");
-				}  
-				if($scope.args.callback_url !== false && !pattern.test($scope.args.callback_url)){ //&& isValidURL() && protocol==https
+				//Attempt to send response to clients callback url.  
+				if($scope.args.callback_url !== false){ //&& isValidURL() && protocol==https
 					//If we can set clientSideLogging var then we could use this: $.log(dataFromServer);
 					try{
 						var responsePromise = $http.post($scope.args.callback_url, dataFromServer, {});
@@ -1295,42 +1289,6 @@ console.log($scope.tcid.employee);
 		scope.sender.postMessage(m, '*');
 	}
 });
-
-(function () {
-'use strict';
-var directiveId = 'ngMatch';
-app.directive(directiveId, ['$parse', function ($parse) {
- 
-var directive = {
-link: link,
-restrict: 'A',
-require: '?ngModel'
-};
-return directive;
- 
-function link(scope, elem, attrs, ctrl) {
-// if ngModel is not defined, we don't need to do anything
-if (!ctrl) return;
-if (!attrs[directiveId]) return;
- 
-var firstPassword = $parse(attrs[directiveId]);
- 
-var validator = function (value) {
-var temp = firstPassword(scope),
-v = value === temp;
-ctrl.$setValidity('match', v);
-return value;
-}
- 
-ctrl.$parsers.unshift(validator);
-ctrl.$formatters.push(validator);
-attrs.$observe(directiveId, function () {
-validator(ctrl.$viewValue);
-});
- 
-}
-}]);
-})();
 /*
 
 app.directive('showErrors', function ($timeout, showErrorsConfig) {
