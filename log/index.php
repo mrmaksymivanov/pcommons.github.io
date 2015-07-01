@@ -151,11 +151,11 @@ if ( !$logs ) {
 				<div class="container">
 					<h1 class="brand">Client Side Logs</h1>
 					<ul class="nav">
-						<li<?php echo empty($_REQUEST['type']) ? ' class="active"' : ''; ?>><a href="view_logs.php">All</a></li>
+						<li<?php echo empty($_REQUEST['type']) ? ' class="active"' : ''; ?>><a href="/log/index.php">All</a></li>
 
 						<?php foreach ( array('error', 'info', 'log') as $type ) : ?>
 						<?php $active = ( !empty($_REQUEST['type']) && $type == $_REQUEST['type'] ) ? ' active' : ''; ?>
-						<li class="<?php echo $type; ?><?php echo $active ?>"><a href="?type=<?php echo $type ?>"><?php echo ucwords($type) ?></a></li>
+						<li class="<?php if($type=='info'){ echo 'incompletes';}else{ echo $type; } ?><?php echo $active ?>"><a href="?type=<?php echo $type ?>"><?php echo ucwords($type) ?></a></li>
 						<?php endforeach ?>
                   		<li>
 						 <?php if(!isset($authUrl)){ print '<a class="logout" href="?logout">Logout</a>'; }?>
