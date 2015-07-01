@@ -55,14 +55,15 @@
     <script src="demo/bower_components/json-formatter/dist/json-formatter.min.js"></script>
     <script>
         $.material.init();
+         if(window.location.host=='localhost'){var hname='/plugin/widget/iframe';}else{var hname='/widget/iframe';}
         var _retrotax_options={
-            iframe_base_path: '/plugin/widget/iframe',
+            iframe_base_path: hname,
             plugin_type: 'obs', 
             username:'demoapi.hiring.manager',
             apikey:'B47400F36FB8BA0C247798C94D153703',
             companyid:1054,
             locationid:8557,
-            framework:'material-design',
+            framework:'bootstrap',
             delay: 0, 
             debug: true, 
             logo:'',
@@ -150,7 +151,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="number" data-hint="How long to delay the modal" ng-model="_retrotax_options.delay" value="{{_retrotax_options.delay}}">
                     <div class="floating-label">delay</div>
-                    <div class="hint">How long to delay the modal. Integer.</div>
+                    <div class="hint">How long to delay the modal in milliseconds. Integer.</div>
                     <span class="material-input"></span>
                 </div>
         </div>
