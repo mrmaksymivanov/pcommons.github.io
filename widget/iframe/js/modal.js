@@ -70,7 +70,7 @@ var animations = {
             if (this.options.fastAnimation || (!document.skipOptimizely && document.fastForwardAnimation))
             {
                 $('body').addClass('fast-animation');
-                setTimeout(stupidIEZoomFix, 10);
+                setTimeout(stupidIEZoomFix, 1);
             }
             else
             {
@@ -110,13 +110,13 @@ $(document).ready(function() {
 
 function stupidIEZoomFix() {
     if (ieVersion>=7) {
-        $('.loading-region').addClass('zoomedOut').addClass('IE');
+        //$('.loading-region').addClass('zoomedOut').addClass('IE');
         $('#modal').addClass('fullyVisible').addClass('IE');
         setTimeout(function() {
             $('#header').addClass('fullyVisible').addClass('IE');
         }, 150);    
     } else {
-        $('.loading-region').addClass('zoomedOut').addClass('notIE');
+        //$('.loading-region').addClass('zoomedOut').addClass('notIE');
         $('#modal').addClass('fullyVisible').addClass('notIE');
         setTimeout(function() {
             $('#header').addClass('fullyVisible').addClass('notIE');

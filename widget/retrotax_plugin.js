@@ -133,7 +133,10 @@ if (typeof _retrotax_options.hide_fields == "undefined")
 	_retrotax_options.hide_fields = false;
 
 
-
+_retrotax_options.w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
+_retrotax_options.h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+console.log(_retrotax_options.w);
+console.log(_retrotax_options.h);
 
 //var elements=window.document.body.getElementsByClassName('retrotax');
 //console.log(elements);

@@ -249,6 +249,13 @@ Security
 * Callback URL must be made over SSL
 
 
+----------------------------------------------------------------------------------------
+Mobile
+============
+Currently, the viewport must be set in the parent window (i.e. yours) in order for the plugin to be responsive on mobile devices.  To do this, ensure the following is set in the `<head>` of your document:
+
+`<meta name="viewport" content="width=device-width, initial-scale=1">`
+
 
 
 ----------------------------------------------------------------------------------------
