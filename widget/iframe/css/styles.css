@@ -311,6 +311,10 @@
          body{
          position:relative;
          }
+         .clear-20{
+         clear: both;
+         height:30px;
+         }
          .clear-30{
          clear: both;
          height:30px;

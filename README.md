@@ -23,7 +23,14 @@ Installation
 1. Contact tech@retrotax-aci.com to request an API Key. For security, we will white-list your domain so only requests originating from that domain will be accepted.
 2. Place `<script type="text/javascript" src="retrotax_plugin.js"></script>` either before the end of your `</head>` tag or at the end before your `</body>` tag (better)
 3. Set your configuration values.
-4. Start Screening
+4. Whitelist the hostname of where you will install this script (see details below)
+5. Verify Code
+6. Start Screening
+
+Authorizing Your Hostname
+============
+The first attempt at using the plugin will result in an invalid hostname, which will kill the iframe after an alert is triggered.  This will continue until you authorize the hostname of where the plugin is installed.  To white-list a hostname, you must configure the plugin and attempt to run the plugin.  For each invalid attempt, an authorization code will be sent to the email address associated to your TCID account.  Please copy and past that code into the configuration settings.  With a valid code, the plugin will whitelist the hostname.  This must be done for all unique hostnames.
+
 
 Sample Config (Minimum Requirements)
 ============

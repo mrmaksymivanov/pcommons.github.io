@@ -53,7 +53,10 @@
 
   <accordion close-others="1">
 
-    <accordion-group heading="Basic Info: {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}" is-open="1" ng-show="currentemployeeid==0">
+    <accordion-group is-open="1" ng-show="currentemployeeid==0">
+        <accordion-heading>
+            Basic Info: {{tcid.employee.maindata.firstname}} {{tcid.employee.maindata.lastname}}   <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.BasicInfo}"></i>
+        </accordion-heading>
 <!--
         <div class="form-group" show-errors>
       <input type="text" class="form-control" name="firstname" ng-model="tcid.employee.maindata.firstname" required />
@@ -180,6 +183,8 @@
           </tr>
         </tbody>
         </table>
+         <div class="clear-20"></div>
+        <alert ng-repeat="alert in alerts  | filter: { section: 'sectionBasicInfo' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
     </accordion-group>
 
     <accordion-group heading="Questionnaire" ng-show="tcid.employee.maindata.rehire==0">
@@ -347,7 +352,11 @@
         </table>
     </accordion-group>
 
-    <accordion-group heading="Benefits Recipient Details" ng-show="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps) && tcid.employee.maindata.rehire==0 ">
+    <accordion-group ng-show="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps) && tcid.employee.maindata.rehire==0 ">
+        <accordion-heading>
+           Benefits Recipient Details <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.Recipient}"></i>
+        </accordion-heading>
+
         <table class="table table-user-information table-responsive">
           <tbody>
           <tr class="req">
@@ -393,10 +402,16 @@
           </tr> 
           </tbody>
         </table>
+         <div class="clear-20"></div>
+        <alert ng-repeat="alert in alerts  | filter: { section: 'sectionRecipient' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+
     </accordion-group>
 
-    <accordion-group heading="Vocational Rehab Services"  ng-show="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0">
-      
+    <accordion-group  ng-show="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0">
+        <accordion-heading>
+           Vocational Rehab Services <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.Vocrehab}"></i>
+        </accordion-heading>
+
         <table class="table table-user-information table-responsive">
           <tbody>
           <tr class="yesno req">
@@ -404,7 +419,7 @@
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.vocrehabagency" btn-radio="0"
-                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Question: Voc Rehab - Rehab Agency?" name="vocrehabagency"
+                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Vocational Rehabilitation Agency" name="vocrehabagency"
                   >NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.vocrehabagency" btn-radio="1">YES</label>
               </div>
@@ -415,7 +430,7 @@
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.deptva" btn-radio="0"
-                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Question: Voc Rehab - Dept of VA?" name="deptva"
+                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Vocational Rehabilitation from Department of Veteran Affaris" name="deptva"
                   >NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.deptva" btn-radio="1">YES</label>
               </div>
@@ -426,7 +441,7 @@
             <td class="" width="100" align="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.ttw" btn-radio="0"
-                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Question: Voc Rehab - TTW?" name="ttw"
+                  ng-required="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0" data-displayname="Vocational Rehabilitation from TTW" name="ttw"
                   >NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.ttw" btn-radio="1">YES</label>
               </div>
@@ -448,7 +463,7 @@
             <th class="frmlbl">Phone Number</th>
             <td class="frminput">
             <input class="input-sm" type="text" ng-model="tcid.employee.maindata.vocrehabinfo.phone" id="vocrehabinfo_phone" mask="(999) 999-9999 ?x?9?9?9?9?"
-            ng-required="tcid.employee.maindata.ttw==1 || tcid.employee.maindata.deptva==1 || tcid.employee.maindata.vocrehabagency==1" data-displayname="Question: Voc Rehab - Phone Number?" name="vocrehabinfo_phone">
+            ng-required="tcid.employee.maindata.ttw==1 || tcid.employee.maindata.deptva==1 || tcid.employee.maindata.vocrehabagency==1" data-displayname="Vocational Rehabilitation Agency Phone Number" name="vocrehabinfo_phone">
              </td>
           </tr> 
           <tr class="req">
@@ -487,8 +502,14 @@
           </tr> 
           </tbody>
         </table>
+         <div class="clear-20"></div>
+        <alert ng-repeat="alert in alerts  | filter: { section: 'sectionVocrehab' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+
     </accordion-group>
-    <accordion-group heading="Felon Details" ng-show="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0">
+    <accordion-group ng-show="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0">
+        <accordion-heading>
+           Felon Details <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.Felon}"></i>
+        </accordion-heading>
         <table class="table table-user-information table-responsive">
           <tbody>
 
@@ -524,7 +545,7 @@
             <td class="" xalign="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.feloninfo.isfederalconviction" btn-radio="0"
-                  ng-required="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0" data-displayname="Question: Felon - Is Federal Conviction?" name="isfederalconviction"
+                  ng-required="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0" data-displayname="Felon Info - Federal Conviction" name="isfederalconviction"
                   >NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.feloninfo.isfederalconviction" btn-radio="1">YES</label>
               </div>
@@ -535,7 +556,7 @@
             <td class="" xalign="right" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.feloninfo.isstateconviction" btn-radio="0"
-                  ng-required="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0" data-displayname="Question: Felon - Is State Conviction?" name="isstateconviction"
+                  ng-required="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0" data-displayname="Felon Info - If State Conviction" name="isstateconviction"
                   >NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.feloninfo.isstateconviction" btn-radio="1">YES</label>
               </div>
@@ -545,7 +566,7 @@
           <tr class="req" ng-show="tcid.employee.maindata.feloninfo.isstateconviction">
             <th class="frmlbl">State</th>
             <td class="frminput">          
-              <select class="input-sm" ng-model="tcid.employee.maindata.feloninfo.stateid" id="feloninfo-stateid" ng-required="tcid.employee.maindata.feloninfo.isstateconviction && tcid.employee.maindata.felon"  data-displayname="Question: Felon - What State Convicted?" name="feloninfo_stateid">
+              <select class="input-sm" ng-model="tcid.employee.maindata.feloninfo.stateid" id="feloninfo-stateid" ng-required="tcid.employee.maindata.feloninfo.isstateconviction && tcid.employee.maindata.felon"  data-displayname="State of Conviction" name="feloninfo_stateid">
                 <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
               </select>
             </td>
@@ -561,7 +582,7 @@
           <tr class="req">
             <th class="frmlbl">Parole Officer Name</th>
             <td class="frminput">
-            <input class="input-sm" type="text" ng-model="tcid.employee.maindata.feloninfo.paroleofficer" data-displayname="Felon Info - Parole Office">
+            <input class="input-sm" type="text" ng-model="tcid.employee.maindata.feloninfo.paroleofficer" data-displayname="Felon Info - Parole Office Name">
           </td>
           </tr>    
           <tr class="req">
@@ -573,8 +594,15 @@
 
           </tbody>
         </table>
+         <div class="clear-20"></div>
+          <alert ng-repeat="alert in alerts  | filter: { section: 'sectionFelon' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+
     </accordion-group>
-    <accordion-group heading="Military Veteran Details"  ng-show="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-show="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0">
+        <accordion-heading>
+           Military Veteran Details <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.Military}"></i>
+        </accordion-heading>
+
         <table class="table table-user-information table-responsive">
           <tbody>
           <tr class="yesno req">
@@ -582,7 +610,7 @@
             <td class=""  align="left" valign="top">
               <div class="btn-group">
                   <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.veteraninfo.disabled" btn-radio="0"
-                   ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" data-displayname="Question: Veteran - Disabled?" name="disabled">NO</label>
+                   ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" data-displayname="Veteran Info - If Disabled" name="disabled">NO</label>
                   <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.veteraninfo.disabled" btn-radio="1">YES</label>
               </div>
             </td>
@@ -639,8 +667,13 @@
 
           </tbody>
         </table>
+         <div class="clear-20"></div>
+        <alert ng-repeat="alert in alerts  | filter: { section: 'sectionMilitary' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
     </accordion-group>
-    <accordion-group heading="Unemployment Detail" ng-show="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0">
+    <accordion-group ng-show="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0">
+        <accordion-heading>
+           Unemployment Detail <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.Unemployed}"></i>
+        </accordion-heading>
         <table class="table table-user-information table-responsive">
           <tbody>
             <tr class="req">
@@ -699,10 +732,13 @@
 
           </tbody>
         </table>
+        <div class="clear-20"></div>
+        <alert ng-repeat="alert in alerts  | filter: { section: 'sectionUnemployed' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+
     </accordion-group>
     <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
         <accordion-heading>
-            Hiring Manager Information {{emp.maindata.hiring_manager_completed}}
+           Hiring Manager Info <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign':icon.HM}"></i>
         </accordion-heading>
         <table class="table table-user-information table-responsive">
             <tbody>
@@ -794,13 +830,15 @@
 
             </tbody>    
         </table>
-                  
+         <div class="clear-20"></div>
+        <alert ng-repeat="alert in alerts  | filter: { section: 'sectionHM' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+
     </accordion-group>
 
 
     <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
         <accordion-heading>
-           Authorization Confirmation <i class="pull-right glyphicon" ></i>
+           Authorization Confirmation
         </accordion-heading>
         <table class="table table-user-information table-responsive">
             <tbody>
@@ -838,18 +876,18 @@
         </table>
         
     </accordion-group>  
-
+<!--
       <accordion-group ng-show="alerts.length>0" id="errorAcc">
             <accordion-heading>
-            See Form Errors   <i class="pull-right glyphicon glyphicon-exclamation-sign"></i>
+            See Form Errors   <i ng-class="{'pull-right glyphicon glyphicon-exclamation-sign' alerts.length>0}"></i>
             </accordion-heading>
-        <alert ng-repeat="alert in alerts" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
- 
+        <alert ng-repeat="alert in alerts  | filter: { section: 'other' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
+ -->
 <!--
         <center><h1>Success!</h1></center>
         <p>Thank you for completing this form.</p>
--->
        </accordion-group>
+-->
 </accordion>
 
   <button id="btnSave" ng-show="currentemployeeid==0" type="{{!isDisabled ? 'submit' : 'button'}}" class="btn btn-primary btn-block saveBtn" ng-disabled="isDisabled">Submit</button>

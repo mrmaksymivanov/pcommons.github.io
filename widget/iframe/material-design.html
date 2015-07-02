@@ -2,6 +2,8 @@
 <head>
     <meta charset="utf-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
 	<link rel="stylesheet" type="text/css" href="css/min/modal.min.css">
   <!--
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -17,24 +19,6 @@
     <link href="css/material-fullpalette.min.css" rel="stylesheet">
     <link href="css/ripples.min.css" rel="stylesheet">
     <link href="css/material-design-custom-styles.css" rel="stylesheet"> 
-                <style>
-                  #input .inputs {
-                    width: 80%;
-                  }
-                  #input .form-control-wrapper {
-                    margin: 30px 0;
-                  }
-                  .form-control-wrapper{
-                    padding-top:10px;
-                    padding-bottom:10px;
-                    margin-top:10px;
-                    margin-bottom:10px;
-                  }
-                           .clear-30{
-         clear: both;
-         height:30px;
-         }
-                </style>
 
 
     <script src="js/min/jquery-1.11.1.min.js"></script>
@@ -436,51 +420,62 @@
     </accordion-group>
 
     <accordion-group heading="Benefits Recipient Details" ng-show="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps) && tcid.employee.maindata.rehire==0 ">
-        <table class="table table-user-information table-responsive">
-          <tbody>
-          <tr class="req">
-            <th class="frmlbl">Recipient Name</th>
 
-            <td class="frminput">
-            <input class="input-sm" type="text" placeholder="Benefit recipient name" 
+
+<div class="row">
+             <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Benefit recipient name" 
             ng-model="tcid.employee.maindata.recipient.recipient_name" 
             ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
             data-displayname="Benefits Recipient Name" name="recipient_name">
-          </td>
-          </tr>    
-          <tr class="req">
-            <th class="frmlbl">Relationship</th>
-            <td class="frminput">
-            <input class="input-sm" type="text" placeholder="Relationship to recipient" ng-model="tcid.employee.maindata.recipient.recipient_relationship" ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
+                    <div class="floating-label">Recipient Name</div>
+                    <div class="hint invalid" ng-if="frmEmployee.recipient_name.$error.required">Recipient Name is required</div>
+                    <span class="material-input"></span>
+                </div>
+            </div>   
+             <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" placeholder="Relationship to recipient" ng-model="tcid.employee.maindata.recipient.recipient_relationship" ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
             data-displayname="Benefits Recipient Relationship" name="recipient_relationship">
-          </td>
-          </tr>
-          <tr class="req">
-            <th class="frmlbl">City</th>
-            <td class="frminput">
-            <input class="input-sm" type="text" placeholder="City where benefits received" ng-model="tcid.employee.maindata.recipient.recipient_cityreceived"
+                    <div class="floating-label">Relationship</div>
+                    <div class="hint invalid" ng-if="frmEmployee.recipient_relationship.$error.required">Relationship is required</div>
+                    <span class="material-input"></span>
+                </div>
+            </div>   
+</div>
+<div class="row">
+         <div class="col-sm-4">
+        <div class="form-control-wrapper">
+                <input class="form-control" type="text" placeholder="City where benefits received" ng-model="tcid.employee.maindata.recipient.recipient_cityreceived"
             ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)"
             data-displayname="Benefits Recipient City" name="recipient_cityreceived">
-          </td>
-          </tr>
-          <tr class="req">
-            <th class="frmlbl">State</th>
-            <td class="frminput">          
-              <select class="input-sm" ng-model="tcid.employee.maindata.recipient.recipient_received_stateid" id="recipient_received_stateid" ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)" data-displayname="Benefits Recipient State" name="recipient_received_stateid">
-                <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
-              </select>
-            </td>
-          </tr> 
-          <tr class="req">
-            <th class="frmlbl">County</th>
-            <td class="frminput">
-              <select class="input-sm" id="recipient_received_county" ng-model="tcid.employee.maindata.recipient.recipient_received_county" data-displayname="Benefits Recipient County" name="recipient_received_county">
+                    <div class="hint invalid" ng-if="frmEmployee.recipient_cityreceived.$error.required">Recipient City is required</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+         <div class="col-sm-4">
+                <div class="form-control-wrapper">
+             <select class="form-control" ng-model="tcid.employee.maindata.recipient.recipient_received_stateid" id="recipient_received_stateid" ng-required="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps)" data-displayname="Benefits Recipient State" name="recipient_received_stateid">
+            <option value="">Select State</option><option value="1">ALASKA</option><option value="2">ALABAMA</option><option value="3">ARKANSAS</option><option value="4">ARIZONA</option><option value="5">CALIFORNIA</option><option value="6">COLORADO</option><option value="7">CONNECTICUT</option><option value="8">DISTRICT OF COLUMBIA</option><option value="9">DELAWARE</option><option value="10">FLORIDA</option><option value="11">GEORGIA</option><option value="12">GUAM</option><option value="13">HAWAII</option><option value="14">IOWA</option><option value="15">IDAHO</option><option value="16">ILLINOIS</option><option value="17">INDIANA</option><option value="18">KANSAS</option><option value="19">KENTUCKY</option><option value="20">LOUISIANA</option><option value="21">MASSACHUSETTS</option><option value="22">MARYLAND</option><option value="23">MAINE</option><option value="24">MICHIGAN</option><option value="25">MINNESOTA</option><option value="26">MISSOURI</option><option value="27">MISSISSIPPI</option><option value="28">MONTANA</option><option value="29">NORTH CAROLINA</option><option value="30">NORTH DAKOTA</option><option value="31">NEBRASKA</option><option value="32">NEW HAMPSHIRE</option><option value="33">NEW JERSEY</option><option value="34">NEW MEXICO</option><option value="35">NEVADA</option><option value="36">NEW YORK</option><option value="37">OHIO</option><option value="38">OKLAHOMA</option><option value="39">OREGON</option><option value="40">PENNSYLVANIA</option><option value="41">PUERTO RICO</option><option value="42">PALAU</option><option value="43">RHODE ISLAND</option><option value="44">SOUTH CAROLINA</option><option value="45">SOUTH DAKOTA</option><option value="46">TENNESSEE</option><option value="47">TEXAS</option><option value="48">UTAH</option><option value="49">VIRGINIA</option><option value="50">VERMONT</option><option value="51">WASHINGTON</option><option value="52">WISCONSIN</option><option value="53">WEST VIRGINIA</option><option value="54">WYOMING</option><option value="55">VIRGIN ISLANDS</option>
+          </select>
+                  <div class="floating-label">State</div>
+                    <div class="hint invalid" ng-if="frmEmployee.recipient_received_stateid.$error.required">Benefits Recipient State</div>
+                    <span class="material-input"></span>
+          </div>
+
+</div> 
+         <div class="col-sm-4">
+                <div class="form-control-wrapper">
+<select class="form-control" id="recipient_received_county" ng-model="tcid.employee.maindata.recipient.recipient_received_county" data-displayname="Benefits Recipient County" name="recipient_received_county">
                 <option ng-repeat='cnty in getCounties(tcid.employee.maindata.recipient.recipient_received_stateid)' value="{{cnty.ID}}">{{cnty.COUNTY}}</option>
               </select>
-            </td>
-          </tr> 
-          </tbody>
-        </table>
+                    <div class="floating-label">County</div>
+                    <div class="hint invalid" ng-if="frmEmployee.recipient_received_county.$error.required">County is required</div>         
+                    <span class="material-input"></span>
+                </div>
+        </div>   
+</div>
     </accordion-group>
 
     <accordion-group heading="Vocational Rehab Services"  ng-show="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0">

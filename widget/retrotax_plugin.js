@@ -132,6 +132,9 @@ if (typeof _retrotax_options.callback_url == "undefined")
 if (typeof _retrotax_options.hide_fields == "undefined")
 	_retrotax_options.hide_fields = false;
 
+if (typeof _retrotax_options.whitelist_code == "undefined")
+	_retrotax_options.whitelist_code = false;
+
 
 _retrotax_options.w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 _retrotax_options.h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)

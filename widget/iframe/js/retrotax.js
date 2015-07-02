@@ -533,39 +533,154 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		$scope.alerts.splice(index, 1);
 	};
 
+	var sectionBasicInfo=['companyid','locationid','firstname','lastname','middleinitial','address','state','city','zip','dob','ssn','ssnconfirmation'];
+	var sectionVocrehab=['vocrehagency','vocrehabinfo_phone','agency','deptva'];
+	var sectionMilitary=['disabled','servicestart','servicestop'];
+	var sectionUnemployed=['unemployedstart','unemployedstop','compensatedstart','compensatedstop'];
+	var sectionFelon=['dateconviction','feloninfo_stateid','isstateconviction','isfederalconviction'];
+	var sectionRecipient=['recipient_name','recipient_relationship','recipient_cityreceived','recipient_received_stateid'];
+	var sectionHM=['hmdgi','hmdogo','hmdsw','startingwage','hmdoh','occupationid'];
+
 	$scope.save = function(isValid) {
 		console.log("--> Submitting form.. isValid?? ");
 		console.log(isValid);
-/*
-var alertsBasic = new Array('firstname','lastname','city','stateid','dob','city','ssn','ssnconfirmation');
-var alertsMilitary = new Array();
-var alertsFelon = new Array();
-var alertsUnemployed = new Array();
-*/
+
+
+$scope.icon={
+	BasicInfo:false,
+	Recipient:false,
+	Vocrehab:false,
+	Military:false,
+	Unemployed:false,
+	Felon:false,
+	HM:false
+}
  $scope.$broadcast('show-errors-check-validity');
    
 		if (!isValid) {
+			$scope.icon={
+				BasicInfo:false,
+				Recipient:false,
+				Vocrehab:false,
+				Military:false,
+				Unemployed:false,
+				Felon:false,
+				HM:false
+			}		
 			$scope.alerts=[];
 			var error = $scope.frmEmployee.$error;
 			
 			angular.forEach(error.required, function(field){
 				console.log('field is required: ',field.$name);
-				$scope.alerts.push({type:'danger',msg: $( "[name='"+field.$name+"']" ).data('displayname')+' is required'});
+				if($.inArray(field.$name, sectionBasicInfo) > -1){
+					var s='sectionBasicInfo';
+					$scope.icon.BasicInfo=true;
+				}else if($.inArray(field.$name, sectionRecipient) > -1){
+					var s='sectionRecipient';
+					$scope.icon.Recipient=true;
+				}else if($.inArray(field.$name, sectionVocrehab) > -1){
+					var s='sectionVocrehab';
+					$scope.icon.Vocrehab=true;
+				}else if($.inArray(field.$name, sectionMilitary) > -1){
+					var s='sectionMilitary';
+					$scope.icon.Military=true;
+				}else if($.inArray(field.$name, sectionUnemployed) > -1){
+					var s='sectionUnemployed';
+					$scope.icon.Unemployed=true;
+				}else if($.inArray(field.$name, sectionFelon) > -1){
+					var s='sectionFelon';
+					$scope.icon.Felon=true;
+				}else if($.inArray(field.$name, sectionHM) > -1){
+					var s='sectionHM';
+					$scope.icon.HM=true;
+				}else{
+					var s='other';
+				}
+				$scope.alerts.push({type:'danger',msg: $( "[name='"+field.$name+"']" ).data('displayname')+' is required',section:s});
+
 			});
 			angular.forEach(error.valid, function(field){
-				console.log('valid - field.....',field);
-				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is valid'});
+				if($.inArray(field.$name, sectionBasicInfo) > -1){
+					var s='sectionBasicInfo';
+					$scope.icon.BasicInfo=true;
+				}else if($.inArray(field.$name, sectionRecipient) > -1){
+					var s='sectionRecipient';
+					$scope.icon.Recipient=true;
+				}else if($.inArray(field.$name, sectionVocrehab) > -1){
+					var s='sectionVocrehab';
+					$scope.icon.Vocrehab=true;
+				}else if($.inArray(field.$name, sectionMilitary) > -1){
+					var s='sectionMilitary';
+					$scope.icon.Military=true;
+				}else if($.inArray(field.$name, sectionUnemployed) > -1){
+					var s='sectionUnemployed';
+					$scope.icon.Unemployed=true;
+				}else if($.inArray(field.$name, sectionFelon) > -1){
+					var s='sectionFelon';
+					$scope.icon.Felon=true;
+				}else if($.inArray(field.$name, sectionHM) > -1){
+					var s='sectionHM';
+					$scope.icon.HM=true;
+				}else{
+					var s='other';
+				}
+				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is valid',section:s});
 			});
 			angular.forEach(error.invalid, function(field){
-				console.log('invalid - field.....',field);
-				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is invalid'});
+				if($.inArray(field.$name, sectionBasicInfo) > -1){
+					var s='sectionBasicInfo';
+					$scope.icon.BasicInfo=true;
+				}else if($.inArray(field.$name, sectionRecipient) > -1){
+					var s='sectionRecipient';
+					$scope.icon.Recipient=true;
+				}else if($.inArray(field.$name, sectionVocrehab) > -1){
+					var s='sectionVocrehab';
+					$scope.icon.Vocrehab=true;
+				}else if($.inArray(field.$name, sectionMilitary) > -1){
+					var s='sectionMilitary';
+					$scope.icon.Military=true;
+				}else if($.inArray(field.$name, sectionUnemployed) > -1){
+					var s='sectionUnemployed';
+					$scope.icon.Unemployed=true;
+				}else if($.inArray(field.$name, sectionFelon) > -1){
+					var s='sectionFelon';
+					$scope.icon.Felon=true;
+				}else if($.inArray(field.$name, sectionHM) > -1){
+					var s='sectionHM';
+					$scope.icon.HM=true;
+				}else{
+					var s='other';
+				}				
+				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is invalid',section:s});
 			});
 			angular.forEach(error.minlength, function(field){
-				console.log('minlength - field.....',field);
-				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is too short'});
+				if($.inArray(field.$name, sectionBasicInfo) > -1){
+					var s='sectionBasicInfo';
+					$scope.icon.BasicInfo=true;
+				}else if($.inArray(field.$name, sectionRecipient) > -1){
+					var s='sectionRecipient';
+					$scope.icon.Recipient=true;
+				}else if($.inArray(field.$name, sectionVocrehab) > -1){
+					var s='sectionVocrehab';
+					$scope.icon.Vocrehab=true;
+				}else if($.inArray(field.$name, sectionMilitary) > -1){
+					var s='sectionMilitary';
+					$scope.icon.Military=true;
+				}else if($.inArray(field.$name, sectionUnemployed) > -1){
+					var s='sectionUnemployed';
+					$scope.icon.Unemployed=true;
+				}else if($.inArray(field.$name, sectionFelon) > -1){
+					var s='sectionFelon';
+					$scope.icon.Felon=true;
+				}else if($.inArray(field.$name, sectionHM) > -1){
+					var s='sectionHM';
+					$scope.icon.HM=true;
+				}else{
+					var s='other';
+				}							
+				$scope.alerts.push({type:'danger',msg: $("[name='"+field.$name+"']").data('displayname')+' is too short',section:s});
 			});
 			var errorAccordian=window.document.getElementById('errorAcc');
-
 			console.log(errorAccordian);
 			return false;
 		}
@@ -961,13 +1076,17 @@ var alertsUnemployed = new Array();
 
     $scope.getCurrentUser=function(tcid){
     		//TODO create method in api which returns the same data as device2fa but accepts a client-side apikey which we check against (this apikey should only be able to work with this method and the save method)
-    		var checkapi2fa='';
+    		var checkapi2fa= (typeof $scope.tcid.whitelist_code == 'undefined' || !$scope.tcid.whitelist_code) ? '' : $scope.tcid.whitelist_code;
     		return $http.get($scope.apiURL+'/api/v1/users/authenticate_plugin?cclhash=123123&plugin=true&apikey='+$scope.tcid.api_key+'&u='+$scope.tcid.username+'&api2fa='+checkapi2fa+'&device='+window.location.hostname)
     		//$scope.tcid.checkapi2fa='';
     		//$scope.tcid.device='temp_device22f';
 			//$scope.tcid.url2fa = $scope.apiURL+'/api/v1/users/device2fa?cclhash=123123&pw=' + $scope.tcid.pw + '&u=' + $scope.tcid.u +'&device='+$scope.tcid.device+'&api2fa='+$scope.tcid.checkapi2fa;
 	
 			.then(function(response) {
+					if(typeof response.data.message != 'undefined' && response.data.message=='E-mailed authorization code'){
+						alert('Hostname not whitelisted - an authorization code has been sent to your email');
+						sendMessage('stop');
+					}
 					console.log(response);
 					if (angular.isDefined($scope.tcid.api_key) && $scope.tcid.api_key!='' && $scope.tcid.api_key.length==32 && $scope.tcid.u!='') {
 						tcid.didlogin=true;
@@ -1257,6 +1376,7 @@ Possible reasons for breakage:
 
 			$scope.tcid.api_key=args.apikey;
 			$scope.tcid.username=args.username;
+			$scope.tcid.whitelist_code=args.whitelist_code;
 			
 			console.log(args);
 			$scope.args=args;
