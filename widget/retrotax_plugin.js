@@ -32,15 +32,8 @@
 	        }
 	    }
 	}
-/* Altering these defaults may break retrotax-aci.com/plugin-demo */
-if (typeof window._retrotax_options != "undefined"){
-	var _retrotax_options=window._retrotax_options;
-}
 
 
-// Default URL for animation iframe. This gets overlay'ed over your page.
-var rt_iframeContentWindow;
-var iframeCopy={};
 
 /**
 --------------------------------------------------------------------------------
@@ -51,13 +44,13 @@ these by pre-defining an object named _retrotax_options and setting the appropri
 properties as desired.
 --------------------------------------------------------------------------------
 */
+if (typeof window._retrotax_options != "undefined")
+	var _retrotax_options=window._retrotax_options;
 
 // The _retrotax_options object is created if it isn't already defined by you
 if (typeof _retrotax_options == "undefined")
 	_retrotax_options = {};
 
-
-// The path to the iframe that gets injected over your page
 if (typeof _retrotax_options.iframe_base_path == "undefined")
 	_retrotax_options.iframe_base_path = 'http://plugin-paulcommons.rhcloud.com/widget/iframe';
 
@@ -69,7 +62,6 @@ if (typeof _retrotax_options.apikey == "undefined")
 
 if (typeof _retrotax_options.companyid == "undefined")
 	_retrotax_options.companyid = false;
-
 
 if (typeof _retrotax_options.locationid == "undefined")
 	_retrotax_options.locationid = false;
@@ -436,7 +428,6 @@ var bindRetroTaxBtn = function() {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-	console.log("DOM CONTENT LOADED");
   	bindRetroTaxBtn();
 });
 

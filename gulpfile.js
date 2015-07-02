@@ -125,7 +125,7 @@ gulp.task('todo', function() {
  
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'images','html','todo']);
+gulp.task('default', ['lint', 'scripts', 'images','html','fonts','todo']);
 
 
 

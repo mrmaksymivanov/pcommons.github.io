@@ -155,7 +155,7 @@ if ( !$logs ) {
 
 						<?php foreach ( array('error', 'info', 'log') as $type ) : ?>
 						<?php $active = ( !empty($_REQUEST['type']) && $type == $_REQUEST['type'] ) ? ' active' : ''; ?>
-						<li class="<?php echo $type ?><?php echo $active ?>"><a href="?type=<?php echo $type ?>"><?php if($type=='info'){ echo 'incompletes';}else{ echo ucwords($type); } ?> </a></li>
+						<li class="<?php echo $type ?><?php echo $active ?>"><a href="?type=<?php echo $type ?>"><?php if($type=='info'){ echo 'Incompletes';}else{ echo ucwords($type); } ?> </a></li>
 						<?php endforeach ?>
                   		<li>
 						 <?php if(!isset($authUrl)){ print '<a class="logout" href="?logout">Logout</a>'; }?>
