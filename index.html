@@ -61,14 +61,15 @@
             iframe_base_path: hname,
             plugin_type: 'obs', 
             username:'demoapi.hiring.manager',
-            apikey:'',
+            apikey:'B47400F36FB8BA0C247798C94D153703',
             companyid:1054,
             locationid:8557,
-            framework:'bootstrap',
+            framework:'material-design',
             delay: 0, 
             debug: true, 
             logo:'',
             callback_url:'',
+            whitelist_code:'',
             button_class:'btn btn-primary',
             button_text:'Open RetroTax Screening',
             button_class_error:'btn btn-danger',
@@ -227,6 +228,14 @@
                     ng-model="_retrotax_options.callback_url" value="{{_retrotax_options.callback_url}}">
                     <div class="floating-label">callback_url</div>
                     <div class="hint">Provide a callback URL and we will return a JSON response of each ATS or OBS submission</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="For white-listing a hostname" ng-model="_retrotax_options.whitelist_code" value="{{_retrotax_options.whitelist_code}}">
+                    <div class="floating-label">Authorization Code</div>
+                    <div class="hint">For white-listing a hostname</div>
                     <span class="material-input"></span>
                 </div>
         </div>

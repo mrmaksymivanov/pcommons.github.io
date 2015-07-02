@@ -28,11 +28,11 @@
 
 /* Checked */
 .btn-success.active:not(.btn-link):not(.btn-flat) {
-background-color: #1abc9c;
+background-color: #007DC3;
 color:#fff;
 }
 .btn-success:hover:not(.btn-link):not(.btn-flat) {
-background-color: #1abc9c;
+background-color: #007DC3;
 color:#fff;
 }
 /* Not Checked */
@@ -60,8 +60,9 @@ color: #000;
 }
 
 .alert-danger {
-background-color: #c0392b;
+background-color: #D54E40;
 }
+/*#c0392b*/
 
 .panel-default>.panel-heading {
 background-color:#fff;
@@ -98,17 +99,17 @@ ul.dropdown-menu{
 	position:fixed;left:20% !important;
 	margin-top:5%;
 }
-
+/*
 .invalid,.ng-invalid{
 	color:#c0392b;
 }
+*/
 
 
-/*
 .form-control-wrapper .floating-label .invalid{
 	color:#c0392b;
 }
-*/
+
 /*
 .form-control-wrapper .floating-label {
 color: #007DC3;
@@ -126,4 +127,12 @@ color: #000;
 	color:black;
 	font-weight: 400;
 	font-size:15px;
+}
+.table > tbody > tr:first-child >th, .table > tbody > tr:first-child > td{
+	border-top: none !important;
+}
+th{
+color: black;
+font-weight: 400;
+font-size: 15px;
 }
