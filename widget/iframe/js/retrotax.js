@@ -546,15 +546,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		console.log(isValid);
 
 
-$scope.icon={
-	BasicInfo:false,
-	Recipient:false,
-	Vocrehab:false,
-	Military:false,
-	Unemployed:false,
-	Felon:false,
-	HM:false
-}
  $scope.$broadcast('show-errors-check-validity');
    
 		if (!isValid) {

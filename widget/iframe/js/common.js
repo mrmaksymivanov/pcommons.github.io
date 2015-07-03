@@ -147,6 +147,8 @@ $(document).ready(function() {
 		$("#ssn").mask("999-99-9999");
 		$("#ssnconfirmation").mask("999-99-9999");
 		$("#startingwage").mask("?9?9.99");
+		$("#vocrehabinfo_phone").mask("(999) 999-9999? x99999");
+		$("#feloninfo_paroleofficerphone").mask("(999) 999-9999? x99999");
 		//$("#zip").mask("99999");
 	}
 });
