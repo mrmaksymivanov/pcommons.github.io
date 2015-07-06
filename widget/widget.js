@@ -35,7 +35,7 @@
 if (typeof window._retrotax_options == "undefined"){
 	//console.log(window.location.href);
 
-alert();
+//alert();
 	var _retrotax_options = {
 
             // This is used to override the widget iframe URL with something else

@@ -268,7 +268,6 @@ var _retrotax_util = {
 	destroyIframe: function() {
 		var iframe = document.getElementById('_bftn_iframe');
 		iframe.setAttribute('class', 'hidden');
-		alert("Hidden...about to remove");
 		iframe.remove();//original code is to rm it. Going to try and hide it
 
 		//iframe.style.display='hidden';
