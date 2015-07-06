@@ -187,7 +187,7 @@
 
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="Optionally apply a css class to the retrotax element" ng-model="_retrotax_options.button_class" value="{{_retrotax_options.button_class}}">
+                    <input class="form-control" type="text" name="button_class" data-hint="Optionally apply a css class to the retrotax element" ng-model="_retrotax_options.button_class" value="{{_retrotax_options.button_class}}">
                     <div class="floating-label">button_class</div>
                     <div class="hint">This depends on your CSS - Demo is using Bootstrap so only those classes will be applied.</div>
                     <span class="material-input"></span>
@@ -196,7 +196,7 @@
 
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="Optionally apply error text to the element's innerHTML in case of an error" 
+                    <input class="form-control" type="text" name="button_text_error" data-hint="Optionally apply error text to the element's innerHTML in case of an error" 
                     ng-model="_retrotax_options.button_text_error" value="{{_retrotax_options.button_text_error}}">
                     <div class="floating-label">button_text_error</div>
                     <div class="hint">Optionally apply error text to the element's innerHTML in case of an error</div>
@@ -206,7 +206,7 @@
 
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="Optionally apply a css class to the retrotax element in case of an error." ng-model="_retrotax_options.button_class_error" value="{{_retrotax_options.button_class_error}}">
+                    <input class="form-control" type="text" name="button_class_error" data-hint="Optionally apply a css class to the retrotax element in case of an error." ng-model="_retrotax_options.button_class_error" value="{{_retrotax_options.button_class_error}}">
                     <div class="floating-label">button_class_error</div>
                     <div class="hint">This depends on your CSS - Demo is using Bootstrap so only those classes will be applied.</div>
                     <span class="material-input"></span>
@@ -215,7 +215,7 @@
 
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="url" data-hint="Provide a valid URL to replace the default RetroTax Logo" 
+                    <input class="form-control" type="url" name="logo" data-hint="Provide a valid URL to replace the default RetroTax Logo" 
                     ng-model="_retrotax_options.logo" value="{{_retrotax_options.logo}}">
                     <div class="floating-label">logo</div>
                     <div class="hint">Provide a valid URL to replace the default RetroTax Logo</div>
@@ -224,7 +224,7 @@
         </div>
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="url" data-hint="Provide a callback URL and we will return a JSON response of each ATS or OBS submission" 
+                    <input class="form-control" type="url" name="callback_url" data-hint="Provide a callback URL and we will return a JSON response of each ATS or OBS submission" 
                     ng-model="_retrotax_options.callback_url" value="{{_retrotax_options.callback_url}}">
                     <div class="floating-label">callback_url</div>
                     <div class="hint">Provide a callback URL and we will return a JSON response of each ATS or OBS submission</div>
@@ -249,7 +249,7 @@
         </div>
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="Whether to hide prepopulated fields from the user or display their populated values. Boolean." ng-model="_retrotax_options.hide_fields" value="{{_retrotax_options.hide_fields}}">
+                    <input class="form-control" type="text" name="hide_fields" data-hint="Whether to hide prepopulated fields from the user or display their populated values. Boolean." ng-model="_retrotax_options.hide_fields" value="{{_retrotax_options.hide_fields}}">
                     <div class="floating-label">hide_fields</div>
                     <div class="hint">Whether to hide prepopulated fields from the user or display their populated values. Boolean.</div>
                     <span class="material-input"></span>
@@ -257,7 +257,7 @@
         </div>
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="If set to id or name the plugin will auto-populate the values in those fields to match those to our field names." ng-model="_retrotax_options.prepopulate_by" value="{{_retrotax_options.prepopulate_by}}">
+                    <input class="form-control" type="text" name="prepopulate_by" data-hint="If set to id or name the plugin will auto-populate the values in those fields to match those to our field names." ng-model="_retrotax_options.prepopulate_by" value="{{_retrotax_options.prepopulate_by}}">
                     <div class="floating-label">prepopulate_by</div>
                     <div class="hint">If set to id or name the plugin will auto-populate the values in those fields to match those to our field names.</div>
                     <span class="material-input"></span>
@@ -266,7 +266,7 @@
         <hr>
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.firstname" value="{{_retrotax_options.populated_fields.firstname}}">
+                    <input class="form-control" type="text" data-hint="" name="populated_fields_firstname" ng-model="_retrotax_options.populated_fields.firstname" value="{{_retrotax_options.populated_fields.firstname}}">
                     <div class="floating-label">populated_fields.firstname</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -274,7 +274,7 @@
         </div>   
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.lastname" value="{{_retrotax_options.populated_fields.lastname}}">
+                    <input class="form-control" type="text" data-hint="" name="populated_fields_lastname" ng-model="_retrotax_options.populated_fields.lastname" value="{{_retrotax_options.populated_fields.lastname}}">
                     <div class="floating-label">populated_fields.lastname</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -282,7 +282,7 @@
         </div> 
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.middleinitial" value="{{_retrotax_options.populated_fields.middleinitial}}">
+                    <input class="form-control" type="text" data-hint="" name="populated_fields_middleinitial" ng-model="_retrotax_options.populated_fields.middleinitial" value="{{_retrotax_options.populated_fields.middleinitial}}">
                     <div class="floating-label">populated_fields.middleinitial</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -290,7 +290,7 @@
         </div>    
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.address" value="{{_retrotax_options.populated_fields.address}}">
+                    <input class="form-control" type="text" data-hint="" name="populated_fields_address" ng-model="_retrotax_options.populated_fields.address" value="{{_retrotax_options.populated_fields.address}}">
                     <div class="floating-label">populated_fields.address</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -298,7 +298,7 @@
         </div> 
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.address2" value="{{_retrotax_options.populated_fields.address2}}">
+                    <input class="form-control" type="text" data-hint="" name="populated_fields_address2" ng-model="_retrotax_options.populated_fields.address2" value="{{_retrotax_options.populated_fields.address2}}">
                     <div class="floating-label">populated_fields.address2</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -306,7 +306,7 @@
         </div>  
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.city" value="{{_retrotax_options.populated_fields.city}}">
+                    <input class="form-control" type="text" data-hint="" name="populated_fields_city" ng-model="_retrotax_options.populated_fields.city" value="{{_retrotax_options.populated_fields.city}}">
                     <div class="floating-label">populated_fields.city</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -314,7 +314,7 @@
         </div>  
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="" ng-model="_retrotax_options.populated_fields.state" value="{{_retrotax_options.populated_fields.state}}">
+                    <input class="form-control" type="text" name="populated_fields_state" data-hint="" ng-model="_retrotax_options.populated_fields.state" value="{{_retrotax_options.populated_fields.state}}">
                     <div class="floating-label">populated_fields.state</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -323,7 +323,7 @@
 
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="text" data-hint="Date of Birth" ng-model="_retrotax_options.populated_fields.dob" value="{{_retrotax_options.populated_fields.dob}}">
+                    <input class="form-control" name="populated_fields_dob" type="text" data-hint="Date of Birth" ng-model="_retrotax_options.populated_fields.dob" value="{{_retrotax_options.populated_fields.dob}}">
                     <div class="floating-label">populated_fields.dob</div>
                     <div class="hint">Date of Birth</div>
                     <span class="material-input"></span>
