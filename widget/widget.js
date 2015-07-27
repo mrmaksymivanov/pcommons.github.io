@@ -20,7 +20,6 @@
 */
 
 (function(){ // :)
-	console.log(window._retrotax_options)
 	Element.prototype.remove = function() {
 	    this.parentElement.removeChild(this);
 	}
