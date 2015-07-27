@@ -1,5 +1,4 @@
 archives/*
-node_modules/*
 .git
 .openshift
 README-INTERNAL.md

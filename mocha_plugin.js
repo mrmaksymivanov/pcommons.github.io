@@ -9,8 +9,8 @@ var url,server,browser,os,dev,browserVersion,username,password=null;
 /*Get Required Libs */
 var assert = require('assert'), 
 fs =         require('fs'), 
-expect = require('chai').expect,
-plugin =       require('plugin.js');  //node_modules/plugin.js
+expect =     require('chai').expect,
+plugin =     require('plugin.js');  //node_modules/plugin.js
 
 var driver;
 
