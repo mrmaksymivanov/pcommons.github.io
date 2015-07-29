@@ -138,7 +138,6 @@ describe('plugin', function() {
     setTimeout(function() { 
         driver.switchTo().frame("_bftn_iframe");
          setTimeout(function() {
-            driver.isElementPresent(webdriver.By.id('lastname'));
             driver.findElement(webdriver.By.id('lastname')).isDisplayed().then(function(bool){       
                 expect(bool).to.be.false;        
                 if(bool){
@@ -155,3 +154,16 @@ describe('plugin', function() {
   after(function(done) { driver.quit(); done();});
 });
 
+//TODO: sethide_fields to true and set a value in first_name field and it should not be displayed
+//TODO: sethide_fields to true and set a value in city field and it should not be displayed
+//TODO: sethide_fields to true and set a value in state field and it should not be displayed
+//TODO: sethide_fields to true and set a value in zip field and it should not be displayed
+//TODO: sethide_fields to true and set a value in address field and it (and address2) should not be displayed
+//TODO: sethide_fields to true and set a value in dob field and it should not be displayed
+
+//TODO: repeat all of the above but set framework to 'bootstrap', not the default 'material-design'
+
+//TODO: set rehire to true and question section should not be displayed
+
+//TODO: set plugin_type to ats - authorization section and hiring manager section should NOT be displayed
+//TODO: set plugin_type to obs - authorization section and hiring manager section should be displayed

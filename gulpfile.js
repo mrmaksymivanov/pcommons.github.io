@@ -117,7 +117,7 @@ gulp.task('html', ['inject'], function () {
 
 // generate a todo.md from your javascript files 
 gulp.task('todo', function() {
-    gulp.src('widget/iframe/js/*.js')
+    gulp.src(['widget/iframe/js/*.js','mocha_plugin.js'])
         .pipe($.todo())
         .pipe(gulp.dest('./'));
         // -> Will output a TODO.md with your todos 
@@ -125,7 +125,8 @@ gulp.task('todo', function() {
  
 
 // Default Task
-gulp.task('default', ['lint', 'scripts', 'images','html','fonts','todo']);
+//'lint', 
+gulp.task('default', ['scripts', 'images','html','fonts','todo']);
 
 
 
