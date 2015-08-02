@@ -688,7 +688,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 				$scope.currentemployeeid=1;//hides accordians
 				//Check if Prequal and send to /prequal/ to generate pdf and send email 
 				if($scope.isPrequal){
-					var u='http://localhost/plugin/';
+					if(window.location.host=='localhost'){var u='http://localhost/plugin/';}else{var u='http://plugin.retrotax-aci.com/';}
 					var obj={};
 					obj.employee=dataFromServer.EMPLOYEE;
 					obj.prequalConfig=$scope.prequalConfig;

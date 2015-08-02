@@ -142,8 +142,7 @@ try {
 
 			$mail->isSMTP();                                      
 			$mail->Host = 'smtp.gmail.com';  					
-			$mail->SMTPAuth = true;                               
-                         
+			$mail->SMTPAuth = true;                                                         
 			$mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
 			$mail->From = 'admin@retrotax-aci.com';
 			$mail->FromName = 'RetroTax';
