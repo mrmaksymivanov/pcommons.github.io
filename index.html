@@ -59,9 +59,9 @@
          if(window.location.host=='localhost'){var hname='/plugin/widget/iframe';}else{var hname='http://plugin.retrotax-aci.com/widget/iframe';}
         var _retrotax_options={
             iframe_base_path: hname,
-            plugin_type: 'obs', 
+            plugin_type: 'prequal', 
             username:'demoapi.hiring.manager',
-            apikey:'',
+            apikey:'B47400F36FB8BA0C247798C94D153703',
             companyid:1054,
             locationid:8557,
             framework:'material-design',
@@ -75,6 +75,20 @@
             button_class_error:'btn btn-danger',
             button_text_error:'Oh snap, an error!',
             prepopulate_by:'id',
+            prequal: {
+                email_to:'paul.commons@retrotax-aci.com',
+                email_cc:'',
+                email_bcc:'',
+                partner_name:'John Doe',
+                partner_organization:'Partner Organization',
+                partner_website:'https://some-partner-website.com',
+                alliance:'',
+                closing_text:'Thank you for partnering with Hiring Co',
+                intro:'',
+                logo_url:'',
+                logo_size:'',
+                retrotax_contact:'Paul Commons'
+            },
             populated_fields: {
                 firstname:'first_name',
                 lastname:'last_name',
@@ -122,7 +136,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="Your webscreen.retrotax-aci.com client-side api-key, which can be found within TCID under 'Accounts'." name="plugin_type" ng-model="_retrotax_options.plugin_type" value="{{_retrotax_options.plugin_type}}" required>
                     <div class="floating-label">plugin_type</div>
-                    <div class="hint">ATS, DEMO, OBS</div>
+                    <div class="hint">ATS, DEMO, OBS, PREQUAL</div>
                     <span class="material-input"></span>
                 </div>
         </div>

@@ -131,7 +131,7 @@ describe('plugin', function() {
     driver.findElement(webdriver.By.name('apikey')).clear();
     driver.findElement(webdriver.By.name('apikey')).sendKeys(pluginConfig.apikey);
     driver.findElement(webdriver.By.name('hide_fields')).clear();
-    driver.findElement(webdriver.By.name('hide_fields')).sendKeys('true');
+    driver.findElement(webdriver.By.name('hide_fields')).sendKeys('false');
     driver.findElement(webdriver.By.name('last_name')).clear();
     driver.findElement(webdriver.By.name('last_name')).sendKeys('Testing');
     driver.findElement(webdriver.By.id('retrotax_plugin_trigger')).click();
@@ -148,7 +148,7 @@ describe('plugin', function() {
                 }
             });
           }, 3000);
-    }, 20000); //20 secs 
+    }, 30000); //30 secs 
   });
  
   after(function(done) { driver.quit(); done();});

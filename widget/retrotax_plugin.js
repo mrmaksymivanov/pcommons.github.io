@@ -133,11 +133,18 @@ if (typeof _retrotax_options.hide_fields == "undefined")
 if (typeof _retrotax_options.whitelist_code == "undefined")
 	_retrotax_options.whitelist_code = false;
 
+if (typeof _retrotax_options.prequal == "undefined" || !_retrotax_options.prequal)
+	_retrotax_options.prequal = {
+                email_to:'',
+                email_cc:'',
+                email_bcc:''
+    };
+
 
 _retrotax_options.w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0)
 _retrotax_options.h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
-console.log(_retrotax_options.w);
-console.log(_retrotax_options.h);
+//console.log(_retrotax_options.w);
+//console.log(_retrotax_options.h);
 
 //var elements=window.document.body.getElementsByClassName('retrotax');
 //console.log(elements);
@@ -162,9 +169,9 @@ var _bftn_animations = {
 		},
 		reload: function() {
 			var iframe=getElementById('_bftn_iframe');
-			console.log(iframe);
+			//console.log(iframe);
 			iframe.style.display = 'none';
-			console.log(iframe);
+			//console.log(iframe);
 			return this;
 		},
 		// what to do when the animation starts
@@ -176,16 +183,16 @@ var _bftn_animations = {
 
 			//if(document.getElementById('_bftn_iframe') !== undefined){
 			var iframe = _retrotax_util.createIframe(this.options.modalAnimation);
-			console.log(_retrotax_options.populated_fields);
+			//console.log(_retrotax_options.populated_fields);
 			if(this.options.prepopulate_by !==false){
-				console.log("going into switch");
+				//console.log("going into switch");
 			switch(this.options.prepopulate_by){
                 case 'id':
 	                for(var index in _retrotax_options.populated_fields) { 
 	   					if (_retrotax_options.populated_fields.hasOwnProperty(index)) {
 	       					var field = _retrotax_options.populated_fields[index];
-	       					console.log(field);
-	       					console.log((document.getElementById(field) != null )); // || document.getElementById(field) != ''
+	       					//console.log(field);
+	       					//console.log((document.getElementById(field) != null )); // || document.getElementById(field) != ''
 	               	    	if(field) _retrotax_options.populated_fields[index] = (document.getElementById(field) != null) ? document.getElementById(field).value : '';
 	   					}
 					}
@@ -240,8 +247,6 @@ var _retrotax_util = {
 
 	// Create the iframe used to display the animation  
 	createIframe: function(animation) {
-		console.log("create Iframe");
-		//console.log(animation);
 		//console.log(window.frames[0]);
 		var iframe = document.createElement('iframe');
 		iframe.id = '_bftn_iframe';
@@ -257,8 +262,6 @@ var _retrotax_util = {
 
 	// Destroy the iframe used to display the animation
 	destroyIframe: function() {
-		//var wframe=window.frames[0].frameElement;
-		//console.log(wframe);
 		var iframe = document.getElementById('_bftn_iframe');
 		console.log(iframe);
 		//iframe.remove();
@@ -274,9 +277,6 @@ var _retrotax_util = {
 	// Necessary because the iframe lives on a different domain and we can't
 	// just call Javascript functions to/from it due to XSS protections.
 	bindIframeCommunicator: function(iframe, animation) {
-		console.log("IN IFRAME");
-		console.log(iframe);
-		console.log(animation);
 		var sendMessage = function(requestType, data, iframe)
 		{
 			data || (data = {});
@@ -335,8 +335,6 @@ var readyRetrotax = function() {
 		errorElement.innerHTML = _retrotax_options.button_text_error;
 		return false;
 	}
-	console.log(_retrotax_options);
-	console.log("in ready");
 	var animation = _bftn_animations[_retrotax_options.animation];
 	setTimeout(function() {
 			animation.init(_retrotax_options).start();
@@ -397,7 +395,6 @@ var bindRetroTaxBtn = function() {
 
 		var div = document.getElementById('retrotax_plugin');
 		if(compatible){
-			console.log(document.getElementById('retrotax_plugin_trigger'));
 			if(document.getElementById('retrotax_plugin_trigger') != null){
 				var existing_retro_trigger = document.getElementById('retrotax_plugin_trigger');
 				existing_retro_trigger.addEventListener('click', function(e) {

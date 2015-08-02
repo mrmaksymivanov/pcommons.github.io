@@ -202,6 +202,17 @@
                 </div>
         </div>  
 
+        <div class="col-sm-8" ng-if="isPrequal">
+        <div class="form-control-wrapper">
+        <input class="form-control empty" type="email" data-hint="email address" ng-model="tcid.employee.maindata.email" name="email" id="email" ng-required="isPrequal" data-displayname="Email Address">
+                <div class="floating-label">Email Address</div>
+                    <div class="hint invalid" ng-if="frmEmployee.email.$error.required">Email Address is required</div>
+                    <div class="hint invalid" ng-if="frmEmployee.email.$error.email">Email Address is invalid</div>
+                    <span class="material-input"></span>
+
+                </div>
+        </div>  
+
         <div class="col-sm-4" ng-hide="isValidDate(args.populated_fields.dob) && args.hide_fields">
         <div class="form-control-wrapper">
         <div class="input-group">

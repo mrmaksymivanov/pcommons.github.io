@@ -435,7 +435,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
     //$scope.isLoggedIn($scope.tcid);
 
 	$scope.thisPath='';
-	$scope.isATS=false; //asssume it's not ATS
+	$scope.isATS=false; //asssume it's not ATS or prequal
+	$scope.isPrequal=false;
 	$scope.isDisabled=false; //for submit button
 
 /*
@@ -685,8 +686,23 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
 				$scope.currentemployeeid=1;//hides accordians
+				//Check if Prequal and send to /prequal/ to generate pdf and send email 
+				if($scope.isPrequal){
+					var u='http://localhost/plugin/';
+					var obj={};
+					obj.employee=dataFromServer.EMPLOYEE;
+					obj.prequalConfig=$scope.prequalConfig;
+					var responsePromise = $http.post(u+'prequal/ajax.mongo.php', obj, {});
+					responsePromise.success(function(dataFromServer, status, headers, config) {
+							sendMessage('stop');
+					});
+
+					responsePromise.error(function(data, status, headers, config) {
+						$.error({'data':data,'status':status,'headers':headers,'config':config});
+					});
+				}
 				//Attempt to send response to clients callback url. 
-				var pattern = /^((http|https|ftp):\/\/)/;
+				var pattern = /^((http|https|ftp):\/\/)/;				
 				if($scope.args.callback_url !== false && pattern.test($scope.args.callback_url)){ 
 					console.log("SENDING TO CALLBACK", dataFromServer.EMPLOYEE);
 					//'Access-Control-Allow-Origin' will need to post to ajax.php and send request server-side
@@ -940,6 +956,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
         $scope.tcid.employee.maindata.address2 = '';
         //$scope.tcid.employee.maindata.countyid=null;
         $scope.tcid.employee.maindata.dob = '11/11/1973';
+        $scope.tcid.employee.maindata.email='paul.commons@retrotax-aci.com';
 
         $scope.tcid.employee.maindata.client = {};
         $scope.tcid.employee.maindata.company = {};
@@ -1361,6 +1378,11 @@ Possible reasons for breakage:
                 case 'obs':
                 	$scope.isATS=false;
                     break;
+                case 'prequal':
+                	$scope.isATS=true;
+                	$scope.isPrequal=true;
+                	$scope.prequalConfig=args.prequal;
+                    break;             
                 default:
                     sendMessage('stop');
           }
