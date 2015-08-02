@@ -137,7 +137,16 @@ if (typeof _retrotax_options.prequal == "undefined" || !_retrotax_options.prequa
 	_retrotax_options.prequal = {
                 email_to:'',
                 email_cc:'',
-                email_bcc:''
+                email_bcc:'',
+                partner_name:'',
+                partner_organization:'',
+                partner_website:'',
+                alliance:'',
+                closing_text:'',
+                intro:'',
+                logo_url:'',
+                logo_size:'',
+                retrotax_contact:''
     };
 
 
