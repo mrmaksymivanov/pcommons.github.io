@@ -150,8 +150,8 @@ try {
 			$mail->FromName = 'RetroTax';
 			$mail->addReplyTo('john.hess@retrotax-aci.com', 'PreQual');				
 			$mail->addAddress('paul.commons@retrotax-aci.com');  
-		    //$file = $fname.'-'.$lname.'-Employer-Tax-Credit-Pre-Qualification.pdf';
-			//$mail->addAttachment($file);             			           
+		    $file = $fname.'-'.$lname.'-Employer-Tax-Credit-Pre-Qualification.pdf';
+			$mail->addAttachment($file);             			           
 			//$mail->addCC('paul.commons@retrotax-aci.com');
 			//$mail->addCC('john.hess@retrotax-aci.com');    
 			$mail->isHTML(true);
