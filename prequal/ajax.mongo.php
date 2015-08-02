@@ -36,7 +36,6 @@ $size    = 'width="600" height="150"';
 $intro   = "";
 $aln   = '';
 $extra   = '';                   
-$isPCG=false;
 
 try {
     
@@ -137,8 +136,9 @@ try {
                     </tr>
                 </table>
                 ';
-                $pdf->writeHTML($html, true, false, true, false, '');
-
+            $pdf->writeHTML($html, true, false, true, false, '');
+            ob_clean();
+            $pdf->Output($fname.'-'.$lname.'-Employer-Tax-Credit-Pre-Qualification.pdf', 'F');
 
 			$mail->isSMTP();                                      
 			$mail->Host = 'smtp.gmail.com';  					
