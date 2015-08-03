@@ -4,15 +4,25 @@ Created by RetroTax
 
 Introduction
 ============
+The RetroTax Plugin is configurable, easy-to-use application built for our clients, alliance partners, and partering organizations to screen job seekers, applicants, and new hires for a range of tax credits. The plugin has 3 different modes for use with On-Boarding Systems, Applicant Tracking Systems, and Pre-Qualification Screening.
+
+Use with On-Boarding Description:
+
+Use with Applicant Tracking System Description:
+
+Use with Pre-Qualification Screening:
+
 
 [Plugin Screenshot](https://drive.google.com/file/d/0B0LfxC9fk-YpLXU4S3Z5TXhfamc/view?usp=sharing)
 
+[Sample ATS Report - for ATS and Prequal Modes](https://drive.google.com/open?id=0B0LfxC9fk-YpY2dJOGExYlJHV2tHNnVKUDZxcVlYQ3hvSFBR)
 
 ----------------------------------------------------------------------------------------
 Demo
 ============
 Website Demo:
 [https://www.retrotax-aci.com/plugin-demo/](https://www.retrotax-aci.com/plugin-demo/)
+
 Configuration Demo:
 [http://plugin.retrotax-aci.com/](http://plugin.retrotax-aci.com/)
 
@@ -289,6 +299,7 @@ button_text_error | No | 'Error - Something went wrong.' | Any | String | Option
 button_class | No | '' | Any | String | Optionally apply a css class to the retrotax element 
 button_class_error | No | '' | Any | String | Optionally apply a css class to the retrotax element in case of an error
 logo | No | 'iframe/images/retrotax_plugin_logo.png' | String IMG SRC or False | String | Defaults to RetroTax Logo. Setting to false removes the RetroTax <img>. Providing a valid URL will return that img src.
+prequal | No | see below | see below | Obj | The pre-configuratable settings for plugin_type prequal
 
 
 ```javascript
@@ -306,6 +317,22 @@ populated_fields={
     };
 ```
 
+```javascript
+
+prequal={
+        email_to:'',  //single valid email
+        email_cc:'',  //commma delimited email list
+        partner_name:'',  //The contact at your company or organization which will be used as a reference in the generated prequal PDF letter 
+        partner_organization:'', //Your company or organization
+        partner_website:'', //valid URL
+        closing_text:'', //closing sentence in the generated prequal PDF letter
+        intro_text:'', //opening sentence in the generated prequal PDF letter
+        logo_url:'', //valid URL
+        logo_width:'', //integer
+        logo_height:'', //integer 
+        retrotax_contact:'' //name of RetroTax contact e.g. john.hess@retrotax-aci.com, natalie.commons@retrotax-aci.com, alan.newcomb@retrotax-aci.com             
+    };
+```
 ----------------------------------------------------------------------------------------
 
 

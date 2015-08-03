@@ -78,15 +78,15 @@
             prequal: {
                 email_to:'paul.commons@retrotax-aci.com',
                 email_cc:'',
-                email_bcc:'',
                 partner_name:'John Doe',
                 partner_organization:'Partner Organization',
                 partner_website:'https://some-partner-website.com',
                 alliance:'',
                 closing_text:'Thank you for partnering with Hiring Co',
-                intro:'',
-                logo_url:'',
-                logo_size:'',
+                intro_text:'',
+                logo_url:'http://plugin.retrotax-aci.com/prequal/img/PCG_logo.png',
+                logo_width:'300', 
+                logo_height:'75',
                 retrotax_contact:'Paul Commons'
             },
             populated_fields: {
@@ -124,7 +124,7 @@
  <div class="col-sm-6 well page active">
     <h3>Plugin Configuration</h3>
     <hr>
-    <form name="demoForm">
+    <form name="demoForm" id="demoForm">
         <div class="col-sm-6">
                 <div class="form-control-wrapper">
                     <input disabled="" name="iframe_base_path" class="form-control" type="text" ng-model="_retrotax_options.iframe_base_path" value="{{_retrotax_options.iframe_base_path}}">
@@ -343,6 +343,109 @@
                     <span class="material-input"></span>
                 </div>
         </div>  
+
+
+
+            <hr>
+<div ng-show="_retrotax_options.plugin_type=='prequal'">
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Email Address to Send To" name="prequal_email_to" id="prequal_email_to" ng-model="_retrotax_options.prequal.email_to" value="{{_retrotax_options.prequal.email_to}}" data-displayname="Email Address To Send To">
+                    <div class="floating-label">prequal.email_to</div>
+                  <!--  <div class="hint invalid" ng-if="demoFrom.prequal_email_to.$error.email">Email Address is invalid</div> -->
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Email Address to CC" name="prequal_email_cc" id="prequal_email_cc" ng-model="_retrotax_options.prequal.email_cc" value="{{_retrotax_options.prequal.email_cc}}" data-displayname="Email Address To CC">
+                    <div class="floating-label">prequal.email_cc</div>
+                 <!--   <div class="hint invalid" ng-if="demoFrom.prequal_email_cc.$error.email">Email Address is invalid</div> -->
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+        <!--
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="Email Address to BCC" name="prequal_email_bcc" id="prequal_email_bcc" ng-model="_retrotax_options.prequal.email_bcc" value="{{_retrotax_options.prequal.email_bcc}}" data-displayname="Email Address To BCC">
+                    <div class="floating-label">prequal.email_bcc</div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+        -->
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" name="prequal.partner_name" ng-model="_retrotax_options.prequal.partner_name" value="{{_retrotax_options.prequal.partner_name}}">
+                    <div class="floating-label">prequal.partner_name</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" name="prequal.partner_organization" ng-model="_retrotax_options.prequal.partner_organization" value="{{_retrotax_options.prequal.partner_organization}}">
+                    <div class="floating-label">prequal.partner_organization</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="url" data-hint="" name="prequal.partner_website" ng-model="_retrotax_options.prequal.partner_website" value="{{_retrotax_options.prequal.partner_website}}">
+                    <div class="floating-label">prequal.partner_website</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" name="prequal.intro_text" ng-model="_retrotax_options.prequal.intro_text" value="{{_retrotax_options.prequal.intro_text}}">
+                    <div class="floating-label">prequal.intro_text</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="url" data-hint="" name="prequal.logo_url" ng-model="_retrotax_options.prequal.logo_url" value="{{_retrotax_options.prequal.logo_url}}">
+                    <div class="floating-label">prequal.logo_url</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="number" ng-maxlength="3" ng-minlength="0" min="0" max="300" data-hint="" name="prequal.logo_width" ng-model="_retrotax_options.prequal.logo_width" value="{{_retrotax_options.prequal.logo_width}}">
+                    <div class="floating-label">prequal.logo_width</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="number" ng-maxlength="3" ng-minlength="0" min="0" max="75" data-hint="" name="prequal.logo_height" ng-model="_retrotax_options.prequal.logo_height" value="{{_retrotax_options.prequal.logo_height}}">
+                    <div class="floating-label">prequal.logo_height</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" name="prequal.closing_text" ng-model="_retrotax_options.prequal.closing_text" value="{{_retrotax_options.prequal.closing_text}}">
+                    <div class="floating-label">prequal.closing_text</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" name="prequal.retrotax_contact" ng-model="_retrotax_options.prequal.retrotax_contact" value="{{_retrotax_options.prequal.retrotax_contact}}">
+                    <div class="floating-label">prequal.retrotax_contact</div>
+                    <div class="hint"></div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+</div>
 </form>
          <div class="col-sm-12">
 
@@ -423,6 +526,7 @@
                 </div>
         </div>  
         <div class="clear-30"></div>
+
 <hr>
     <!-- Add this to your site -->
     <div id="retrotax_plugin"></div> 

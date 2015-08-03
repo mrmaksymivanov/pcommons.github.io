@@ -153,7 +153,13 @@
         <td class="frminput">
         <input class="input-sm" type="tel" placeholder="social security number" ng-model="tcid.employee.maindata.ssnconfirmation" name="ssnconfirmation" id="ssnconfirmation" mask="999-99-9999"  ng-required="!isATS"  data-displayname="Confirmed Social Security Number">
         </td>
-        </tr>        
+        </tr>      
+        <tr class="req" ng-if="isPrequal">
+        <th class="frmlbl">Email Address</th>
+        <td class="frminput">
+        <input class="input-sm" type="email" placeholder="Email Address" ng-model="tcid.employee.maindata.email" name="email" id="email" ng-required="isPrequal" data-displayname="Email Address">
+        </td>
+        </tr> 
         <tr class="req contdob" ng-hide="isValidDate(args.populated_fields.dob) && args.hide_fields">
         <th class="frmlbl">DOB</th>
         <td class="input-group frminput">

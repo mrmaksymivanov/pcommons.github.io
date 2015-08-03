@@ -137,15 +137,14 @@ if (typeof _retrotax_options.prequal == "undefined" || !_retrotax_options.prequa
 	_retrotax_options.prequal = {
                 email_to:'',
                 email_cc:'',
-                email_bcc:'',
                 partner_name:'',
                 partner_organization:'',
                 partner_website:'',
-                alliance:'',
                 closing_text:'',
-                intro:'',
+                intro_text:'',
                 logo_url:'',
-                logo_size:'',
+                logo_width:'', 
+                logo_height:'',                
                 retrotax_contact:''
     };
 

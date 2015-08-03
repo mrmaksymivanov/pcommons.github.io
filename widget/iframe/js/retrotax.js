@@ -534,7 +534,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		$scope.alerts.splice(index, 1);
 	};
 
-	var sectionBasicInfo=['companyid','locationid','firstname','lastname','middleinitial','address','state','city','zip','dob','ssn','ssnconfirmation'];
+	var sectionBasicInfo=['companyid','locationid','firstname','lastname','middleinitial','address','state','city','zip','dob','ssn','ssnconfirmation','email'];
 	var sectionVocrehab=['vocrehagency','vocrehabinfo_phone','agency','deptva'];
 	var sectionMilitary=['disabled','servicestart','servicestop'];
 	var sectionUnemployed=['unemployedstart','unemployedstop','compensatedstart','compensatedstop'];
@@ -686,13 +686,13 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
 				$scope.currentemployeeid=1;//hides accordians
-				//Check if Prequal and send to /prequal/ to generate pdf and send email 
+
 				if($scope.isPrequal){
-					if(window.location.host=='localhost'){var u='http://localhost/plugin/';}else{var u='http://plugin.retrotax-aci.com/';}
+					if(window.location.host=='localhost'){var u='http://localhost/plugin/prequal/ajax.mongo.php';}else{var u='http://plugin.retrotax-aci.com/prequal/ajax.mongo.php';}
 					var obj={};
 					obj.employee=dataFromServer.EMPLOYEE;
 					obj.prequalConfig=$scope.prequalConfig;
-					var responsePromise = $http.post(u+'prequal/ajax.mongo.php', obj, {});
+					var responsePromise = $http.post(u, obj, {});
 					responsePromise.success(function(dataFromServer, status, headers, config) {
 							sendMessage('stop');
 					});
@@ -701,6 +701,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 						$.error({'data':data,'status':status,'headers':headers,'config':config});
 					});
 				}
+
 				//Attempt to send response to clients callback url. 
 				var pattern = /^((http|https|ftp):\/\/)/;				
 				if($scope.args.callback_url !== false && pattern.test($scope.args.callback_url)){ 
