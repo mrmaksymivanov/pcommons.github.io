@@ -405,8 +405,20 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.tcid.employees=[];
 	$scope.tmpcomp=null; //$index
 	
-	$scope.tcid.counties=[];
-	$scope.tcid.gettingcounties=[];
+    $scope.tcid.counties = [];
+    $scope.tcid.gettingcounties = [];
+    $scope.tcid.cities = [];
+    $scope.tcid.gettingcities = [];
+    $scope.tcid.empcityother = false;
+    $scope.tcid.empcityothered = function() {
+        console.log('.... city',$scope.tcid.employee.maindata.city);
+
+        if ($scope.tcid.employee.maindata.city == 'Other...') {
+            $scope.tcid.employee.maindata.city='';
+            $scope.tcid.empcityother = true;
+        }
+    }
+
 
 	$scope.currentemployeeid=0;
 	$routeParams.employeeid='new';
@@ -1428,6 +1440,36 @@ console.log($scope.tcid.employee);
 		var m = JSON.stringify({status: 200, message: 'stop'});
 		scope.sender.postMessage(m, '*');
 	}
+
+
+
+	$scope.getZips=function(){
+		zp=$scope.tcid.employee.maindata.zip;
+	 	if (zp.length!=5) {return false;}
+	 	if ($scope.tcid.gettingcities[zp]) {return false;}
+		$scope.tcid.gettingcities[zp]=true;
+		if ($scope.tcid.cities[zp] == undefined) {
+			console.log(zp,'*** hopefully only once*****   zips for this zpate yet, so load it up!!!',zp);
+			$http.get('http://tcid.retrotax.co/api/v1/api_employees/zipLookup?apikey=13106D13D015F19EC675A5D61CC29086&u=Tom.Langer&zip='+zp)
+			.success(function (data) {
+				console.log(data);
+				$scope.tcid.employee.maindata.city=data[0].city;
+				$scope.tcid.employee.maindata.stateid=data[0].stateid;
+				console.log('set stateid to:',$scope.tcid.employee.maindata.stateid,data[0].stateid);
+                $scope.tcid.cities[zp]=data;
+                $scope.tcid.cities[zp].push({"city":"Other...","stateid":"0"});
+				return $scope.tcid.cities[zp];
+			});
+		} else {
+			// console.log('zips array data is defined, return exizping array: ');
+			$scope.tcid.gettingcities[zp]=false;
+			return $scope.tcid.cities[zp];
+		}
+		//$scope.$apply();
+	    return;
+	}
+
+
 });
 /*
 

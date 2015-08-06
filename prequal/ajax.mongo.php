@@ -39,21 +39,25 @@ if (!filter_var($logo_url, FILTER_VALIDATE_URL) === false && is_numeric($logo_wi
 }
 
 
-var_dump($partner_logo);
+//var_dump($partner_logo);
 $partner_logo = '<td align="center"><img src="' . $logo_url . '" width="' . $logo_width . '" height="' . $logo_height . '" /></td>';
 $intro = "";
 $extra = '';
 
 $retrotax_contact_name = 'Angie Mackey';
+$retrotax_contact_phone= '317-925-0553';
 switch ($retrotax_contact) {
     case 'john.hess@retrotax-aci.com':
         $retrotax_contact_name = 'John Hess';
+        $retrotax_contact_phone= '312-646-7386';
         break;
     case 'natalie.commons@retrotax-aci.com':
-        $retrotax_contact_name = 'John Hess';
+        $retrotax_contact_name = 'Natalie Commons';
+        $retrotax_contact_phone= '347.451.0982';
         break;
     case 'alan.newcomb@retrotax-aci.com':
         $retrotax_contact_name = 'Alan Newcomb';
+        $retrotax_contact_phone= '317-513-5429';
         break;
 }
 
@@ -135,13 +139,13 @@ try {
                         </p><br>    
                 ' . $mapSection . '
                 <br><br>
-                <p><span style="text-align:justify;">Please contact <a href="http://retrotax-aci.com">RetroTax</a>&#174; and reference this document for more information as to how your organization can take advantage of these valuable employer incentives.</span><br></p>
+                <p><span style="text-align:justify;">Please contact <a href="http://retrotax-aci.com">RetroTax</a>&#174; and reference this document for more information as to how your organization can take advantage of these valuable employer incentives. Please keep in mind that these programs require timely action on part of the employer in order to capitalize on the available credits- contact RetroTax at or before the time of hiring.</span><br></p>
                 <p>
                 RetroTax&#174;<br>
                 Attn: ' . $retrotax_contact_name . '<br>
                 3730 Washington Blvd<br>
                 Indianapolis, IN 46205<br>
-                312-646-7386<br>
+                ' . $retrotax_contact_phone . '<br>
                 <a>' . $retrotax_contact . '</a><br>
                 </p>
                 <p>' . $closing . '</p><br>
@@ -157,9 +161,10 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-
+    $mail->Username   = 'prequalification@retrotax-aci.com';
+    $mail->Password   = "C*V=Q8rN!";
     $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
-    $mail->From       = 'admin@retrotax-aci.com';
+    $mail->From       = 'prequalification@retrotax-aci.com';
     $mail->FromName   = 'RetroTax';
     $mail->addReplyTo('john.hess@retrotax-aci.com', 'PreQual');
     $mail->addAttachment($fname . '-' . $lname . '-Employer-Tax-Credit-Pre-Qualification.pdf');

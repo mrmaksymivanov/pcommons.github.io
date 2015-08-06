@@ -146,14 +146,40 @@
         </div>   
 </div>       
 <div class="row">
-         <div class="col-sm-4" ng-hide="args.populated_fields.city!='' && args.hide_fields">
+         <div class="col-sm-3" ng-hide="args.populated_fields.zip!='' && args.hide_fields">
+                <div class="form-control-wrapper">
+<input ng-class="{'form-control empty':args.populated_fields.zip=='', 'form-control':true}"  type="text" data-hint="zip code" ng=maxlength="5" ng-minlength="5" ng-model="tcid.employee.maindata.zip" name="zip" id="zip" ng-required="true" data-displayname="Zip" ng-change="getZips();">
+                    <div class="floating-label">Zip</div>
+                    <div class="hint invalid" ng-if="frmEmployee.zip.$error.required">Zip Code is required</div>
+                    <div class="hint invalid" ng-if="frmEmployee.zip.$error.minlength || frmEmployee.zip.$error.maxlength">Zipe Code must be 5 characters long</div>                    
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+
+         <div class="col-sm-4" ng-hide="!tcid.empcityother || args.populated_fields.city!='' && args.hide_fields">
         <div class="form-control-wrapper">
-                <input  ng-class="{'form-control empty':args.populated_fields.city=='', 'form-control':true}" type="text" data-hint="Enter Your City" ng-model="tcid.employee.maindata.city" name="city" ng-required="true" ng-minlength="2" ng-maxlength="50" data-displayname="Address" >
+                <input  ng-class="{'form-control empty':args.populated_fields.city=='', 'form-control':true}" type="text" data-hint="Enter Your City" ng-model="tcid.employee.maindata.city" name="city" ng-required="true" ng-minlength="2" ng-maxlength="50" data-displayname="City" >
                 <div class="floating-label">City</div>
                     <div class="hint invalid" ng-if="frmEmployee.city.$error.required">City is required</div>
                     <span class="material-input"></span>
                 </div>
         </div>  
+
+       <div class="col-sm-4" ng-hide="tcid.empcityother || args.populated_fields.city != '' && args.hide_fields">
+        <div class="form-control-wrapper">
+            <select class="form-control" ng-model="tcid.employee.maindata.city" ng-required="true" data-displayname="City" data-hint="Enter Your City" name="city" ng-change="tcid.empcityothered()">
+                <option ng-repeat="cty in tcid.cities[tcid.employee.maindata.zip]"
+                        ng-selected="{{cty.city == tcid.employee.maindata.city}}" 
+                        value="{{cty.city}}">{{cty.city}}
+                </option>
+            </select>
+                <div class="floating-label">City</div>
+                    <div class="hint invalid" ng-if="frmEmployee.city.$error.required">City is required</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>  
+
+
          <div class="col-sm-5" ng-hide="getStateMatch(args.populated_fields.state)>0 && args.populated_fields.state!='' && args.hide_fields">
                 <div class="form-control-wrapper">
             <select class="form-control"  ng-class="{'form-control empty':args.populated_fields.state=='' || getStateMatch(args.populated_fields.state)==0, 'form-control':true}"  ng-model="tcid.employee.maindata.stateid" id="stateid" name="stateid" ng-required="true"  data-displayname="State">
@@ -165,16 +191,12 @@
           </div>
 
 </div> 
-         <div class="col-sm-3" ng-hide="args.populated_fields.zip!='' && args.hide_fields">
-                <div class="form-control-wrapper">
-<input ng-class="{'form-control empty':args.populated_fields.zip=='', 'form-control':true}"  type="text" data-hint="zip code" ng=maxlength="5" ng-minlength="5" ng-model="tcid.employee.maindata.zip" name="zip" id="zip" ng-required="true" data-displayname="Zip" >
-                    <div class="floating-label">Zip</div>
-                    <div class="hint invalid" ng-if="frmEmployee.zip.$error.required">Zip Code is required</div>
-                    <div class="hint invalid" ng-if="frmEmployee.zip.$error.minlength || frmEmployee.zip.$error.maxlength">Zipe Code must be 5 characters long</div>                    
-                    <span class="material-input"></span>
-                </div>
-        </div>   
+
 </div>
+
+
+ 
+
 <div class="row">
         <div class="col-sm-4" ng-if="!isATS" ng-show="tcid.employee.maindata.ssn4==undefined || tcid.employee.maindata.applicationstatusid==''">
         <div class="form-control-wrapper">
