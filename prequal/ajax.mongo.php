@@ -5,7 +5,16 @@ ob_clean();
 require 'plugins/PHPMailer-master/class.phpmailer.php';
 require_once('plugins/tcpdf/config/lang/eng.php');
 require_once('plugins/tcpdf/tcpdf.php');
-
+/*
+function get_string_between($string, $start, $end){
+    $string = " ".$string;
+    $ini = strpos($string,$start);
+    if ($ini == 0) return "";
+    $ini += strlen($start);
+    $len = strpos($string,$end,$ini) - $ini;
+    return substr($string,$ini,$len);
+}
+*/
 $obj           = json_decode($HTTP_RAW_POST_DATA, true);
 $employee      = $obj['employee'];
 $prequalConfig = $obj['prequalConfig'];
@@ -25,12 +34,14 @@ $lname            = ucfirst(trim($employee['rows'][0]['maindata']['lastname']));
 $logo_width       = (string) $prequalConfig['logo_width'];
 $logo_height      = (string) $prequalConfig['logo_height'];
 $logo_url         = (string) $prequalConfig['logo_url'];
-
 $googleMap    = '';
 $emailMap     = '';
 $mapSection   = '';
 $shareSidebar = 'Let your friends, family, & colleagues know by forwarding this email. They might be eligible, too.';
-$amt          = "A";
+//$subdata=$employee['rows'][0]['maindata'];
+//foreach($subdata as $qualification){}
+//$amt          = get_string_between(trim($employee['rows'][0]['maindata']['qualifications'][1]),"[","]");
+$amt="A";
 
 if (!filter_var($logo_url, FILTER_VALIDATE_URL) === false && is_numeric($logo_width) && is_numeric($logo_height)) {
     $partner_logo = '<td align="center"><img src="' . $logo_url . '" width="' . $logo_width . '" height="' . $logo_height . '" /></td>';
@@ -104,6 +115,8 @@ switch ($amt) {
     case "W":
         $amt = "$9,600";
         break;
+    default:
+        $amt = "$2,400";
 }
 
 try {

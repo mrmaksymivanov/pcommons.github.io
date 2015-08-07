@@ -88,7 +88,8 @@
                 logo_url:'http://plugin.retrotax-aci.com/prequal/img/PCG_logo.png',
                 logo_width:'300', 
                 logo_height:'75',
-                retrotax_contact:'paul.commons@retrotax-aci.com'
+                retrotax_contact:'paul.commons@retrotax-aci.com',
+                ask_ssn:false
             },
             populated_fields: {
                 firstname:'first_name',
@@ -291,7 +292,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="populated_fields_firstname" ng-model="_retrotax_options.populated_fields.firstname" value="{{_retrotax_options.populated_fields.firstname}}">
                     <div class="floating-label">populated_fields.firstname</div>
-                    <div class="hint"></div>
+                    <div class="hint">String.</div>
                     <span class="material-input"></span>
                 </div>
         </div>   
@@ -299,7 +300,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="populated_fields_lastname" ng-model="_retrotax_options.populated_fields.lastname" value="{{_retrotax_options.populated_fields.lastname}}">
                     <div class="floating-label">populated_fields.lastname</div>
-                    <div class="hint"></div>
+                    <div class="hint">String.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -307,7 +308,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="populated_fields_middleinitial" ng-model="_retrotax_options.populated_fields.middleinitial" value="{{_retrotax_options.populated_fields.middleinitial}}">
                     <div class="floating-label">populated_fields.middleinitial</div>
-                    <div class="hint"></div>
+                    <div class="hint">Single Character String.</div>
                     <span class="material-input"></span>
                 </div>
         </div>    
@@ -315,7 +316,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="populated_fields_address" ng-model="_retrotax_options.populated_fields.address" value="{{_retrotax_options.populated_fields.address}}">
                     <div class="floating-label">populated_fields.address</div>
-                    <div class="hint"></div>
+                    <div class="hint">String.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -323,7 +324,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="populated_fields_address2" ng-model="_retrotax_options.populated_fields.address2" value="{{_retrotax_options.populated_fields.address2}}">
                     <div class="floating-label">populated_fields.address2</div>
-                    <div class="hint"></div>
+                    <div class="hint">String.</div>
                     <span class="material-input"></span>
                 </div>
         </div>  
@@ -331,7 +332,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="populated_fields_city" ng-model="_retrotax_options.populated_fields.city" value="{{_retrotax_options.populated_fields.city}}">
                     <div class="floating-label">populated_fields.city</div>
-                    <div class="hint"></div>
+                    <div class="hint">String</div>
                     <span class="material-input"></span>
                 </div>
         </div>  
@@ -339,7 +340,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" name="populated_fields_state" data-hint="" ng-model="_retrotax_options.populated_fields.state" value="{{_retrotax_options.populated_fields.state}}">
                     <div class="floating-label">populated_fields.state</div>
-                    <div class="hint"></div>
+                    <div class="hint">Integer or 2 Chacter State Abbreviated String.</div>
                     <span class="material-input"></span>
                 </div>
         </div>  
@@ -348,7 +349,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" name="populated_fields_dob" type="text" data-hint="Date of Birth" ng-model="_retrotax_options.populated_fields.dob" value="{{_retrotax_options.populated_fields.dob}}">
                     <div class="floating-label">populated_fields.dob</div>
-                    <div class="hint">Date of Birth</div>
+                    <div class="hint">Date of Birth.  String (mm/dd/yyyy)</div>
                     <span class="material-input"></span>
                 </div>
         </div>  
@@ -369,6 +370,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="Email Address to CC" name="prequal_email_cc" id="prequal_email_cc" ng-model="_retrotax_options.prequal.email_cc" value="{{_retrotax_options.prequal.email_cc}}" data-displayname="Email Address To CC">
                     <div class="floating-label">prequal.email_cc</div>
+                    <div class="hint">Comma delimited email addresses to CC on the prequalification email.  Email or Comma delimited emails.</div>
                  <!--   <div class="hint invalid" ng-if="demoFrom.prequal_email_cc.$error.email">Email Address is invalid</div> -->
                     <span class="material-input"></span>
                 </div>
@@ -386,7 +388,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="prequal.partner_name" ng-model="_retrotax_options.prequal.partner_name" value="{{_retrotax_options.prequal.partner_name}}">
                     <div class="floating-label">prequal.partner_name</div>
-                    <div class="hint"></div>
+                    <div class="hint">The individual contact person at your organization which will sign the prequalification PDF. String.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -394,7 +396,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="prequal.partner_organization" ng-model="_retrotax_options.prequal.partner_organization" value="{{_retrotax_options.prequal.partner_organization}}">
                     <div class="floating-label">prequal.partner_organization</div>
-                    <div class="hint"></div>
+                    <div class="hint">The name of your oganization which will appear on the prequalification PDF. String.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -402,7 +404,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="url" data-hint="" name="prequal.partner_website" ng-model="_retrotax_options.prequal.partner_website" value="{{_retrotax_options.prequal.partner_website}}">
                     <div class="floating-label">prequal.partner_website</div>
-                    <div class="hint"></div>
+                    <div class="hint">Partner website (e.g. http://yourwebsite.com). URL.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -410,7 +412,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="prequal.intro_text" ng-model="_retrotax_options.prequal.intro_text" value="{{_retrotax_options.prequal.intro_text}}">
                     <div class="floating-label">prequal.intro_text</div>
-                    <div class="hint"></div>
+                    <div class="hint">Introduction text inserted at the beginning of the prequalification PDF. String.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -418,7 +420,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="url" data-hint="" name="prequal.logo_url" ng-model="_retrotax_options.prequal.logo_url" value="{{_retrotax_options.prequal.logo_url}}">
                     <div class="floating-label">prequal.logo_url</div>
-                    <div class="hint"></div>
+                    <div class="hint">Web accessible URL which will be inserted at the top of the prequalification PDF. URL.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -426,7 +428,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" maxlength="3" minlength="0" data-hint="" name="prequal.logo_width" ng-model="_retrotax_options.prequal.logo_width" value="{{_retrotax_options.prequal.logo_width}}">
                     <div class="floating-label">prequal.logo_width</div>
-                    <div class="hint"></div>
+                    <div class="hint">Max width 300px. Integer.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -434,7 +436,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" maxlength="3" minlength="0" data-hint="" name="prequal.logo_height" ng-model="_retrotax_options.prequal.logo_height" value="{{_retrotax_options.prequal.logo_height}}">
                     <div class="floating-label">prequal.logo_height</div>
-                    <div class="hint"></div>
+                    <div class="hint">Max height 75px. Integer.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -442,7 +444,7 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="prequal.closing_text" ng-model="_retrotax_options.prequal.closing_text" value="{{_retrotax_options.prequal.closing_text}}">
                     <div class="floating-label">prequal.closing_text</div>
-                    <div class="hint"></div>
+                    <div class="hint">Closing text inserted at the end of the prequalification PDF. String.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
@@ -450,12 +452,21 @@
                 <div class="form-control-wrapper">
                     <input class="form-control" type="text" data-hint="" name="prequal.retrotax_contact" ng-model="_retrotax_options.prequal.retrotax_contact" value="{{_retrotax_options.prequal.retrotax_contact}}">
                     <div class="floating-label">prequal.retrotax_contact</div>
-                    <div class="hint"></div>
+                    <div class="hint">The RetroTax Contact Email Address. Email.</div>
+                    <span class="material-input"></span>
+                </div>
+        </div> 
+         <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="text" data-hint="" name="prequal.ask_ssn" ng-model="_retrotax_options.prequal.ask_ssn" value="{{_retrotax_options.prequal.ask_ssn}}">
+                    <div class="floating-label">prequal.ask_ssn</div>
+                    <div class="hint">Whether or not to ask user for Social Security Number (necessary for generarting documents, like Form 180).  Boolean.</div>
                     <span class="material-input"></span>
                 </div>
         </div> 
 </div>
 </form>
+<div class="clear-30"></div>
          <div class="col-sm-12">
 
     <h5>The plugin configuration as a JSON Object:</h3>

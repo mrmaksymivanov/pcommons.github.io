@@ -148,7 +148,8 @@ if (typeof _retrotax_options.prequal == "undefined" || !_retrotax_options.prequa
                 logo_url:'',
                 logo_width:'', 
                 logo_height:'',                
-                retrotax_contact:''
+                retrotax_contact:'',
+                ask_ssn:false
     };
 
 
