@@ -271,7 +271,7 @@
 
     </accordion-group>
 
-    <accordion-group heading="Questionnaire" ng-show="tcid.employee.maindata.rehire==0">
+    <accordion-group heading="Questionnaire" ng-show="tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <table class="table table-user-information table-responsive">
           <tbody>
           <tr class="yesno req">
@@ -436,7 +436,7 @@
         </table>
     </accordion-group>
 
-    <accordion-group ng-show="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps) && tcid.employee.maindata.rehire==0 ">
+    <accordion-group ng-show="(tcid.employee.maindata.afdc || tcid.employee.maindata.foodstamps) && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Benefits Recipient Details <i ng-class="{'pull-right mdi-alert-warning':icon.Recipient}"></i>
         </accordion-heading>
@@ -496,7 +496,7 @@
         <alert ng-repeat="alert in alerts  | filter: { section: 'sectionRecipient' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
     </accordion-group>
 
-    <accordion-group  ng-show="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-show="tcid.employee.maindata.vocrehab && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Vocational Rehab Services <i ng-class="{'pull-right mdi-alert-warning':icon.Vocrehab}"></i>
         </accordion-heading>
@@ -616,7 +616,7 @@
         <alert ng-repeat="alert in alerts  | filter: { section: 'sectionVocrehab' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
 
     </accordion-group>
-    <accordion-group ng-show="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0">
+    <accordion-group ng-show="tcid.employee.maindata.felon && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Felon Details <i ng-class="{'pull-right mdi-alert-warning':icon.Felon}"></i>
         </accordion-heading>
@@ -724,7 +724,7 @@
           <alert ng-repeat="alert in alerts  | filter: { section: 'sectionFelon' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
 
     </accordion-group>
-    <accordion-group  ng-show="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-show="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Military Veteran Details <i ng-class="{'pull-right mdi-alert-warning':icon.Military}"></i>
         </accordion-heading>
@@ -806,7 +806,7 @@
         <div class="clear-20"></div>
         <alert ng-repeat="alert in alerts  | filter: { section: 'sectionMilitary' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
     </accordion-group>
-    <accordion-group ng-show="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0">
+    <accordion-group ng-show="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Unemployment Detail <i ng-class="{'pull-right mdi-alert-warning':icon.Unemployed}"></i>
         </accordion-heading>
@@ -928,7 +928,7 @@
 <div class="clear-20"></div>
         <alert ng-repeat="alert in alerts  | filter: { section: 'sectionUnemployed' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
     </accordion-group>
-    <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Hiring Manager Info <i ng-class="{'pull-right mdi-alert-warning':icon.HM}"></i>
         </accordion-heading>
@@ -1048,7 +1048,7 @@
     </accordion-group>
 
 
-    <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0">
+    <accordion-group  ng-if="!isATS" ng-show="tcid.employee.showhminfo && tcid.employee.maindata.rehire==0 && currentemployeeid==0">
         <accordion-heading>
            Authorization Confirmation <i class="pull-right glyphicon" ></i>
         </accordion-heading>
@@ -1088,6 +1088,14 @@
         </table>
         
     </accordion-group>  
+
+   <accordion-group is-open="1" ng-show="currentemployeeid==1">
+        <accordion-heading>
+           Successfully Submitted - Thank you!
+        </accordion-heading>
+    </accordion-group> 
+ 
+
 </accordion>
 <alert ng-repeat="alert in alerts  | filter: { section: 'other' }" type="{{alert.type}}"  close="closeAlert($index)">{{alert.msg}}</alert>
 <center>

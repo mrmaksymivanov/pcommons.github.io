@@ -402,6 +402,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.tcid.employee={};
 	$scope.tcid.employees=[];
 	$scope.tmpcomp=null; //$index
+	$scope.isUploading=false;
 	
     $scope.tcid.counties = [];
     $scope.tcid.gettingcounties = [];
@@ -555,20 +556,12 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 	$scope.save = function(isValid) {
 		console.log("--> Submitting form.. isValid?? ");
 		console.log(isValid);
+		$scope.isUploading=true;
 
-
- $scope.$broadcast('show-errors-check-validity');
+ 		$scope.$broadcast('show-errors-check-validity');
    
 		if (!isValid) {
-			$scope.icon={
-				BasicInfo:false,
-				Recipient:false,
-				Vocrehab:false,
-				Military:false,
-				Unemployed:false,
-				Felon:false,
-				HM:false
-			}		
+			$scope.icon={ BasicInfo:false,Recipient:false,Vocrehab:false,Military:false,Unemployed:false,Felon:false,HM:false}		
 			$scope.alerts=[];
 			var error = $scope.frmEmployee.$error;
 			
@@ -684,6 +677,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			});
 			var errorAccordian=window.document.getElementById('errorAcc');
 			console.log(errorAccordian);
+			$scope.isUploading=false;
 			return false;
 		}
 
@@ -695,6 +689,10 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
 
+		//How do we handle SSNs for ATS,Prequal Mode?  Setting defaults temporarily
+		if($scope.tcid.employee.maindata.ssn==''){$scope.tcid.employee.maindata.ssn='111-11-1111';}
+		if($scope.tcid.employee.maindata.ssnconfirmation==''){$scope.tcid.employee.maindata.ssnconfirmation='111-11-1111';}
+
 		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
 
 		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key+'&clientid='+$scope.tcid.employee.maindata.clientid + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
@@ -702,7 +700,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
 			if (dataFromServer.SUCCESS) {
-				$scope.currentemployeeid=1;//hides accordians
 
 				if($scope.isPrequal){
 					if(window.location.host=='localhost'){var u='http://localhost/plugin/prequal/ajax.mongo.php';}else{var u='http://plugin.retrotax-aci.com/prequal/ajax.mongo.php';}
@@ -716,6 +713,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 
 					responsePromise.error(function(data, status, headers, config) {
 						$.error({'data':data,'status':status,'headers':headers,'config':config});
+						sendMessage('stop');
 					});
 				}
 
@@ -724,27 +722,26 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 				if($scope.args.callback_url !== false && pattern.test($scope.args.callback_url)){ 
 					console.log("SENDING TO CALLBACK", dataFromServer.EMPLOYEE);
 					//'Access-Control-Allow-Origin' will need to post to ajax.php and send request server-side
-					//try{
 					var responsePromise = $http.post($scope.args.callback_url, dataFromServer.EMPLOYEE, {});
 					responsePromise.success(function(dataFromServer, status, headers, config) {
 							sendMessage('stop');
 					});
 					responsePromise.error(function(data, status, headers, config) {
 						$.error({'data':data,'status':status,'headers':headers,'config':config});
+						sendMessage('stop');
 					});					
-					setTimeout(function() {
-                    	sendMessage('stop');
-                	}, 1000);
 				}
-			}
+
+				$scope.currentemployeeid=1;//hides accordians
+				setTimeout(function() {sendMessage('stop');}, 2000);
+			} // success==false
 		});
 		responsePromise.error(function(data, status, headers, config) {
 			console.log(data,status,headers,config);
 			$.error({'data':data,'status':status,'headers':headers,'config':config});
 			//alert("Submitting form failed!");
-			setTimeout(function() {
-                sendMessage('stop');
-            }, 2000);
+			//$scope.isUploading=false;
+			//setTimeout(function() {sendMessage('stop');}, 2000);
 		});
 	}
 
@@ -910,7 +907,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.startingwage=null;
 		emp.maindata.occupationid=null;
 		emp.maindata.hashiringmanager=0;
-		emp.maindata.userentered=typeof user_provided_data.id!='undefined' ? user_provided_data.id : null;
+		emp.maindata.userentered=typeof user_provided_data.id!='undefined' ? user_provided_data.id : 942;
 
 		emp.maindata.hiring_manager_completed=0;
 		
