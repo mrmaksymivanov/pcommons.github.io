@@ -62,9 +62,10 @@
             plugin_type: 'prequal', 
             username:'demoapi.hiring.manager',
             apikey:'B47400F36FB8BA0C247798C94D153703',
+            clientid:364,
             companyid:1054,
             locationid:8557,
-            framework:'material-design',
+            framework:'bootstrap',
             delay: 0, 
             debug: true, 
             logo:'',
@@ -153,6 +154,14 @@
                     <input class="form-control" type="text" data-hint="TCID Client-side api-key" ng-model="_retrotax_options.apikey" value="{{_retrotax_options.apikey}}" name="apikey" required>
                     <div class="floating-label">apikey</div>
                     <div class="hint">TCID Client-side api-key</div>
+                    <span class="material-input"></span>
+                </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-control-wrapper">
+                    <input class="form-control" type="number" name="companyid" data-hint="TCID Client ID" ng-model="_retrotax_options.clientid" value="{{_retrotax_options.clientid}}">
+                    <div class="floating-label">clientid</div>
+                    <div class="hint">TCID Client ID</div>
                     <span class="material-input"></span>
                 </div>
         </div>
@@ -415,7 +424,7 @@
         </div> 
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="number" ng-maxlength="3" ng-minlength="0" min="0" max="300" data-hint="" name="prequal.logo_width" ng-model="_retrotax_options.prequal.logo_width" value="{{_retrotax_options.prequal.logo_width}}">
+                    <input class="form-control" type="text" maxlength="3" minlength="0" data-hint="" name="prequal.logo_width" ng-model="_retrotax_options.prequal.logo_width" value="{{_retrotax_options.prequal.logo_width}}">
                     <div class="floating-label">prequal.logo_width</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>
@@ -423,7 +432,7 @@
         </div> 
          <div class="col-sm-6">
                 <div class="form-control-wrapper">
-                    <input class="form-control" type="number" ng-maxlength="3" ng-minlength="0" min="0" max="75" data-hint="" name="prequal.logo_height" ng-model="_retrotax_options.prequal.logo_height" value="{{_retrotax_options.prequal.logo_height}}">
+                    <input class="form-control" type="text" maxlength="3" minlength="0" data-hint="" name="prequal.logo_height" ng-model="_retrotax_options.prequal.logo_height" value="{{_retrotax_options.prequal.logo_height}}">
                     <div class="floating-label">prequal.logo_height</div>
                     <div class="hint"></div>
                     <span class="material-input"></span>

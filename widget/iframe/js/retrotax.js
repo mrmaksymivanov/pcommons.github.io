@@ -78,6 +78,7 @@
 }).call(this);
 
 
+
 var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngPostMessage']);
 
 
@@ -85,7 +86,8 @@ var app = angular.module("retrotax", ['ngRoute','ui.bootstrap','ngPostMessage'])
 app.constant('debug', true);
 app.value('debug', true);
 
-app.config(function($routeProvider, $locationProvider, $provide, debug){
+
+app.config(function($routeProvider, $locationProvider, $provide, $httpProvider, debug){
 //app.config(function($routeProvider){
 
 	$routeProvider.
@@ -117,7 +119,11 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
     });
 
     
-    
+  //Reset headers to avoid OPTIONS request (aka preflight)
+  $httpProvider.defaults.headers.common = {};
+  $httpProvider.defaults.headers.post = {};
+  $httpProvider.defaults.headers.put = {};
+  $httpProvider.defaults.headers.patch = {}; 
     
     /* catch exceptions in angular
     $provide.decorator('$exceptionHandler', ['$delegate', function($delegate){
@@ -171,8 +177,8 @@ app.config(function($routeProvider, $locationProvider, $provide, debug){
 
 });
 
-/*
 
+/*
 app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	var lcurrentuser={};
 	var lcu_locations=[];
@@ -185,40 +191,32 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	var getRetroURL=function(debug){
 		console.log(window.location.hostname);
         if(typeof device != "undefined") return (debug==true) ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";
- 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
+ 		return (window.location.hostname=="plugin-paulcommons.rhcloud.com" || window.location.hostname=="localhost" || window.location.hostname=="plugin.retrotax-aci.com") ? "http://tcid.retrotax.co":"https://webscreen.retrotax-aci.com";     
     }
 
 	var mergeCCL=function(indata) {
 		var tmpindata=[];
 		tmpindata.clients=[{"id":indata.companies[0].maindata.clientid, "legal_name":"temp name"}];
-
 		var ret={};
 		ret.clients=[];
-
 		$.each(tmpindata.clients, function( key, value ) {
 			var tmpclient=value;
 			tmpclient.companies=[];
-
 			$.each(indata.companies, function( key, value ) {
 				if (tmpclient.id==value.maindata.clientid) {
 					var tmpcompany=value.maindata;
 					tmpcompany.locations=[];
-
 					$.each(indata.locations, function( key, value ) {
 						if (tmpcompany.id==value.maindata.companyid) {
 							tmpcompany.locations.push(value.maindata);
 						}
 					});
-
 					tmpclient.companies.push(tmpcompany);
 				}
 			});	
-
 			ret.clients.push(tmpclient);
 		});
-
-		//console.log('mergeccl ret: ',ret);
-
+		console.log('mergeccl ret: ',ret);
 		return ret;
 	}
 
@@ -269,15 +267,15 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
 						lcurrentuser=tcid;
 
-						localStorage.setItem('cu', JSON.stringify(lcurrentuser));
-						localStorage.setItem('u',lcurrentuser.username);
+						//localStorage.setItem('cu', JSON.stringify(lcurrentuser));
+						//localStorage.setItem('u',lcurrentuser.username);
 
 						console.log('(app.js) LOGGED IN USER: ',lcurrentuser);
 
 
 					} else {
-						localStorage.setItem("hasAccess", 0);
-						localStorage.setItem('u','');
+						//localStorage.setItem("hasAccess", 0);
+						//localStorage.setItem('u','');
 						console.log('LOGGED **NOT*** in USER: ',lcurrentuser);
 					}
 			        return lcurrentuser;
@@ -380,8 +378,8 @@ app.factory('AuthService', ['$http', '$q', function ($http, $q) {
 	};
 
 }]);
-*/
 
+*/
 /*
 // TODO: create gulp file
 // TODO: remove common.js file and test PostMessage sans it
@@ -689,10 +687,17 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			return false;
 		}
 
+        $scope.tcid.employee.maindata.dob = $filter('date')($scope.tcid.employee.maindata.dob, 'MM/dd/yyyy');
+        $scope.tcid.employee.maindata.doh = $filter('date')($scope.tcid.employee.maindata.doh, 'MM/dd/yyyy');
+        $scope.tcid.employee.maindata.dgi = $filter('date')($scope.tcid.employee.maindata.dgi, 'MM/dd/yyyy');
+        $scope.tcid.employee.maindata.dsw = $filter('date')($scope.tcid.employee.maindata.dsw, 'MM/dd/yyyy');
+        $scope.tcid.employee.maindata.dojo = $filter('date')($scope.tcid.employee.maindata.dojo, 'MM/dd/yyyy');
+
 		$scope.tcid.employee.maindata.hiring_manager_completed=1;
+
 		console.log('attempting to save employee object:',$scope.tcid.employee.maindata);
 
-		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
+		var responsePromise = $http.post($scope.apiURL+'/api/v1/api_employees/save?u='+$scope.tcid.username+'&apikey='+$scope.tcid.api_key+'&clientid='+$scope.tcid.employee.maindata.clientid + '&companyid='+$scope.tcid.employee.maindata.companyid+'&locationid='+$scope.tcid.employee.maindata.locationid, $scope.tcid.employee.maindata, {});
 
 		responsePromise.success(function(dataFromServer, status, headers, config) {
 			console.log(dataFromServer);
@@ -734,9 +739,12 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 			}
 		});
 		responsePromise.error(function(data, status, headers, config) {
+			console.log(data,status,headers,config);
 			$.error({'data':data,'status':status,'headers':headers,'config':config});
-			alert("Submitting form failed!");
-
+			//alert("Submitting form failed!");
+			setTimeout(function() {
+                sendMessage('stop');
+            }, 2000);
 		});
 	}
 
@@ -958,8 +966,8 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
         $scope.tcid.employee.maindata.ssn = '111-11-1111';
         $scope.tcid.employee.maindata.ssnconfirmation = '111-11-1111';
         $scope.tcid.employee.maindata.ssn4 = '';
-        $scope.tcid.employee.maindata.firstname = 'plugin';
-        $scope.tcid.employee.maindata.lastname = 'test';
+        $scope.tcid.employee.maindata.firstname = 'John';
+        $scope.tcid.employee.maindata.lastname = 'Doe';
         $scope.tcid.employee.maindata.middleinitial = '';
         $scope.tcid.employee.maindata.city = 'chicago';
         //$scope.tcid.employee.maindata.state='IL';
@@ -1040,7 +1048,6 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
         $scope.tcid.employee.maindata.unemploymentinfo.compensated = null;
         $scope.tcid.employee.maindata.unemploymentinfo.compensatedstart = '';
         $scope.tcid.employee.maindata.unemploymentinfo.compensatedstop = '';
-
 
         $scope.tcid.employee.maindata.doh = '2/11/2015';
         $scope.tcid.employee.maindata.dgi = '2/11/2015';
@@ -1420,7 +1427,7 @@ Possible reasons for breakage:
 			}
 			
 			$scope.hasProvided={};
-			$scope.hasProvided.clientid=typeof args.clientid!='undefined' ? true : false;
+			$scope.hasProvided.clientid= (typeof args.clientid!='undefined' && args.companyid !== false) ? true : false;
 			$scope.hasProvided.companyid= (typeof args.companyid !== 'undefined' && args.companyid !== false) ? true : false;
 			$scope.hasProvided.locationid=(typeof args.locationid!='undefined' && args.locationid !== false) ? true : false;
 			//$scope.hasProvided.firstname=typeof args.populated_fields.firstname!='undefined' ? true : false;

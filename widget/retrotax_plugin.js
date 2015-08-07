@@ -58,6 +58,9 @@ if (typeof _retrotax_options.username == "undefined")
 if (typeof _retrotax_options.apikey == "undefined")
 	_retrotax_options.apikey = false;
 
+if (typeof _retrotax_options.clientid == "undefined")
+	_retrotax_options.clientid = false;
+
 if (typeof _retrotax_options.companyid == "undefined")
 	_retrotax_options.companyid = false;
 

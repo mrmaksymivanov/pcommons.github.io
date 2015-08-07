@@ -238,7 +238,7 @@
         <div class="col-sm-4" ng-hide="isValidDate(args.populated_fields.dob) && args.hide_fields">
         <div class="form-control-wrapper">
         <div class="input-group">
-            <input type="tel" class="form-control"  datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.dob" is-open="cals['dob']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Date of Birth" name="dob" />
+            <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.dob" is-open="cals['dob']" min-date="minDate" datepicker-options="dateOptions"  ng-required="true" close-text="Close"  data-displayname="Date of Birth" name="dob" />
                     <div class="floating-label">Date of Birth</div>
                     <div class="hint invalid" ng-if="frmEmployee.dob.$error.required">Date of Birth is required</div>                    
                     <span class="material-input"></span>
@@ -651,7 +651,7 @@
        <div class="col-sm-6">
         <div class="form-control-wrapper">
         <div class="input-group">
-        <input type="tel" class="form-control"  datepicker-popup="MM/dd/yyyy" data-hint="Conviction Date" ng-model="tcid.employee.maindata.feloninfo.dateconviction" is-open="cals['felondc']" min-date="minDate" datepicker-options="dateOptions"  
+        <input type="tel" class="form-control"  datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" data-hint="Conviction Date" ng-model="tcid.employee.maindata.feloninfo.dateconviction" is-open="cals['felondc']" min-date="minDate" datepicker-options="dateOptions"  
                 ng-required="tcid.employee.maindata.felon==1"
                  close-text="Close"  data-displayname="Conviction Date" name="dateconviction" />
                     <div class="floating-label">Conviction Date</div>
@@ -666,7 +666,7 @@
       <div class="col-sm-6">
         <div class="form-control-wrapper">
         <div class="input-group">
-        <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" data-hint="Date of Release" ng-model="tcid.employee.maindata.feloninfo.daterelease" is-open="cals['felondr']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.felon==1" close-text="Close"  data-displayname="Conviction Date" name="daterelease" />
+        <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" data-hint="Date of Release" ng-model="tcid.employee.maindata.feloninfo.daterelease" is-open="cals['felondr']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.felon==1" close-text="Close"  data-displayname="Conviction Date" name="daterelease" />
                     <div class="floating-label">Date of Release</div>
                     <span class="material-input"></span>
             <span class="input-group-btn">
@@ -750,7 +750,7 @@
       <div class="col-sm-4">
         <div class="form-control-wrapper">
         <div class="input-group">
-        <input type="tel"  name="servicestart" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestart" is-open="cals['vsdf']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date From" data-hint="Service Date From"/>
+        <input type="tel"  name="servicestart" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestart" is-open="cals['vsdf']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date From" data-hint="Service Date From"/>
                     <div class="floating-label">Service Date From</div>
                     <span class="material-input"></span>
             <span class="input-group-btn">
@@ -763,7 +763,7 @@
        <div class="col-sm-4">
         <div class="form-control-wrapper">
         <div class="input-group">
-        <input type="tel" name="servicestart" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestop" is-open="cals['vsdt']" min-date="minDate" datepicker-options="dateOptions" ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date To" data-hint="Service Date to"/>
+        <input type="tel" name="servicestart" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.veteraninfo.servicestop" is-open="cals['vsdt']" min-date="minDate" datepicker-options="dateOptions" ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Service Date To" data-hint="Service Date to"/>
                     <div class="floating-label">Service Date To</div>
                     <span class="material-input"></span>
             <span class="input-group-btn">
@@ -817,7 +817,7 @@
       <div class="col-sm-6">
         <div class="form-control-wrapper">
         <div class="input-group">
-         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstart" is-open="cals['unemployedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed From"  name="unemployedstart" data-hint="Unemployed From Date" />
+         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstart" is-open="cals['unemployedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed From"  name="unemployedstart" data-hint="Unemployed From Date" />
                     <div class="floating-label">Unemployed From</div>
                     <div class="hint">Unemployed From Date</div>
                     <span class="material-input"></span>
@@ -831,7 +831,7 @@
        <div class="col-sm-6">
         <div class="form-control-wrapper">
         <div class="input-group">
-         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstop" is-open="cals['unemployedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed To" name="unemployedstop" data-hint="Unemployed To Date"/>
+         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.unemployedstop" is-open="cals['unemployedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemployed && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Unemployed To" name="unemployedstop" data-hint="Unemployed To Date"/>
                     <div class="floating-label">Unemployed To</div>
                      <div class="hint">Unemployed To Date</div>                   
                     <span class="material-input"></span>
@@ -843,12 +843,30 @@
         </div>  
 
 </div>
-  <div class="row"  ng-show="tcid.employee.maindata.unemploymentinfo.compensated==1">
+
+        <table class="table table-user-information table-responsive">
+          <tbody>
+          <tr class="yesno req">
+            <th  align="left" valign="top">Did you receive unemployment compensation <br/>at any point during your unemployment?</th>
+            <td class=""  align="left" valign="top">
+              <div class="btn-group">
+                  <label class="btn btn-sm btn-warning" ng-model="tcid.employee.maindata.unemploymentinfo.compensated" btn-radio="0"
+                   ng-required="tcid.employee.maindata.veteran && tcid.employee.maindata.rehire==0" data-displayname="Unemployment Compensation" name="compensated">NO</label>
+                  <label class="btn btn-sm btn-success" ng-model="tcid.employee.maindata.unemploymentinfo.compensated" btn-radio="1">YES</label>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+<!--
+
+<div class="row">
 
       <div class="col-sm-6">
         <div class="form-control-wrapper">
         <div class="input-group">
-         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstart" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated From" style="width:100px" name="compensatedstart"  data-hint="Compensated From Date"/>
+         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstart" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.compensated && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Compensated From"  name="compensatedstart" data-hint="Compensated From Date" />
                     <div class="floating-label">Compensated From</div>
                     <div class="hint">Compensated From Date</div>
                     <span class="material-input"></span>
@@ -862,8 +880,40 @@
        <div class="col-sm-6">
         <div class="form-control-wrapper">
         <div class="input-group">
-         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstop" is-open="cals['compensatedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated To"  name="compensatedstop" data-hint="Compensated To Date"/>
-                <span class="input-group-btn">
+         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstop" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.compensated && tcid.employee.maindata.rehire==0" close-text="Close"  data-displayname="Compensated To"  name="compensatedstop" data-hint="Compensated To Date" />
+                    <div class="floating-label">Compensated To</div>
+                    <div class="hint">Compensated To Date</div>
+                    <span class="material-input"></span>
+            <span class="input-group-btn">
+                  <button type="button" class="btn btn-sm btn-default calBtn" ng-click="calop($event,'compensatedstop')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+            </div>
+          </div>
+        </div>  
+
+</div>
+-->
+
+  <div class="row"  ng-show="tcid.employee.maindata.unemploymentinfo.compensated==1">
+
+      <div class="col-sm-6">
+        <div class="form-control-wrapper">
+        <div class="input-group">
+         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstart" is-open="cals['compensatedstart']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated From" name="compensatedstart" data-hint="Compensated From Date"/>
+                    <div class="floating-label">Compensated From</div>
+                    <div class="hint">Compensated From Date</div>
+                    <span class="material-input"></span>
+            <span class="input-group-btn">
+                  <button type="button" class="btn btn-sm btn-default calBtn" ng-click="calop($event,'compensatedstart')"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+            </div>
+          </div>
+        </div>  
+
+       <div class="col-sm-6">
+        <div class="form-control-wrapper">
+        <div class="input-group">
+         <input type="tel" class="form-control" datepicker-popup="MM/dd/yyyy" placeholder="mm/dd/yyyy" ng-model="tcid.employee.maindata.unemploymentinfo.compensatedstop" is-open="cals['compensatedstop']" min-date="minDate" datepicker-options="dateOptions"  ng-required="tcid.employee.maindata.unemploymentinfo.compensated==1" close-text="Close"  data-displayname="Compensated To" name="compensatedstop" data-hint="Compensated To Date"/>
                     <div class="floating-label">Compensated To</div>
                      <div class="hint">Compensated To Date</div>                   
                     <span class="material-input"></span>
