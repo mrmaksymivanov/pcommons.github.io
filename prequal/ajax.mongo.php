@@ -19,7 +19,7 @@ $obj           = json_decode($HTTP_RAW_POST_DATA, true);
 $employee      = $obj['employee'];
 $prequalConfig = $obj['prequalConfig'];
 
-$email            = (string) $prequalConfig['email_to'];
+$email            = (string) $obj['email_to'];
 $emailCC          = (string) $prequalConfig['email_cc'];
 $emailBCC         = (string) $prequalConfig['email_bcc'];
 $ccArray          = explode(',', $emailCC);

@@ -706,6 +706,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 					var obj={};
 					obj.employee=dataFromServer.EMPLOYEE;
 					obj.prequalConfig=$scope.prequalConfig;
+					obj.email_to=$scope.tcid.employee.maindata.email;
 					var responsePromise = $http.post(u, obj, {});
 					responsePromise.success(function(dataFromServer, status, headers, config) {
 							sendMessage('stop');
