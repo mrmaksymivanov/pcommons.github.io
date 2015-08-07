@@ -733,7 +733,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 				}
 
 				$scope.currentemployeeid=1;//hides accordians
-				setTimeout(function() {sendMessage('stop');}, 2000);
+				//setTimeout(function() {sendMessage('stop');}, 2000);
 			} // success==false
 		});
 		responsePromise.error(function(data, status, headers, config) {
@@ -805,6 +805,7 @@ app.controller("ctlEmployee", function($scope, $http, $route, $routeParams, $loc
 		emp.maindata.address2=typeof user_provided_data.populated_fields.address2!='undefined' ? user_provided_data.populated_fields.address2 : '';
 		//emp.maindata.countyid=null;
 		emp.maindata.dob= (typeof user_provided_data.populated_fields.dob!='undefined' && $scope.isValidDate(user_provided_data.populated_fields.dob))? user_provided_data.populated_fields.dob : null;
+        emp.maindata.email='';
 
 		emp.maindata.client={};
 		emp.maindata.company={};
