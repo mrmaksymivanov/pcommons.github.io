@@ -31,7 +31,6 @@
 	    }
 	}
 
-
 /**************************************
 Partnering organizations and prequal orgs custom config
 ***************************************/
