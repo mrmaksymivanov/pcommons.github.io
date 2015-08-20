@@ -30,34 +30,7 @@
 	        }
 	    }
 	}
-/*
-	if (typeof window._retrotax_options == "undefined"){
-		var _retrotax_options = {
-	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
-	            debug: false,
-	            username:'DemoAPI.New.Employee',
-	            apikey:'111BC0B55FEF6737944B37B1CA2DBED3',
-	            button_class:"btn btn-huge btn-info",
-	            button_text:"Open RetroTax Screening Plugin",
-	            framework:"material-design",
-	            plugin_type: 'demo',  
-	            prepopulate_basic_info_by_id: {
-	                firstname:'first_name',
-	                lastname:'last_name',
-	                middleinitial:'middle_init',
-	                city:'',
-	                state:'',
-	                stateid:'',
-	                zip:'',
-	                address:'',
-	                address2:'',
-	                countyid:'',
-	                dob:''
-	            }
-	        };
-	}
 
-*/
 
 /**************************************
 Partnering organizations and prequal orgs custom config
