@@ -50,7 +50,7 @@ if (typeof(pluginChapman) != 'undefined' && pluginChapman != null){
 	            framework:"material-design",
 	            plugin_type: 'prequal'
 	            logo:'',
-				prequal = {
+				prequal:{
 			                email_to:'',
 			                email_cc:'',
 			                partner_name:'',
@@ -82,7 +82,7 @@ if (typeof(pluginPCG) != 'undefined' && pluginPCG != null){
 	            framework:"material-design",
 	            plugin_type: 'prequal',
 	            logo:'',
-				prequal = {
+				prequal:{
 			                email_to:'',
 			                email_cc:'',
 			                partner_name:'',
@@ -114,7 +114,7 @@ if (typeof(pluginMW) != 'undefined' && pluginMW != null){
 	            framework:"material-design",
 	            plugin_type: 'prequal',
 	            logo:'',
-				prequal = {
+				prequal:{
 			                email_to:'',
 			                email_cc:'',
 			                partner_name:'',
