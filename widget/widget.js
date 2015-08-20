@@ -48,7 +48,7 @@ if (typeof(pluginChapman) != 'undefined' && pluginChapman != null){
 	            button_class:"btn btn-huge btn-info",
 	            button_text:"Open RetroTax & Chapman Tax Credit Screening",
 	            framework:"material-design",
-	            plugin_type: 'prequal'
+	            plugin_type: 'prequal',
 	            logo:'',
 				prequal:{
 			                email_to:'',
