@@ -132,6 +132,7 @@ if (typeof(pluginMW) != 'undefined' && pluginMW != null){
 	}
 }
 
+
 var pluginRetroTax = document.getElementById('retrotax_demo');
 if (typeof(pluginRetroTax) != 'undefined' && pluginRetroTax != null){
 	if (typeof window._retrotax_options == "undefined"){
