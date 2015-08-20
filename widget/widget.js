@@ -31,7 +31,7 @@
 	    }
 	}
 
-	if (typeof window._retrotax_options == "undefined"){
+if (typeof window._retrotax_options == "undefined"){
 		var _retrotax_options = {
 	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
 	            debug: false,
@@ -55,7 +55,7 @@
 	                dob:''
 	            }
 	        };
-	}
+}
 
 /**************************************
 Partnering organizations and prequal orgs custom config
