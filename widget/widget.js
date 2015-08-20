@@ -59,11 +59,8 @@ if (typeof window._retrotax_options == "undefined"){
 
 /**************************************
 Partnering organizations and prequal orgs custom config
-***************************************
-
-var pluginChapman = document.getElementById('chapman_plugin');
-if (typeof(pluginChapman) != 'undefined' && pluginChapman != null){
-	if (typeof window._retrotax_options == "undefined"){
+***************************************/
+if (window.location.href == 'https://www.retrotax-aci.com/chapman-partnership/' || window.location.href == 'http://demo.retrotax-aci.com/chapman-partnership/'){
 		var _retrotax_options = {
 	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
 	            debug: false,
@@ -89,12 +86,9 @@ if (typeof(pluginChapman) != 'undefined' && pluginChapman != null){
 			                ask_ssn:false
 			    }
 	        };
-	}
 }
 
-var pluginPCG = document.getElementById('pcg_plugin');
-if (typeof(pluginPCG) != 'undefined' && pluginPCG != null){
-	if (typeof window._retrotax_options == "undefined"){
+if (window.location.href == 'https://www.retrotax-aci.com/public-consulting-group/' || window.location.href == 'http://demo.retrotax-aci.com/public-consulting-group/'){
 		var _retrotax_options = {
 	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
 	            debug: false,
@@ -123,9 +117,7 @@ if (typeof(pluginPCG) != 'undefined' && pluginPCG != null){
 	}
 }
 
-var pluginMW = document.getElementById('mw_plugin');
-if (typeof(pluginMW) != 'undefined' && pluginMW != null){
-	if (typeof window._retrotax_options == "undefined"){
+if (window.location.href == 'https://www.retrotax-aci.com/manufacturing-works/' || window.location.href == 'http://demo.retrotax-aci.com/manufacturing-works/'){
 		var _retrotax_options = {
 	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
 	            debug: false,
@@ -155,37 +147,6 @@ if (typeof(pluginMW) != 'undefined' && pluginMW != null){
 }
 
 
-var pluginRetroTax = document.getElementById('retrotax_demo');
-console.log(pluginRetroTax);
-if (typeof(pluginRetroTax) != 'undefined' && pluginRetroTax != null){
-	if (typeof window._retrotax_options == "undefined"){
-		var _retrotax_options = {
-	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
-	            debug: false,
-	            username:'DemoAPI.New.Employee',
-	            apikey:'111BC0B55FEF6737944B37B1CA2DBED3',
-	            button_class:"btn btn-huge btn-info",
-	            button_text:"Open RetroTax Screening Plugin",
-	            framework:"material-design",
-	            plugin_type: 'demo',  
-	            prepopulate_basic_info_by_id: {
-	                firstname:'first_name',
-	                lastname:'last_name',
-	                middleinitial:'middle_init',
-	                city:'',
-	                state:'',
-	                stateid:'',
-	                zip:'',
-	                address:'',
-	                address2:'',
-	                countyid:'',
-	                dob:''
-	            }
-	        };
-	}
-}
-
-*/
 
 
 
