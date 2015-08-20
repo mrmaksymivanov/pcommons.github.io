@@ -60,6 +60,7 @@ if (typeof window._retrotax_options == "undefined"){
 /**************************************
 Partnering organizations and prequal orgs custom config
 ***************************************/
+
 if (window.location.href == 'https://www.retrotax-aci.com/chapman-partnership/' || window.location.href == 'http://demo.retrotax-aci.com/chapman-partnership/'){
 		var _retrotax_options = {
 	            iframe_base_path: 'https://pcommons.github.io/widget/iframe',  //http://plugin.retrotax-aci.com/widget/iframe',
