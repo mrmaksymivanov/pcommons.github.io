@@ -114,7 +114,6 @@ if (window.location.href == 'https://www.retrotax-aci.com/public-consulting-grou
 			                ask_ssn:false
 			    }
 	        };
-	}
 }
 
 if (window.location.href == 'https://www.retrotax-aci.com/manufacturing-works/' || window.location.href == 'http://demo.retrotax-aci.com/manufacturing-works/'){
@@ -143,7 +142,6 @@ if (window.location.href == 'https://www.retrotax-aci.com/manufacturing-works/' 
 			                ask_ssn:false
 			    }           
 	        };
-	}
 }
 
 
