@@ -33,12 +33,9 @@
 
 
 /**************************************
-
-
 Partnering organizations and prequal orgs custom config
-
-
 ***************************************/
+
 var pluginChapman = document.getElementById('chapman_plugin');
 if (typeof(pluginChapman) != 'undefined' && pluginChapman != null){
 	/* Altering these defaults may break chapman prequal */
